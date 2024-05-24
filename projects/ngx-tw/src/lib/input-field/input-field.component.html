@@ -1,0 +1,37 @@
+<div class="relative flex items-center mt-4 md:mt-0">
+  <span
+    class="absolute ml-2"
+    *ngIf="iconPrefix"
+  >
+    <tw-icon class="text-gray-400 {{ iconPrefixClass }}">{{
+			iconPrefix
+		}}</tw-icon>
+  </span>
+
+  <input
+    [type]="inputType"
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    [disabled]="disabled"
+    [attr.maxLength]="maxLength"
+    [attr.minLength]="minLength"
+    [required]="required"
+    [pattern]="pattern"
+    (change)="onChange($event)"
+    class="tw-input-field {{ color }}"
+    [ngClass]="{
+			'icon-left': iconPrefix && !iconSuffix,
+			'icon-right': iconSuffix && !iconPrefix,
+			'icon-left-right': iconSuffix && iconPrefix
+		}"
+  />
+
+  <span
+    class="absolute mr-2 right-0"
+    *ngIf="iconSuffix"
+  >
+    <tw-icon class="text-gray-400 {{ iconSuffixClass }}">{{
+			iconSuffix
+		}}</tw-icon>
+  </span>
+</div>

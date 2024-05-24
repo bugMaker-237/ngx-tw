@@ -1,0 +1,83 @@
+<span
+  class="block truncate"
+  [ngClass]="{'block': !innerValue}"
+  [hidden]="innerValue"
+>
+  {{ placeholder}}
+</span>
+
+<span
+  class="block truncate"
+  [innerHtml]="htmlValue"
+  [ngClass]="{'block': innerValue}"
+  [hidden]="!innerValue"
+></span>
+
+<style>
+  .custom-arrow:empty {
+    display: none;
+  }
+
+</style>
+<span
+  class="custom-arrow absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
+  #arrowContainer
+>
+  <ng-content select="[arrow-icon]"></ng-content>
+</span>
+
+<span
+  class="default-arrow absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none"
+  *ngIf="arrowContainer.children.length === 0"
+>
+  <svg
+    class="h-5 w-5 text-gray-400"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      fill-rule="evenodd"
+      d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+      clip-rule="evenodd"
+    />
+  </svg>
+</span>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayLockPosition]="true"
+  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+  [cdkConnectedOverlayScrollStrategy]="_scrollStrategy"
+  [cdkConnectedOverlayOrigin]="elementRef.nativeElement"
+  [cdkConnectedOverlayOpen]="isOpen"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayMinWidth]="elementRef.nativeElement.offsetWidth"
+  (backdropClick)="backdropClick()"
+  (overlayKeydown)="handleKeydown($event)"
+  (detach)="closePanel()"
+>
+  <div
+    [attr.id]="id + '-panel'"
+    tabindex="-1"
+    class="tw-option-panel-scroll {{color}} relative"
+    role="listbox"
+  >
+    <!-- Input container -->
+    <div
+      #inputContainer
+      class="w-full flex flex-col p-3"
+      [ngClass]="{'flex': inputContainer.children.length !== 0, 'hidden': inputContainer.children.length === 0, 'pb-0 z-10 sticky top-0 bg-white dark:bg-slate-700': inputSticky}"
+    >
+      <ng-content select="input"></ng-content>
+    </div>
+
+    <!-- Options -->
+    <ng-content select="tw-option"></ng-content>
+
+    <!-- Will be used for extra content like empty list message -->
+    <ng-content></ng-content>
+  </div>
+</ng-template>

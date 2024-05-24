@@ -1,0 +1,32 @@
+<tw-sticky-content-header>
+  <div class="px-5 pb-4 pt-2 gap-4 flex items-center w-full">
+    <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-100">
+      <tw-icon svgIcon="hero:shopping-bag" />
+    </div>
+    <div class="flex flex-col flex-1">
+      <h1 class="text-3xl font-semibold">{{header}}</h1>
+			<ng-content select="[subHeader]"></ng-content>
+    </div>
+    <div class="flex gap-3 items-center flex-wrap">
+      <tw-button-icon
+        twClass="bg-primary-50"
+        color="primary"
+        svgIcon="hero:chevron-left"
+      ></tw-button-icon>
+      <tw-button-icon
+        color="primary"
+        twClass="bg-primary-50"
+        svgIcon="hero:chevron-right"
+      ></tw-button-icon>
+      <tw-button-icon
+        color="primary"
+        twClass="bg-primary-50"
+        svgIcon="hero:ellipsis-horizontal"
+      ></tw-button-icon>
+      <tw-button
+        color="primary"
+        type="filled"
+      >Enregistrer</tw-button>
+    </div>
+  </div>
+</tw-sticky-content-header>

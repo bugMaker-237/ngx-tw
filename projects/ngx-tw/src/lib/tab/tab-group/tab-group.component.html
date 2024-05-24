@@ -1,0 +1,11 @@
+<div class="w-100 flex flex-col">
+  <div class="tw-tab mb-4 {{color}}">
+    <tw-tab-item
+      *ngFor="let item of children; let i = index"
+      [label]="item.label"
+      [isSelected]="selectedIndex === i"
+      (selected)="selectedIndex = i; selectionChanged.emit(i)"
+    />
+  </div>
+  <ng-container [ngTemplateOutlet]="currentContent"></ng-container>
+</div>
