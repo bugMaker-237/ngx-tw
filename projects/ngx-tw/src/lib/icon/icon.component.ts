@@ -18,19 +18,27 @@ import { Subscription } from 'rxjs';
     `
       :host {
         display: block;
-        width: var(--c-icon-width);
-        height: var(--c-icon-height);
+        width: var(--c-icon-width) !important;
+        height: var(--c-icon-height) !important;
+        min-width: var(--c-icon-width) !important;
+        min-height: var(--c-icon-height) !important;
+      }
+      :host svg {
+        width: var(--c-icon-width) !important;
+        height: var(--c-icon-height) !important;
+        min-width: var(--c-icon-width) !important;
+        min-height: var(--c-icon-height) !important;
       }
     `,
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TwIconComponent implements AfterViewInit, OnDestroy {
+export class TwIcon implements AfterViewInit, OnDestroy {
   private static _iconRegistry = new Map<string, string>();
   private _retrievalSubscription$?: Subscription;
   private _svgIcon?: string;
-  private _size = 18;
+  private _size = 20;
 
   @Input() set size(value: number) {
     this._size = value;
@@ -90,10 +98,10 @@ export class TwIconComponent implements AfterViewInit, OnDestroy {
         'tw-icon: Could not determine icon namespace and name from ' + iconName
       );
 
-    if (!TwIconComponent._iconRegistry.has(iconName))
+    if (!TwIcon._iconRegistry.has(iconName))
       this._retriveIcon(nativeElement, iconName, namespace, name);
     else {
-      const icon = TwIconComponent._iconRegistry.get(iconName)!;
+      const icon = TwIcon._iconRegistry.get(iconName)!;
       nativeElement.innerHTML = icon;
     }
   }
@@ -113,8 +121,11 @@ export class TwIconComponent implements AfterViewInit, OnDestroy {
         responseType: 'text' as any,
       })
       .subscribe((v) => {
-        TwIconComponent._iconRegistry.set(iconName, v);
+        TwIcon._iconRegistry.set(iconName, v);
         elt.innerHTML = v;
+        const svg = elt.firstElementChild as SVGElement;
+        svg.classList.value = '';
+        svg.style.cssText = `width: ${this.size}px!important; height: ${this.size}px!important;`;
       });
   }
 }

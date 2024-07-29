@@ -1,4 +1,5 @@
-import { CdkTableModule } from '@angular/cdk/table';
+import { ArrayDataSource } from '@angular/cdk/collections';
+import { CdkTableModule, DataSource } from '@angular/cdk/table';
 import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
@@ -10,25 +11,25 @@ import {
   QueryList,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TwButtonComponent } from '@com/button/button.component';
-import { TwIconComponent } from '@com/icon/icon.component';
-import { TwOptionComponent } from '@com/select/option/option.component';
-import { TwSelectComponent } from '@com/select/select.component';
+import { TwButton } from '../button/button.component';
+import { TwIcon } from '../icon/icon.component';
+import { TwOption } from '../select/option/option.component';
+import { TwSelect } from '../select/select.component';
 import {
-  __TwColumnDefDirective,
-  __TwRowDefDirective,
+  TwColumnDefDirective,
+  TwRowDefDirective,
 } from './column-definitions.directive';
 
 @Component({
   standalone: true,
   imports: [
-    TwIconComponent,
-    TwButtonComponent,
+    TwIcon,
+    TwButton,
     NgIf,
     NgFor,
     NgTemplateOutlet,
-    TwSelectComponent,
-    TwOptionComponent,
+    TwSelect,
+    TwOption,
     CdkTableModule,
     RouterLink,
   ],
@@ -36,24 +37,39 @@ import {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TwTableComponent<T> {
-  @Input() dataSource: T[] = [];
+export class TwTable<T> {
+  private _dataSource?: T[];
+  get dataSource(): T[] {
+    return this._dataSource || [];
+  }
+
+  @Input() set dataSource(value: T[]) {
+    this._dataSource = value;
+    this.internalSource = value ? new ArrayDataSource(value) : void 0;
+  }
 
   @Input() displayCheckbox: boolean = true;
 
   @Input() displayPagination: boolean = true;
+  @Input() displayEmptyTemplate: boolean = false;
 
+  @Input() totalItemsCount: number = 0;
   @Input() pageSizes: number[] = [10, 20, 50, 100];
 
   @Output() itemClick = new EventEmitter<T>();
+  @Output() addItemClick = new EventEmitter<T>();
+  @Output() clearSearchClick = new EventEmitter<T>();
 
-  @ContentChildren(__TwColumnDefDirective)
-  columnDefs?: QueryList<__TwColumnDefDirective>;
+  @ContentChildren(TwColumnDefDirective)
+  columnDefs?: QueryList<TwColumnDefDirective<T>>;
 
-  @ContentChild(__TwRowDefDirective)
-  rowDef?: __TwRowDefDirective;
+  @ContentChild(TwRowDefDirective)
+  rowDef?: TwRowDefDirective<T>;
 
   defaultPageSize = 10;
+
+  internalSource?: DataSource<T>;
+
   get displayColumns() {
     const cols = this.rowDef?.displayColumns || [];
     return this.displayCheckbox ? ['checkbox', ...cols] : cols;
@@ -63,5 +79,8 @@ export class TwTableComponent<T> {
     return this.columnDefs?.toArray() || [];
   }
 
+  get totalPagesCount() {
+    return Math.ceil(this.totalItemsCount / this.defaultPageSize);
+  }
   constructor() {}
 }

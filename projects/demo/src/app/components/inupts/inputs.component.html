@@ -1,0 +1,82 @@
+<h2 class="my-4 text-2xl mt-4">Inputs</h2>
+
+<form
+  [formGroup]="form"
+  class="gap-6 flex flex-col max-w-2xl"
+>
+
+  <div class="flex flex-col gap-3">
+    <span>Classic</span>
+    <tw-input-field
+      name="name"
+      inputType="text"
+      [required]="true"
+      [formControl]="form.controls.nameClassic"
+      placeholder="Name"
+    />
+
+  </div>
+
+
+  <div class="flex flex-col gap-3">
+    <span>Icon prefix</span>
+    <tw-input-field
+      name="name"
+      inputType="text"
+      color="accent"
+      [required]="true"
+      [formControl]="form.controls.nameIconPrefix"
+      placeholder="Name"
+      iconPrefix="hero:megaphone"
+    />
+  </div>
+
+
+  <div class="flex flex-col gap-3">
+    <span>Icon prefix & suffix</span>
+    <tw-input-field
+      name="name"
+      inputType="text"
+      color="danger"
+      [required]="true"
+      [formControl]="form.controls.nameIconPrefixSuffix"
+      placeholder="Name"
+      iconPrefix="hero:megaphone"
+      iconSuffix="hero:presentation-chart-line"
+    />
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Multiline (textarea)</span>
+
+    <tw-input-field
+      name="description"
+      inputType="text"
+      [multiline]="true"
+      [formControl]="form.controls.description"
+      placeholder="Description"
+    />
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Chip list</span>
+
+    <tw-chip-list
+      [chips]="chips"
+      [isEditable]="true"
+      color="accent"
+    />
+
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Switch</span>
+    <tw-switch
+      [formControl]="form.controls.runCycle"
+      label="Run on next cycle"
+      color="accent"
+    />
+  </div>
+
+
+</form>

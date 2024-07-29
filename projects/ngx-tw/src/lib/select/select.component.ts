@@ -7,6 +7,7 @@ import {
   hasModifierKey,
 } from '@angular/cdk/keycodes';
 import {
+  BlockScrollStrategy,
   CdkConnectedOverlay,
   ConnectedPosition,
   Overlay,
@@ -27,12 +28,9 @@ import {
   forwardRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ColorTypes } from '@com/color-types';
 import { Observable, defer, merge, startWith, switchMap, take } from 'rxjs';
-import {
-  OptionSelectionChange,
-  TwOptionComponent,
-} from './option/option.component';
+import { ColorTypes } from '../color-types';
+import { OptionSelectionChange, TwOption } from './option/option.component';
 
 /**
  * IDs need to be unique across components, so this counter exists outside of
@@ -54,21 +52,21 @@ let _uniqueIdCounter = 0;
     '[attr.aria-controls]': 'isOpen ? id + "-panel" : null',
     '[attr.aria-expanded]': 'isOpen',
     '[attr.aria-disabled]': 'disabled.toString()',
-    '[attr.aria-haspopup]': 'listbox',
-    '[attr.aria-labelledby]': 'listbox-label',
+    '[attr.aria-haspopup]': '"listbox"',
+    '[attr.aria-labelledby]': '"listbox-label"',
     '(keydown)': 'handleKeydown($event)',
     '(click)': 'openPanel()',
-    '[class]': '"tw-select " + color',
+    '[class]': '"tw-select " + (color || "")',
   },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TwSelectComponent),
+      useExisting: forwardRef(() => TwSelect),
       multi: true,
     },
   ],
 })
-export class TwSelectComponent
+export class TwSelect
   implements ControlValueAccessor, OnInit, AfterContentInit
 {
   @Input() public placeholder: string = 'Select an option';
@@ -91,12 +89,12 @@ export class TwSelectComponent
   @ViewChild('inputContainer', { static: true })
   public inputContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('trigger', { static: true }) public trigger!: ElementRef;
-  @ContentChildren(TwOptionComponent, { descendants: true })
-  public options!: QueryList<TwOptionComponent>;
+  @ContentChildren(TwOption, { descendants: true })
+  public options!: QueryList<TwOption>;
 
   @Input() color?: ColorTypes;
 
-	@Input() inputSticky = true;
+  @Input() inputSticky = true;
 
   public get htmlValue(): string | null {
     //
@@ -114,8 +112,8 @@ export class TwSelectComponent
   public isOpen: boolean = false;
   public overlayWidth!: string;
 
-  private _keyManager!: ActiveDescendantKeyManager<TwOptionComponent>;
-  public _scrollStrategy: any = this.overlay.scrollStrategies.block();
+  private _keyManager!: ActiveDescendantKeyManager<TwOption>;
+  public _scrollStrategy: BlockScrollStrategy;
 
   public positions: ConnectedPosition[] = [
     {
@@ -175,7 +173,9 @@ export class TwSelectComponent
     public overlay: Overlay,
     private readonly zone: NgZone,
     private readonly liveAnnouncer: LiveAnnouncer
-  ) {}
+  ) {
+    this._scrollStrategy = this.overlay.scrollStrategies.block();
+  }
 
   ngOnInit(): void {}
 
@@ -288,11 +288,7 @@ export class TwSelectComponent
     this._updateKeyManagerActiveItem(newValue);
   }
 
-  onSelect(
-    source: TwOptionComponent,
-    isUserInput: boolean,
-    innerHTML: string | null
-  ) {
+  onSelect(source: TwOption, isUserInput: boolean, innerHTML: string | null) {
     //
     // Validate value is different
     if (this.innerValue === source.value) return this.closePanel();
@@ -354,14 +350,12 @@ export class TwSelectComponent
 
       // // We set a duration on the live announcement, because we want the live element to be
       // // cleared after a while so that users can't navigate to it using the arrow keys.
-      // this.liveAnnouncer.announce((manager.activeItem as TwOptionComponent)?.contentElement?.nativeElement?.innerHTML, 10000);
+      // this.liveAnnouncer.announce((manager.activeItem as TwOption)?.contentElement?.nativeElement?.innerHTML, 10000);
     }
   }
 
   private _initKeyManager() {
-    this._keyManager = new ActiveDescendantKeyManager<TwOptionComponent>(
-      this.options
-    )
+    this._keyManager = new ActiveDescendantKeyManager<TwOption>(this.options)
       .withTypeAhead()
       .withVerticalOrientation()
       .withHomeAndEnd()
@@ -389,11 +383,9 @@ export class TwSelectComponent
 
       //
       // Find selected option index
-      const correspondingOption = this.options.find(
-        (option: TwOptionComponent) => {
-          return option.value != null && this.compareWith(option.value, value);
-        }
-      );
+      const correspondingOption = this.options.find((option: TwOption) => {
+        return option.value != null && this.compareWith(option.value, value);
+      });
       // validate and update active item
       if (correspondingOption) manager.setActiveItem(correspondingOption);
       else manager.setActiveItem(-1);

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TwIconComponent } from '@com/icon/icon.component';
+import { TwIcon } from '../icon/icon.component';
 
 @Component({
-  imports: [TwIconComponent],
+  imports: [TwIcon],
   standalone: true,
   selector: 'tw-selected-app',
   templateUrl: './selected-app.component.html',

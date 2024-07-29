@@ -1,0 +1,93 @@
+<h2 class="mb-8 mt-8 text-2xl">Menus</h2>
+
+
+<div class="gap-2 flex-col flex">
+  <h3 class="border-b border-gray-200 dark:border-slate-500">Classic menu button</h3>
+  <div class="pt-4">
+    <div class="flex gap-16">
+      <tw-button
+        type="filled"
+        color="primary"
+        class="w-20 block"
+        [twMenuTriggerFor]="menu"
+      >Menu</tw-button>
+      <tw-button-icon
+        type="filled"
+        color="accent"
+        [twMenuTriggerFor]="menu"
+        svgIcon="hero:ellipsis-horizontal"
+      ></tw-button-icon>
+    </div>
+
+
+    <tw-menu
+      #menu
+      class="pt-8"
+    >
+
+      <button *twMenuItem>Hello mundo 0</button>
+      <button *twMenuItem>Hello mundo 1</button>
+      <button *twMenuItem>Hello mundo 2</button>
+      <button *twMenuItem>Hello mundo 3</button>
+    </tw-menu>
+  </div>
+  <h3 class="border-b border-gray-200 dark:border-slate-500 mt-8">Menu with submenus</h3>
+  <div class="pt-4">
+    <div class="flex gap-16">
+      <tw-button
+        type="filled"
+        color="primary"
+        class="w-20 block"
+        [twMenuTriggerFor]="menu2"
+      >Menu</tw-button>
+      <tw-button-icon
+        type="filled"
+        color="accent"
+        twClass="hover:shadow-md"
+        [twMenuTriggerFor]="menu2"
+        svgIcon="hero:ellipsis-horizontal"
+      ></tw-button-icon>
+    </div>
+
+    <tw-menu
+      #menu2
+      class="pt-8"
+    >
+
+      <button *twMenuItem>Hello mundo 0</button>
+      <button
+        *twMenuItem="subMenu"
+        class="flex items-center justify-between gap-4"
+      >Hello mundo 1 <tw-icon
+          [size]="16"
+          svgIcon="hero:chevron-right"
+        ></tw-icon></button>
+      <button *twMenuItem>Hello mundo 2</button>
+      <button *twMenuItem>Hello mundo 3</button>
+    </tw-menu>
+
+    <tw-menu
+      #subMenu
+      class="pt-8"
+    >
+
+      <button *twMenuItem>Submenu 0</button>
+      <button
+        *twMenuItem="subMenu2"
+        class="flex items-center justify-between gap-4"
+      >Submenu 1 <tw-icon
+          [size]="16"
+          svgIcon="hero:chevron-right"
+        ></tw-icon></button>
+    </tw-menu>
+
+    <tw-menu
+      #subMenu2
+      class="pt-8"
+    >
+
+      <button *twMenuItem>Submenu sub 0</button>
+      <button *twMenuItem>Submenu sub 1</button>
+    </tw-menu>
+  </div>
+</div>

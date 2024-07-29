@@ -1,21 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { TwButtonIconComponent } from '@com/button/button-icon.component';
-import { TwButtonComponent } from '@com/button/button.component';
-import { TwIconComponent } from '@com/icon/icon.component';
-import { TwStickyContentHeaderComponent } from '@com/sticky-content-header/sticky-content-header.component';
+import { TwButtonIcon } from '../button/button-icon.component';
+import { TwButton } from '../button/button.component';
+import { TwIcon } from '../icon/icon.component';
+import { TwStickyContentHeader } from '../sticky-content-header/sticky-content-header.component';
 
 @Component({
   selector: 'tw-toolbar',
   templateUrl: './toolbar.component.html',
-  imports: [
-    TwStickyContentHeaderComponent,
-    TwIconComponent,
-    TwButtonIconComponent,
-    TwButtonComponent,
-  ],
+  imports: [TwStickyContentHeader, TwIcon, TwButtonIcon, TwButton],
   standalone: true,
 })
-export class TwToolbarComponent {
+export class TwToolbar {
   @Input() header?: string;
+  @Input() toolbarIcon?: string = 'hero:shopping-bag';
+  @Input() hideActions = false;
   constructor() {}
 }

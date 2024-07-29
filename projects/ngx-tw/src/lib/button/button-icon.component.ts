@@ -1,32 +1,50 @@
 import { NgClass } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { TwIconComponent } from '@com/icon/icon.component';
 import { ColorTypes } from '../color-types';
-import { ButtonType, TwButton } from './button-interface';
+import { TwIcon } from '../icon/icon.component';
+import { ButtonType, TwButtonInterface } from './button-interface';
 
 @Component({
   standalone: true,
-  imports: [NgClass, TwIconComponent],
+  imports: [NgClass, TwIcon],
   selector: 'tw-button-icon',
   template: `
+    @if(href){
+    <a
+      class="tw-button-icon {{ twClass }} {{ type }} {{ color }}"
+      [href]="href"
+      [target]="target"
+      [attr.title]="title"
+      [ariaDisabled]="disabled"
+    >
+      <tw-icon [svgIcon]="svgIcon" [size]="svgIconSize" />
+    </a>
+
+    }@else {
     <button
       class="tw-button-icon {{ twClass }} {{ type }} {{ color }}"
       [type]="isSubmit ? 'submit' : 'button'"
-      [title]="title"
+      [attr.title]="title"
       [disabled]="disabled"
+      [ariaDisabled]="disabled"
     >
-      <tw-icon [svgIcon]="svgIcon" />
+      <tw-icon [svgIcon]="svgIcon" [size]="svgIconSize" />
     </button>
+
+    }
   `,
 })
-export class TwButtonIconComponent implements OnInit, TwButton {
+export class TwButtonIcon implements OnInit, TwButtonInterface {
   @Input() type?: ButtonType = 'basic';
   @Input() color?: ColorTypes;
   @Input() isSubmit?: boolean;
-  @Input() twClass?: string;
+  @Input({ alias: 'class' }) twClass?: string;
   @Input() disabled?: boolean;
-  @Input() title?: string;
+  @Input() title?: string = '';
   @Input() svgIcon?: string;
+  @Input() svgIconSize = 20;
+  @Input() href?: string;
+  @Input() target?: string;
   constructor() {}
 
   ngOnInit(): void {}

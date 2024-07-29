@@ -1,37 +1,78 @@
-<div class="relative flex items-center mt-4 md:mt-0">
-  <span
-    class="absolute ml-2"
-    *ngIf="iconPrefix"
-  >
-    <tw-icon class="text-gray-400 {{ iconPrefixClass }}">{{
-			iconPrefix
-		}}</tw-icon>
-  </span>
+<div class="flex flex-col gap-2">
+  @if (showLabel) {
+  <label
+    [for]="name"
+    class="font-semibold"
+  >{{label || placeholder}}</label>
+  }
+  <div class="relative flex items-center w-full">
+    <span
+      class="absolute ml-2"
+      *ngIf="iconPrefix"
+    >
+      <tw-icon
+        class="text-gray-400 {{ iconPrefixClass }}"
+        [svgIcon]="iconPrefix"
+      />
+    </span>
 
-  <input
-    [type]="inputType"
-    [placeholder]="placeholder"
-    [(ngModel)]="value"
-    [disabled]="disabled"
-    [attr.maxLength]="maxLength"
-    [attr.minLength]="minLength"
-    [required]="required"
-    [pattern]="pattern"
-    (change)="onChange($event)"
-    class="tw-input-field {{ color }}"
-    [ngClass]="{
-			'icon-left': iconPrefix && !iconSuffix,
-			'icon-right': iconSuffix && !iconPrefix,
-			'icon-left-right': iconSuffix && iconPrefix
-		}"
-  />
+    @if (multiline) {
+    <textarea
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="3"
+      cdkAutosizeMaxRows="7"
+      [title]="placeholder"
+      [placeholder]="placeholder"
+      [(ngModel)]="value"
+      [disabled]="disabled"
+      [attr.maxLength]="maxLength"
+      [attr.minLength]="minLength"
+      [required]="required"
+      [name]="name"
+      [pattern]="pattern"
+      (change)="onChange($event)"
+      class="tw-input-field w-full {{ color }} {{twClass}}"
+      [ngClass]="{
+      'icon-left': iconPrefix && !iconSuffix,
+      'icon-right': iconSuffix && !iconPrefix,
+      'icon-left-right': iconSuffix && iconPrefix
+    }"
+    ></textarea>
+    }@else {
+    <input
+      [title]="placeholder"
+      [type]="inputType"
+      [placeholder]="placeholder"
+      [value]="value"
+      [disabled]="disabled"
+      [attr.maxLength]="maxLength"
+      [attr.minLength]="minLength"
+      [required]="required"
+      [name]="name"
+      [pattern]="pattern"
+      (change)="onChange($event)"
+      class="tw-input-field w-full {{ color }} {{twClass}}"
+      [ngClass]="{
+        'icon-left': iconPrefix && !iconSuffix,
+        'icon-right': iconSuffix && !iconPrefix,
+        'icon-left-right': iconSuffix && iconPrefix
+      }"
+    />
 
-  <span
-    class="absolute mr-2 right-0"
-    *ngIf="iconSuffix"
-  >
-    <tw-icon class="text-gray-400 {{ iconSuffixClass }}">{{
-			iconSuffix
-		}}</tw-icon>
-  </span>
+    }
+
+
+    <span
+      class="absolute mr-2 right-0"
+      *ngIf="iconSuffix"
+    >
+      <tw-icon
+        class="text-gray-400 {{ iconSuffixClass }}"
+        [svgIcon]="iconSuffix"
+      />
+    </span>
+  </div>
+  @if (errors) {
+  <span class="bg-red-100 text-red-900 rounded-lg shadow-sm px-2 py-1 text-sm">{{errors}}</span>
+  }
 </div>

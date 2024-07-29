@@ -1,0 +1,45 @@
+<div class="select-none fixed z-[1000] w-1/4 right-0 top-6 flex flex-col gap-4">
+  <ng-container #alertsContainer></ng-container>
+</div>
+
+<ng-template
+  #alertTemplate
+  let-notification
+>
+  <div
+    class="tw-notification w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400"
+    role="alert"
+  >
+    <div class="flex">
+      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg {{notification.iconColor}}">
+        <tw-icon [svgIcon]="notification.icon" />
+      </div>
+      <div class="ms-3 text-sm font-normal flex-1 justify-center flex flex-col">
+        <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">{{notification.title}}</span>
+        @if(notification.description){
+        <div class="mb-2 text-sm font-normal">
+          {{notification.description}}
+        </div>
+        }
+        @if (notification.showActions) {
+        <div class="grid grid-cols-2 gap-2">
+          @if (notification.primaryActionText) {
+          <tw-button
+            type="filled"
+            color="primary"
+          >{{notification.primaryActionText}}</tw-button>
+          }
+          @if (notification.secondaryActionText) {
+          <tw-button type="outlined">{{notification.secondaryActionText}}</tw-button>
+          }
+        </div>
+        }
+      </div>
+      <tw-button-icon
+        svgIcon="hero:x-mark"
+        (click)="close(notification.ref)"
+      />
+    </div>
+  </div>
+
+</ng-template>

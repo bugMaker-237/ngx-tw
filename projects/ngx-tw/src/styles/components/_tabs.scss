@@ -1,0 +1,31 @@
+.tw-tab {
+  @apply mt-4 flex overflow-x-auto overflow-y-hidden border-b border-gray-200 dark:border-gray-600 whitespace-nowrap;
+  .tw-tab-item {
+    @apply inline-flex items-center justify-start h-10 px-4 -mb-px;
+    @apply bg-transparent transition-all whitespace-nowrap cursor-pointer;
+    @apply text-sm text-center font-medium border-b-2 border-transparent sm:text-base;
+    @apply focus:outline-none;
+
+    &.selected-item {
+      @apply font-semibold;
+    }
+  }
+  &.primary .tw-tab-item {
+    @apply hover:border-primary-400;
+    &.selected-item {
+      @apply text-primary-500 border-primary-500 border-b-2;
+    }
+  }
+  &.accent .tw-tab-item {
+    @apply hover:border-accent-400;
+    &.selected-item {
+      @apply text-accent-500 border-accent-500;
+    }
+  }
+  &.danger .tw-tab-item {
+    @apply hover:border-danger-400;
+    &.selected-item {
+      @apply text-danger-500 border-danger-500;
+    }
+  }
+}

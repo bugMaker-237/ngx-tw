@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SVG Viewer</title>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+    <!-- <link
+        href="css/style.css"
+        rel="stylesheet"
+    > -->
+    <style>
+        svg {
+            height: 56px;
+            width: 56px;
+        }
+
+        td:first-child {
+            min-width: 250px;
+        }
+
+        table {
+            border-style: dashed;
+        }
+
+        input,
+        fieldset {
+            margin-bottom: 16px;
+        }
+
+        fieldset div {
+            float: left;
+            margin-right: 64px;
+            padding: 16px;
+        }
+
+        .code {
+            background-color: #eee;
+        }
+
+        .notice {
+            margin-bottom: 24px;
+        }
+
+        h3 {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>SVG VIEWER</h1>
+    <fieldset>
+        <div>
+            <label for="color-picker">Pick a color :</label>
+            <input
+                id="picker"
+                type="color"
+                name="color-picker"
+                value="#409021"
+            > <br>
+            <label for="width">Select width :</label>
+            <input
+                id="width"
+                type="number"
+                name="width"
+                value="56"
+            > <br>
+            <label for="height">Select height :</label>
+            <input
+                id="height"
+                type="number"
+                name="height"
+                value="56"
+            > <br>
+            <button
+                type="button"
+                id="computer"
+            >Compute</button>
+        </div>
+        <div>
+            <h3>Code for simple SVG :</h3>
+            <div class="code">
+                <samp id="code"></samp>
+            </div>
+        </div>
+        <div>
+            <h3>Code for complex SVG <sup><b>*</b></sup> :</h3>
+            <div class="code">
+                <samp id="code-cplx"></samp>
+            </div>
+        </div>
+    </fieldset>
+    <div class="notice">
+        <code><sup><b>*</b></sup>Complex svg's are the colored svg's below, if you have no colored svg's then all
+            modifications can be handled with Code for simple SVG</code>
+    </div>
+    <table
+        cellspacing="4"
+        border="4"
+        cellpadding="4"
+    >
+        <thead>
+            <td>Name</td>
+            <td>View</td>
+        </thead>
+        <tbody>
+            {#replace}
+        </tbody>
+    </table>
+
+<script>
+    var codeTemplate = "svg {<br>"+
+                        "&nbsp;&nbsp;&nbsp;{#width}<br>"+
+                        "&nbsp;&nbsp;&nbsp;{#height}<br>"+
+                        "&nbsp;&nbsp;&nbsp;{#fill}<br>"+
+                    "}<br>";
+    var codeTemplateComplex = "svg {<br>"+
+                            "&nbsp;&nbsp;&nbsp;{#width}<br>"+
+                            "&nbsp;&nbsp;&nbsp;{#height}<br>"+
+                        "}<br>"+
+                        "svg path {<br>"+
+                            "&nbsp;&nbsp;&nbsp;{#fill}<br>"+
+                        "}<br>"+
+                        "svg g {<br>"+
+                            "&nbsp;&nbsp;&nbsp;{#fill}<br>"+
+                        "}";
+    window.addEventListener('DOMContentLoaded', function () {
+        Compute();
+        document.getElementById('computer').addEventListener('click', function () {
+            Compute();
+        });
+        
+    });
+    function Compute() {
+        var widthStyle ='width:'+ document.getElementById('width').value+ 'px!important;';
+        var heightStyle ='height:'+ document.getElementById('height').value+ 'px!important;';
+        var colorStyle ='fill:'+ document.getElementById('picker').value + '!important;';
+        var svg = document.querySelectorAll('svg');
+        
+        svg.forEach(elt=>{
+            elt.setAttribute("style", widthStyle+heightStyle+colorStyle);
+        });
+
+        // TODO : handle complex SVGs
+
+        // var paths = document.querySelectorAll('svg path');
+        // var gs = document.querySelectorAll('svg g');
+        
+        // paths.forEach(elt=>{
+        //     elt.setAttribute("style", colorStyle);
+        // });
+        // gs.forEach(elt=>{
+        //     elt.setAttribute("style", colorStyle);
+        // });
+        var code = codeTemplate.replace('{#width}', widthStyle).replace('{#height}', heightStyle).replace('{#fill}', colorStyle);
+        var complexCode = codeTemplateComplex.replace('{#width}', widthStyle).replace('{#height}', heightStyle).replace('{#fill}', colorStyle).replace('{#fill}', colorStyle);
+
+        document.getElementById('code').innerHTML = code;
+        document.getElementById('code-cplx').innerHTML = complexCode;
+        
+    }
+</script>
+</body>
+
+</html>

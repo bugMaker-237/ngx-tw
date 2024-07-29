@@ -1,0 +1,47 @@
+<h2 class="mb-8 mt-8 text-2xl">Expander</h2>
+
+<div class="gap-2 dark:divide-slate-500 flex-col flex">
+  <h3>Expander</h3>
+  <tw-expander>
+    <tw-expander-header>Evénements 1</tw-expander-header>
+    <tw-expander-content>
+      <div class="p-4">Some Event</div>
+    </tw-expander-content>
+  </tw-expander>
+  <h3 class="mt-8">Expander without icon</h3>
+  <tw-expander>
+    <tw-expander-header [showIcon]="false">Evénements 2</tw-expander-header>
+    <tw-expander-content>
+      <div class="p-4">Some Event</div>
+    </tw-expander-content>
+  </tw-expander>
+
+  <h3 class="mt-8">Expander Group</h3>
+  <tw-expander-group
+    [multi]="false"
+    class="block w-full mt-8"
+  >
+    <tw-expander>
+      <tw-expander-header>Evénements 1</tw-expander-header>
+      <tw-expander-content>
+        <div class="p-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus repellat aperiam a id,
+          repudiandae nobis. Sequi, id? Consectetur assumenda et facere, expedita dolorem, maiores quibusdam repellat
+          fugiat, non neque quia.
+          Optio, delectus! Doloremque totam aliquam ab quod omnis rem tempore animi voluptatibus culpa cum iure
+          similique dicta, optio facere nulla nisi odio! Similique a nostrum fugit sapiente at! Explicabo, laudantium.
+          Cumque et ullam quod natus praesentium possimus impedit! Eius sapiente unde beatae praesentium quam neque
+          architecto magnam accusamus officiis. Esse libero a eligendi nam consequuntur neque ipsum, illum quae
+          mollitia?</div>
+      </tw-expander-content>
+    </tw-expander>
+    <tw-expander>
+      <tw-expander-header>Evénements 2</tw-expander-header>
+      <tw-expander-content>
+        <div class="p-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus consectetur quis quia sit, sed
+          dolores non labore cupiditate voluptatum voluptate veniam quam eius quaerat obcaecati libero cum
+          exercitationem. Optio, est.</div>
+      </tw-expander-content>
+    </tw-expander>
+
+  </tw-expander-group>
+</div>

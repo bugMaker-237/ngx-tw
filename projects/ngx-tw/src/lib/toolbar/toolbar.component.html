@@ -1,12 +1,13 @@
 <tw-sticky-content-header>
   <div class="px-5 pb-4 pt-2 gap-4 flex items-center w-full">
     <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary-100">
-      <tw-icon svgIcon="hero:shopping-bag" />
+      <tw-icon [svgIcon]="toolbarIcon" />
     </div>
     <div class="flex flex-col flex-1">
       <h1 class="text-3xl font-semibold">{{header}}</h1>
-			<ng-content select="[subHeader]"></ng-content>
+      <ng-content select="[subHeader]"></ng-content>
     </div>
+    @if (!hideActions) {
     <div class="flex gap-3 items-center flex-wrap">
       <tw-button-icon
         twClass="bg-primary-50"
@@ -28,5 +29,6 @@
         type="filled"
       >Enregistrer</tw-button>
     </div>
+    }
   </div>
 </tw-sticky-content-header>

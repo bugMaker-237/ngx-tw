@@ -1,0 +1,80 @@
+.tw-switch {
+  @apply h-6 relative flex items-center;
+}
+
+.tw-switch > [type="checkbox"] {
+  @apply w-11 h-0 cursor-pointer inline-block;
+  @apply focus:outline-0 dark:focus:outline-0;
+  @apply border-0 dark:border-0;
+  @apply focus:ring-offset-transparent dark:focus:ring-offset-transparent;
+  @apply focus:ring-transparent dark:focus:ring-transparent;
+  @apply focus-within:ring-0 dark:focus-within:ring-0;
+  @apply focus:shadow-none dark:focus:shadow-none;
+
+  @apply after:absolute before:absolute;
+  @apply after:top-0 before:top-0;
+  @apply after:block before:inline-block;
+  @apply before:rounded-full after:rounded-full;
+
+  @apply after:content-[''] after:w-5 after:h-5 after:mt-0.5 after:ml-0.5;
+  @apply after:shadow-md after:duration-100;
+
+  @apply before:content-[''] before:w-10 before:h-full;
+  @apply before:shadow-[inset_0_0_#000];
+
+  @apply after:bg-white dark:after:bg-gray-50;
+  @apply before:bg-gray-300 dark:before:bg-gray-600;
+  @apply before:checked:bg-inherit dark:before:checked:bg-inherit;
+  @apply checked:after:duration-300 checked:after:translate-x-4;
+
+  @apply disabled:after:bg-opacity-75 disabled:cursor-not-allowed;
+  @apply disabled:checked:before:bg-opacity-40;
+
+  &.primary {
+    @apply bg-primary-400;
+  }
+
+  &.accent {
+    @apply bg-accent-400;
+  }
+
+  &.danger {
+    @apply bg-danger-400;
+  }
+}
+
+.tw-input-wrapper.ng-invalid.ng-dirty .tw-input-field {
+  @apply border-danger-400 dark:border-danger-300 ring-danger-300 ring-[1.5px];
+}
+
+.tw-input-field {
+  @apply block w-full md:min-w-5 transition-all py-1.5;
+  @apply bg-white dark:bg-gray-900; // ring-1 ring-inset ring-gray-300
+  @apply shadow-sm border border-gray-200 rounded-lg dark:border-gray-600;
+  @apply focus:outline-none focus:ring-[1.5px] focus:ring-opacity-40;
+  @apply text-gray-700  placeholder-gray-400/70 dark:text-gray-300;
+
+  &.icon-left {
+    @apply pl-11 pr-5;
+  }
+
+  &.icon-right {
+    @apply pl-5 pr-11;
+  }
+
+  &.icon-left-right {
+    @apply px-11;
+  }
+
+  &.primary {
+    @apply focus:border-primary-400 dark:focus:border-primary-300 focus:ring-primary-300;
+  }
+
+  &.accent {
+    @apply focus:border-accent-400 dark:focus:border-accent-300 focus:ring-accent-300;
+  }
+
+  &.danger {
+    @apply focus:border-danger-400 dark:focus:border-danger-300 focus:ring-danger-300;
+  }
+}

@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { TwIconComponent } from '@com/icon/icon.component';
+import { TwIcon } from '../../icon/icon.component';
 
 /**
  * Option IDs need to be unique across components, so this counter exists outside of
@@ -20,7 +20,7 @@ let _uniqueIdCounter = 0;
 export class OptionSelectionChange<T = any> {
   constructor(
     /** Reference to the option that emitted the event. */
-    public source: TwOptionComponent<T>,
+    public source: TwOption<T>,
     /** Whether the change in the option's value was a result of a user action. */
     public isUserInput: boolean = false,
     /** Content element */
@@ -31,7 +31,7 @@ export class OptionSelectionChange<T = any> {
 @Component({
   selector: 'tw-option',
   standalone: true,
-  imports: [NgClass, TwIconComponent, NgIf],
+  imports: [NgClass, TwIcon, NgIf],
   templateUrl: './option.component.html',
   host: {
     '[attr.id]': 'id',
@@ -40,7 +40,7 @@ export class OptionSelectionChange<T = any> {
     class: 'tw-option',
   },
 })
-export class TwOptionComponent<T = any> implements OnInit {
+export class TwOption<T = any> implements OnInit {
   public selected: boolean = false;
   public active: boolean = false;
 

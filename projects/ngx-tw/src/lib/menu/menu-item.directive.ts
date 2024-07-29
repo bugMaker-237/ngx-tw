@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
-import { TwMenuComponent } from './menu.component';
+import { TwMenu } from './menu.component';
 
 @Directive({
   selector: '[twMenuItem]',
@@ -8,11 +8,11 @@ import { TwMenuComponent } from './menu.component';
 })
 export class TwMenuItemDirective {
   @Input({ required: false, alias: 'twMenuItem' })
-  menu?: TwMenuComponent | string;
+  menu?: TwMenu | string;
   type: 'check' | 'radio' | 'classic' = 'classic';
 
   get triggerMenu() {
-    return (this.menu as TwMenuComponent)?.menuTemplate;
+    return (this.menu as TwMenu)?.menuTemplate;
   }
 
   constructor(public template: TemplateRef<any>) {}

@@ -3,7 +3,7 @@ import { ColorTypes } from '../color-types';
 export type ButtonType = 'basic' | 'outlined' | 'filled';
 export type RoundedTypes = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 
-export interface TwButton {
+export interface TwButtonInterface {
   /**
    * The type fo the button : basic, outlined, filled
    * @default basic
@@ -18,4 +18,6 @@ export interface TwButton {
   disabled?: boolean;
   twClass?: string;
   title?: string;
+  href?: string;
+  target?: string;
 }

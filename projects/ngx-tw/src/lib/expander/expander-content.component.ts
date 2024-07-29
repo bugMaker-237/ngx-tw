@@ -7,6 +7,6 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
     <ng-content></ng-content>
   </ng-template>`,
 })
-export class TwExpanderContentComponent {
+export class TwExpanderContent {
   @ViewChild(TemplateRef, { static: true }) content?: TemplateRef<any>;
 }

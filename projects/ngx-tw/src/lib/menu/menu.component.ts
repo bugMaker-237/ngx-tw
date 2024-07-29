@@ -9,6 +9,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   ContentChildren,
+  Input,
   QueryList,
   TemplateRef,
   ViewChild,
@@ -29,11 +30,12 @@ import { TwMenuItemDirective } from './menu-item.directive';
   template: `
     <ng-template>
       <div
-        class="bg-white dark:bg-slate-700 dark:text-white shadow-md rounded-lg w-full"
+        class="bg-white dark:bg-slate-700 dark:text-white drop-shadow-lg rounded-lg w-full"
+        [style.width]="panelWidth"
         cdkMenu
       >
         @for(item of menuItems; track $index){ @switch(item.type) { @case
-        (item.type ==='check') {
+        ('check') {
         <div
           cdkMenuItemCheckbox
           [cdkMenuItemChecked]="false"
@@ -43,7 +45,7 @@ import { TwMenuItemDirective } from './menu-item.directive';
           <ng-container *ngTemplateOutlet="item.template"></ng-container>
         </div>
 
-        } @case (item.type ==='radio') {
+        } @case ('radio') {
         <div
           cdkMenuItemRadio
           [cdkMenuTriggerFor]="item.triggerMenu"
@@ -64,8 +66,11 @@ import { TwMenuItemDirective } from './menu-item.directive';
     </ng-template>
   `,
 })
-export class TwMenuComponent {
+export class TwMenu {
   @ViewChild(TemplateRef, { static: true }) menuTemplate?: TemplateRef<unknown>;
   @ContentChildren(TwMenuItemDirective)
   menuItems?: QueryList<TwMenuItemDirective>;
+
+  @Input()
+  panelWidth?: string;
 }

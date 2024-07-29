@@ -1,0 +1,56 @@
+.tw-select {
+  @apply relative border border-gray-300  block w-full md:min-w-48 transition-all;
+  @apply bg-white dark:bg-gray-900;
+  @apply shadow-sm pr-1 py-1.5 pl-3 text-left cursor-default focus:outline-none;
+  @apply border border-gray-200 rounded-md dark:border-gray-600;
+  @apply focus:outline-none focus:ring focus:ring-opacity-40;
+  @apply text-gray-700 dark:text-gray-300;
+
+  &.primary {
+    @apply focus:border-primary-400 dark:focus:border-primary-300 focus:ring-primary-300;
+  }
+
+  &.accent {
+    @apply focus:border-accent-400 dark:focus:border-accent-300 focus:ring-accent-300;
+  }
+
+  &.danger {
+    @apply focus:border-danger-400 dark:focus:border-danger-300 focus:ring-danger-300;
+  }
+
+  &.ng-invalid.ng-dirty .tw-input-field {
+    @apply border-danger-400 dark:border-danger-300 ring-danger-300 ring-[1.5px];
+  }
+}
+
+.tw-option-panel-scroll {
+  @apply bg-white dark:bg-slate-800 shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 w-full overflow-auto focus:outline-none sm:text-sm;
+
+  &.primary {
+    .tw-option .indicator,
+    .tw-option .content.selected-item {
+      @apply text-primary-800 dark:text-primary-500 font-medium;
+    }
+  }
+
+  &.accent {
+    .tw-option .indicator,
+    .tw-option .content.selected-item {
+      @apply text-accent-800 dark:text-accent-500 font-medium;
+    }
+  }
+
+  &.danger {
+    .tw-option .indicator,
+    .tw-option .content.selected-item {
+      @apply text-danger-800 dark:text-danger-500 font-medium;
+    }
+  }
+}
+
+.tw-option {
+  @apply block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-50/10 cursor-default select-none relative;
+  .indicator {
+    @apply pr-4 absolute inset-y-0 items-center justify-center;
+  }
+}

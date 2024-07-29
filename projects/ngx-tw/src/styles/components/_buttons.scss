@@ -1,0 +1,99 @@
+.tw-btn-base {
+  &.basic {
+    @apply hover:bg-gray-100 dark:hover:text-gray-800;
+
+    &.primary {
+      @apply hover:bg-primary-50 text-primary-400;
+    }
+    &.accent {
+      @apply hover:bg-accent-50 text-accent-400;
+    }
+    &.danger {
+      @apply hover:bg-danger-50 text-danger-400;
+    }
+    &:disabled {
+      @apply disabled:bg-gray-50 disabled:text-gray-400;
+    }
+  }
+
+  &.outlined {
+    @apply border-gray-100 dark:border-gray-700 border;
+    @apply hover:bg-gray-100 dark:hover:text-gray-800;
+    @apply dark:hover:bg-gray-800 dark:bg-gray-900  dark:text-gray-200 dark:hover:text-white;
+
+    &.primary {
+      @apply hover:bg-primary-50 text-primary-400 border-primary-100 dark:border-primary-400 dark:hover:bg-primary-400 dark:hover:text-white hover:border-primary-400;
+    }
+    &.accent {
+      @apply hover:bg-accent-50 text-accent-400 border-accent-100 dark:border-accent-400 dark:hover:bg-accent-400 dark:hover:text-white hover:border-danger-400;
+    }
+    &.danger {
+      @apply hover:bg-danger-50 text-danger-400 border-danger-100 dark:border-danger-400 dark:hover:bg-danger-400 dark:hover:text-white hover:border-danger-400;
+    }
+    &:disabled {
+      @apply disabled:bg-gray-50 disabled:text-gray-400 border-none;
+    }
+  }
+
+  &.filled {
+    @apply text-white;
+    @apply bg-gray-500  hover:bg-gray-600 dark:hover:bg-gray-500 dark:bg-gray-600;
+
+    &.primary {
+      @apply bg-primary-500  hover:bg-primary-700 dark:hover:bg-primary-500 dark:bg-primary-600;
+    }
+
+    &.accent {
+      @apply bg-accent-500 hover:bg-accent-700 dark:hover:bg-accent-500 dark:bg-accent-600;
+    }
+
+    &.danger {
+      @apply bg-danger-400 hover:bg-danger-700 dark:hover:bg-danger-500 dark:bg-danger-600;
+    }
+    &:disabled {
+      @apply disabled:bg-gray-50 disabled:text-gray-400 border-none;
+    }
+  }
+}
+
+.tw-button-icon {
+  @apply flex justify-center items-center;
+  @apply bg-transparent rounded-full hover:bg-gray-100 transition-all;
+  @apply min-h-[32px] min-w-[32px];
+
+  @extend .tw-btn-base;
+}
+
+.tw-button-group {
+  @apply inline-flex overflow-hidden;
+  @apply rtl:flex-row-reverse border divide-x rounded-lg;
+  @apply bg-white  dark:bg-gray-900   dark:border-gray-700 dark:divide-gray-700;
+
+  & .tw-button-group-item {
+    @apply px-5 py-2 text-xs font-medium transition-colors duration-200;
+    @apply sm:text-sm text-gray-600  dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100;
+
+    &.selected-item {
+      @apply bg-gray-100 dark:bg-gray-800;
+    }
+  }
+
+  &.vertical {
+    @apply flex flex-col  divide-x-0  divide-y;
+  }
+}
+
+.tw-button {
+  @apply flex items-center shrink-0 justify-center px-4 py-1;
+  @apply transition-colors duration-200;
+  @apply tracking-wide;
+  @apply w-full gap-x-2;
+  @apply h-9 text-sm;
+  @apply shadow-sm border border-gray-200 dark:border-gray-600;
+
+  tw-icon {
+    @apply w-5 h-5;
+  }
+
+  @extend .tw-btn-base;
+}

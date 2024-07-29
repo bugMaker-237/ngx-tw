@@ -1,4 +1,5 @@
 import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'tw-tab',
@@ -7,8 +8,12 @@ import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
     <ng-content></ng-content>
   </ng-template>`,
 })
-export class TwTabItemComponent {
+export class TwTabItem {
   @Input() label?: string;
+  @Input() route?: {
+    path: string[];
+    extras?: NavigationExtras;
+  };
   @ViewChild(TemplateRef, { static: true }) content?: TemplateRef<any>;
   constructor() {}
 }

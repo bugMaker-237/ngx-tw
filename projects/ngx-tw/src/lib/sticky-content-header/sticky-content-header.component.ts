@@ -12,7 +12,7 @@ import { Component, Input } from '@angular/core';
     </div>
   `,
 })
-export class TwStickyContentHeaderComponent {
+export class TwStickyContentHeader {
   @Input() top = 72;
   @Input() zIndex = 20;
 }

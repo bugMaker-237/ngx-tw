@@ -1,0 +1,39 @@
+.tw-chip-list {
+  @apply focus:outline-none focus-within:ring-2 focus-within:ring-opacity-40;
+  @apply border p-2 rounded-lg flex-wrap;
+
+  &.primary {
+    @apply focus-within:border-primary-400 dark:focus-within:border-primary-300 focus-within:ring-primary-300;
+  }
+
+  &.accent {
+    @apply focus-within:border-accent-400 dark:focus-within:border-accent-300 focus-within:ring-accent-300;
+  }
+
+  &.danger {
+    @apply focus-within:border-danger-400 dark:focus-within:border-danger-300 focus-within:ring-danger-300;
+  }
+
+  input[type="text"] {
+    width: auto;
+    min-width: 0px;
+    padding: 0px;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.tw-chip {
+  @apply inline-flex flex-nowrap items-center bg-white border border-gray-200 rounded-full p-1.5 dark:bg-neutral-900 dark:border-neutral-700 justify-center text-gray-800;
+  & img {
+    @apply me-1.5 inline-block size-6 rounded-full;
+  }
+  & .label {
+    @apply whitespace-nowrap px-1 text-sm font-medium text-inherit truncate dark:text-white;
+  }
+  & .icon {
+    @apply ms-2.5 inline-flex justify-center items-center size-5 rounded-full text-gray-800 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:bg-neutral-700/50 dark:hover:bg-neutral-700 dark:text-neutral-400 cursor-pointer;
+  }
+}

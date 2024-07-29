@@ -7,7 +7,8 @@ import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
     <ng-content></ng-content>
   </ng-template>`,
 })
-export class TwExpanderHeaderComponent {
+export class TwExpanderHeader {
   @Input() showIcon = true;
+  @Input() hideDivider = false;
   @ViewChild(TemplateRef, { static: true }) content?: TemplateRef<any>;
 }

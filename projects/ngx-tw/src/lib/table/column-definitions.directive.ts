@@ -4,7 +4,7 @@ import { ContentChild, Directive, Input, TemplateRef } from '@angular/core';
   selector: '[twHeaderCellDef]',
   standalone: true,
 })
-export class __TwHeaderCellDefDirective {
+export class TwHeaderCellDefDirective {
   constructor(public template: TemplateRef<any>) {}
 }
 
@@ -12,7 +12,7 @@ export class __TwHeaderCellDefDirective {
   selector: '[twCellDef]',
   standalone: true,
 })
-export class __TwCellDefDirective<T> {
+export class TwCellDefDirective<T> {
   constructor(public template: TemplateRef<T>) {}
 }
 
@@ -20,29 +20,28 @@ export class __TwCellDefDirective<T> {
   selector: '[twRowDef]',
   standalone: true,
 })
-export class __TwRowDefDirective {
+export class TwRowDefDirective<T> {
   @Input({ alias: 'twRowDefDisplayColumns', required: true })
   displayColumns!: string[];
-  @Input({ alias: 'twRowDefLink' }) getLink?: (row: any) => string[];
-  constructor(public template: TemplateRef<any>) {}
+  @Input({ alias: 'twRowDefLink' }) getLink?: (row: T) => string[];
+  constructor(public template: TemplateRef<T>) {}
 }
 
 @Directive({
   selector: '[twColumnDef]',
   standalone: true,
 })
-export class __TwColumnDefDirective {
+export class TwColumnDefDirective<T> {
   @Input({ alias: 'twColumnDef', required: true }) name!: string;
-  @ContentChild(__TwHeaderCellDefDirective)
-  headerCellDef?: __TwHeaderCellDefDirective;
-  @ContentChild(__TwCellDefDirective)
-  cellDef?: __TwCellDefDirective<any>;
+  @ContentChild(TwHeaderCellDefDirective)
+  headerCellDef?: TwHeaderCellDefDirective;
+  @ContentChild(TwCellDefDirective)
+  cellDef?: TwCellDefDirective<T | { $implicit: T }>;
 }
 
 export const TwTableColumnRowDefinitions = [
-  __TwCellDefDirective,
-  __TwColumnDefDirective,
-  __TwHeaderCellDefDirective,
-  __TwCellDefDirective,
-  __TwRowDefDirective,
+  TwColumnDefDirective,
+  TwHeaderCellDefDirective,
+  TwCellDefDirective,
+  TwRowDefDirective,
 ];

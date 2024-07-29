@@ -4,8 +4,12 @@
       *ngFor="let item of children; let i = index"
       [label]="item.label"
       [isSelected]="selectedIndex === i"
-      (selected)="selectedIndex = i; selectionChanged.emit(i)"
+      (selected)="selectedIndex = i; selectionChanged.emit(i); navigate(item.route)"
     />
   </div>
+  @if(behavior === 'default'){
   <ng-container [ngTemplateOutlet]="currentContent"></ng-container>
+  }@else{
+  <router-outlet></router-outlet>
+  }
 </div>

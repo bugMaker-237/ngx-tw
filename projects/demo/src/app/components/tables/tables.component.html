@@ -1,0 +1,67 @@
+<h2 class="mb-8 mt-8 text-2xl">Table</h2>
+
+<div class="divide-y divide-solid gap-2 dark:divide-slate-500 flex-col flex">
+  <h3>Empty table</h3>
+  <tw-table class="pt-4">
+
+  </tw-table>
+</div>
+
+<div class="divide-y divide-solid gap-2 mt-16 dark:divide-slate-500 flex-col flex">
+  <h3>Table with data</h3>
+  <tw-table
+    [dataSource]="dataSource"
+    class="pt-4"
+  >
+    <ng-container twColumnDef="amount">
+      <ng-container *twHeaderCellDef> Amount </ng-container>
+      <ng-container *twCellDef="let item"> <b>{{item.amount}}</b> </ng-container>
+    </ng-container>
+
+    <ng-container twColumnDef="status">
+      <ng-container *twHeaderCellDef> Status </ng-container>
+      <ng-container *twCellDef="let item">
+
+        <div
+          class="inline-flex items-center px-2 py-1 rounded-md gap-x-2 text-[#217005] bg-[#d1fab3] border-[#a8f170] dark:bg-gray-800 dark:text-[#61c532]"
+        >
+          <span>{{item.status}}</span>
+          <tw-icon svgIcon="hero:check" />
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container twColumnDef="paymentMethod">
+      <ng-container *twHeaderCellDef> Payment Method </ng-container>
+      <ng-container *twCellDef="let item"> {{item.paymentMethod}} </ng-container>
+    </ng-container>
+
+    <ng-container twColumnDef="description">
+      <ng-container *twHeaderCellDef> Description </ng-container>
+      <ng-container *twCellDef="let item"> {{item.description}} </ng-container>
+    </ng-container>
+
+    <ng-container twColumnDef="customer">
+      <ng-container *twHeaderCellDef> Customer </ng-container>
+      <ng-container *twCellDef="let item"> {{item.customer}} </ng-container>
+    </ng-container>
+
+    <ng-container twColumnDef="date">
+      <ng-container *twHeaderCellDef> Date </ng-container>
+      <ng-container *twCellDef="let item"> {{item.date}} </ng-container>
+    </ng-container>
+
+    <ng-container twColumnDef="actions">
+      <ng-container *twHeaderCellDef> </ng-container>
+      <ng-container *twCellDef="let item">
+        <div class="flex items-center">
+          <tw-button-icon svgIcon="hero:trash" />
+          <tw-button-icon svgIcon="hero:eye" />
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <tr *twRowDef="let item; displayColumns:displayedColumns;"></tr>
+
+  </tw-table>
+</div>

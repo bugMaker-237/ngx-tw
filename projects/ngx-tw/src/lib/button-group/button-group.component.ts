@@ -4,17 +4,18 @@ import {
   Component,
   ContentChildren,
   EventEmitter,
+  Input,
   Output,
   QueryList,
 } from '@angular/core';
-import { TwButtonGroupItemComponent } from './button-group-Item.component';
+import { TwButtonGroupItem } from './button-group-Item.component';
 
 @Component({
   imports: [NgFor, NgTemplateOutlet],
   selector: 'tw-btn-group',
   standalone: true,
   template: `
-    <div class="tw-button-group">
+    <div class="tw-button-group {{ orientation }}">
       <button
         *ngFor="let item of children; let i = index"
         class="tw-button-group-item"
@@ -26,12 +27,15 @@ import { TwButtonGroupItemComponent } from './button-group-Item.component';
     </div>
   `,
 })
-export class TwButtonGroupComponent implements AfterViewInit {
-  @ContentChildren(TwButtonGroupItemComponent)
-  children?: QueryList<TwButtonGroupItemComponent>;
+export class TwButtonGroup implements AfterViewInit {
+  @ContentChildren(TwButtonGroupItem)
+  children?: QueryList<TwButtonGroupItem>;
 
   @Output() selectionChanged = new EventEmitter<number>();
   selectedIndex = 0;
+
+  @Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
+
   constructor() {}
 
   ngAfterViewInit(): void {}

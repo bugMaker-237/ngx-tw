@@ -7,7 +7,7 @@ import {
   QueryList,
   ViewChild,
 } from '@angular/core';
-import { TwExpanderItemComponent } from './expander-item.component';
+import { TwExpanderItem } from './expander-item.component';
 
 @Component({
   selector: 'tw-expander-group',
@@ -19,13 +19,13 @@ import { TwExpanderItemComponent } from './expander-item.component';
     </div>
   `,
 })
-export class TwExpanderGroupComponent implements AfterContentInit {
+export class TwExpanderGroup implements AfterContentInit {
   @Input() multi = false;
 
   @ViewChild(CdkAccordion, { static: true }) expanderGroup?: CdkAccordion;
 
-  @ContentChildren(TwExpanderItemComponent)
-  expanderItems?: QueryList<TwExpanderItemComponent>;
+  @ContentChildren(TwExpanderItem)
+  expanderItems?: QueryList<TwExpanderItem>;
 
   ngAfterContentInit(): void {
     this.expanderItems?.forEach((i) => (i.parent = this));

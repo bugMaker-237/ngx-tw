@@ -1,0 +1,87 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "./components/buttons";
+@import "./components/inputs";
+@import "./components/select";
+@import "./components/tabs";
+@import "./components/chips";
+@import "./fonts/blinker";
+@import "./fonts/montserrat";
+
+@import "@angular/cdk/overlay-prebuilt.css";
+
+body {
+  @apply text-gray-600 bg-gray-100 dark:text-white dark:bg-gray-900;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Blinker,
+    Helvetica Neue, Ubuntu, sans-serif;
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  // font-family: -apple-system, BlinkMacSystemFont, Montserrat, Blinker,
+  //   Helvetica Neue, Ubuntu, sans-serif;
+}
+
+.tw-dropdown-menu-item {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  -webkit-user-select: none;
+  user-select: none;
+  min-width: 64px;
+  line-height: 36px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
+  > * {
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100%;
+  }
+}
+
+.tw-dropdown-menu-item:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+.tw-dropdown-menu-item:active {
+  background-color: rgb(170, 170, 170);
+}
+
+.tw-dropdown-menu-item[role="menuitemradio"][aria-checked="true"] {
+  background-color: rgb(225, 225, 225);
+}
+.tw-dropdown-menu-item[role="menuitemcheckbox"][aria-checked="true"] {
+  background-color: rgb(225, 225, 225);
+}
+
+table.tw-table tbody {
+  @apply bg-white divide-y divide-gray-200 dark:divide-gray-700;
+}
+
+.tw-menu-item {
+  @apply flex items-center;
+  @apply hover:bg-gray-200 p-2 rounded-md transition-all dark:hover:bg-primary-500;
+  &.selected-item {
+    @apply text-primary-500 font-semibold dark:text-primary-300 dark:hover:text-white;
+  }
+}
+
+.acrylic-backdrop {
+  @apply backdrop-blur;
+  background-color: transparent !important;
+}
+
+[class^="cdk-"]:focus-visible,
+[class*=" cdk-"]:focus-visible {
+  outline: none;
+}

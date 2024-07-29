@@ -13,7 +13,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     </div>
   `,
 })
-export class __TwTabItemComponent {
+export class __TwTabItem {
   @Output() selected = new EventEmitter();
   @Input() label?: string;
   @Input() isSelected?: boolean;

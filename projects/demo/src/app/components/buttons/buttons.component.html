@@ -1,0 +1,172 @@
+<h2 class="my-4 text-2xl">Buttons</h2>
+
+<div class="divide-y divide-solid flex flex-col gap-2 dark:divide-slate-500">
+  <div class="grid-cols-8 gap-2 grid items-center pt-4">
+    <span>Basic</span>
+    <div class="flex col-span-7 items-center justify-stretch gap-4">
+      <tw-button type="basic">Basic</tw-button>
+      <tw-button
+        type="basic"
+        color="primary"
+      >Primary</tw-button>
+      <tw-button
+        type="basic"
+        color="accent"
+      >Accent</tw-button>
+      <tw-button
+        type="basic"
+        color="danger"
+      >Danger</tw-button>
+      <tw-button
+        type="basic"
+        color="danger"
+        [disabled]="true"
+      >Disabled</tw-button>
+    </div>
+  </div>
+
+  <div class="grid-cols-8 gap-2 grid items-center pt-4">
+    <span>Outlined</span>
+    <div class="flex col-span-7 items-center justify-stretch gap-4">
+      <tw-button type="outlined">Outlined</tw-button>
+      <tw-button
+        type="outlined"
+        color="primary"
+      >Primary</tw-button>
+      <tw-button
+        type="outlined"
+        color="accent"
+      >Accent</tw-button>
+      <tw-button
+        type="outlined"
+        color="danger"
+      >Danger</tw-button>
+      <tw-button
+        type="outlined"
+        color="danger"
+        [disabled]="true"
+      >Disabled</tw-button>
+    </div>
+  </div>
+
+  <div class="grid-cols-8 gap-2 grid items-center pt-4">
+    <span>Filled</span>
+    <div class="flex col-span-7 items-center justify-stretch gap-4">
+      <tw-button type="filled">Filled</tw-button>
+      <tw-button
+        type="filled"
+        color="primary"
+      >Primary</tw-button>
+      <tw-button
+        type="filled"
+        color="accent"
+      >Accent</tw-button>
+      <tw-button
+        type="filled"
+        color="danger"
+      >Danger</tw-button>
+      <tw-button
+        type="filled"
+        color="danger"
+        [disabled]="true"
+      >Disabled</tw-button>
+    </div>
+  </div>
+</div>
+
+<h2 class="mb-4 mt-8 text-2xl">Button Icons</h2>
+
+<div class="divide-y divide-solid flex flex-col gap-2 dark:divide-slate-500">
+  <div class="grid-cols-8 gap-2 grid items-center pt-4">
+    <span>Basic</span>
+    <div class="flex col-span-7 items-center justify-stretch gap-4">
+      <tw-button-icon
+        type="basic"
+        svgIcon="hero:code-bracket"
+      />
+      <tw-button-icon
+        type="basic"
+        color="primary"
+        svgIcon="hero:command-line"
+      />
+      <tw-button-icon
+        type="basic"
+        color="accent"
+        svgIcon="hero:qr-code"
+      />
+      <tw-button-icon
+        type="basic"
+        color="danger"
+        svgIcon="hero:clipboard-document-list"
+      />
+      <tw-button-icon
+        type="basic"
+        color="danger"
+        [disabled]="true"
+        svgIcon="hero:code-bracket"
+      />
+    </div>
+  </div>
+
+  <div class="grid-cols-8 gap-2 grid items-center pt-4">
+    <span>Outlined</span>
+    <div class="flex col-span-7 items-center justify-stretch gap-4">
+      <tw-button-icon
+        type="outlined"
+        svgIcon="hero:code-bracket"
+      />
+      <tw-button-icon
+        type="outlined"
+        color="primary"
+        svgIcon="hero:command-line"
+      />
+      <tw-button-icon
+        type="outlined"
+        color="accent"
+        svgIcon="hero:qr-code"
+      />
+      <tw-button-icon
+        type="outlined"
+        color="danger"
+        svgIcon="hero:clipboard-document-list"
+      />
+      <tw-button-icon
+        type="outlined"
+        color="danger"
+        [disabled]="true"
+        svgIcon="hero:code-bracket"
+      />
+    </div>
+  </div>
+
+  <div class="grid-cols-8 gap-2 grid items-center pt-4">
+    <span>Filled</span>
+    <div class="flex col-span-7 items-center justify-stretch gap-4">
+      <tw-button-icon
+        type="outlined"
+        svgIcon="hero:code-bracket"
+      />
+      <tw-button-icon
+        type="filled"
+        color="primary"
+        svgIcon="hero:command-line"
+      />
+      <tw-button-icon
+        type="filled"
+        color="accent"
+        svgIcon="hero:qr-code"
+      />
+      <tw-button-icon
+        type="filled"
+        color="danger"
+        svgIcon="hero:clipboard-document-list"
+      />
+      <tw-button-icon
+        type="filled"
+        color="danger"
+        [disabled]="true"
+        svgIcon="hero:code-bracket"
+      />
+    </div>
+  </div>
+</div>

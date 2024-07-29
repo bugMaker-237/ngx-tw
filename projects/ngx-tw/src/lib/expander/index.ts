@@ -1,18 +1,26 @@
-import { TwExpanderContentComponent } from './expander-content.component';
-import { TwExpanderGroupComponent } from './expander-group.component';
-import { TwExpanderHeaderComponent } from './expander-header.component';
-import { TwExpanderItemComponent } from './expander-item.component';
+import { TwExpanderContent } from './expander-content.component';
+import { TwExpanderGroup } from './expander-group.component';
+import { TwExpanderHeader } from './expander-header.component';
+import { TwExpanderItem } from './expander-item.component';
 
-export const TwExpanderModule = [
-  TwExpanderItemComponent,
-  TwExpanderContentComponent,
-  TwExpanderHeaderComponent,
-  TwExpanderGroupComponent,
-];
+import { NgModule } from '@angular/core';
 
-export {
-  TwExpanderContentComponent,
-  TwExpanderGroupComponent,
-  TwExpanderHeaderComponent,
-  TwExpanderItemComponent,
-};
+@NgModule({
+  declarations: [],
+  imports: [
+    TwExpanderItem,
+    TwExpanderContent,
+    TwExpanderHeader,
+    TwExpanderGroup,
+  ],
+  exports: [
+    TwExpanderItem,
+    TwExpanderContent,
+    TwExpanderHeader,
+    TwExpanderGroup,
+  ],
+  providers: [],
+})
+export class TwExpanderModule {}
+
+export { TwExpanderContent, TwExpanderGroup, TwExpanderHeader, TwExpanderItem };

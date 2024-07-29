@@ -7,7 +7,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
     <ng-content></ng-content>
   </ng-template>`,
 })
-export class TwButtonGroupItemComponent {
+export class TwButtonGroupItem {
   @ViewChild(TemplateRef, { static: true }) content: TemplateRef<any> | null =
     null;
   constructor() {}

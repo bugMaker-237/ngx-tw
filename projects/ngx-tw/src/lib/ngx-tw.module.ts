@@ -1,51 +1,66 @@
 import { NgModule } from '@angular/core';
-import { TwButtonGroupComponent } from './button-group/button-group.component';
-import { TwButtonComponent } from './button/button.component';
+import { TwAlertService } from './alerts/alert.service';
+import { TwAlerts } from './alerts/alerts.component';
+import { TwButtonGroup } from './button-group/button-group.component';
+import { TwButton } from './button/button.component';
+import { TwChipList } from './chip/chip-list.component';
+import { TwChip } from './chip/chip.component';
+import { TwDialog } from './dialog/dialog';
 import { TwExpanderModule } from './expander';
-import { TwInputFieldComponent } from './input-field/input-field.component';
+import { TwInputField } from './input-field/input-field.component';
 import { TwMenuModule } from './menu';
-import { TwSelectComponent } from './select/select.component';
-import { TwStickyContentHeaderComponent } from './sticky-content-header/sticky-content-header.component';
-import { TwTabGroupComponent } from './tab/tab-group/tab-group.component';
-import { TwTabItemComponent } from './tab/tab-item-maker.component';
-import { __TwTabItemComponent } from './tab/tab.component';
-import { TwTableColumnRowDefinitions } from './table/column-definitions.directive';
-import { TwTableComponent } from './table/table.component';
-import { TwToolbarComponent } from './toolbar/toolbar.component';
+import { TwOption } from './select/option/option.component';
+import { TwSelect } from './select/select.component';
+import { TwSpinner } from './spinner/spinner.component';
+import { TwStickyContentHeader } from './sticky-content-header/sticky-content-header.component';
+import { TwSwitch } from './switch/switch.component';
+import { TwTabGroup } from './tab/tab-group/tab-group.component';
+import { TwTabItem } from './tab/tab-item-maker.component';
+import { TwTableModule } from './table';
+import { TwToolbar } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [],
   imports: [
-    TwButtonComponent,
-    TwButtonGroupComponent,
+    TwButton,
+    TwButtonGroup,
     TwExpanderModule,
-    TwStickyContentHeaderComponent,
-    TwInputFieldComponent,
+    TwStickyContentHeader,
+    TwInputField,
     TwMenuModule,
-    TwSelectComponent,
-    TwStickyContentHeaderComponent,
-    TwTabGroupComponent,
-    TwTabItemComponent,
-    __TwTabItemComponent,
-    TwTableComponent,
-    TwTableColumnRowDefinitions,
-    TwToolbarComponent,
+    TwSelect,
+    TwStickyContentHeader,
+    TwTabGroup,
+    TwTabItem,
+    TwTableModule,
+    TwToolbar,
+    TwSwitch,
+    TwOption,
+    TwChip,
+    TwChipList,
+    TwSpinner,
+    TwAlerts,
   ],
+  providers: [TwDialog, TwAlertService],
   exports: [
-    TwButtonComponent,
-    TwButtonGroupComponent,
+    TwButton,
+    TwButtonGroup,
     TwExpanderModule,
-    TwStickyContentHeaderComponent,
-    TwInputFieldComponent,
+    TwStickyContentHeader,
+    TwInputField,
     TwMenuModule,
-    TwSelectComponent,
-    TwStickyContentHeaderComponent,
-    TwTabGroupComponent,
-    TwTabItemComponent,
-    __TwTabItemComponent,
-    TwTableComponent,
-    TwTableColumnRowDefinitions,
-    TwToolbarComponent,
+    TwSelect,
+    TwStickyContentHeader,
+    TwTabGroup,
+    TwTabItem,
+    TwTableModule,
+    TwToolbar,
+    TwSwitch,
+    TwOption,
+    TwChip,
+    TwChipList,
+    TwSpinner,
+    TwAlerts,
   ],
 })
 export class NgxTwModule {}

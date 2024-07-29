@@ -1,12 +1,21 @@
 import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ColorTypes } from '@com/color-types';
-import { ButtonType, RoundedTypes, TwButton } from './button-interface';
+import { ColorTypes } from '../color-types';
+import {
+  ButtonType,
+  RoundedTypes,
+  TwButtonInterface,
+} from './button-interface';
 
 @Component({
   standalone: true,
   imports: [NgClass],
   selector: 'tw-button',
+  host: {
+    role: 'button',
+    '[attr.type]': 'isSubmit ? "submit" : "button"',
+    class: 'block',
+  },
   template: `
     <button
       class="tw-button {{ twClass }} {{ type }} rounded-{{ rounded }} {{
@@ -19,7 +28,7 @@ import { ButtonType, RoundedTypes, TwButton } from './button-interface';
     </button>
   `,
 })
-export class TwButtonComponent implements TwButton {
+export class TwButton implements TwButtonInterface {
   @Input() type?: ButtonType = 'basic';
   @Input() isSubmit?: boolean;
   @Input() rounded?: RoundedTypes = 'md';
