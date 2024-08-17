@@ -1,37 +1,22 @@
-<ng-container *ngIf="!dataSource?.length && displayEmptyTemplate; else dataTemplate">
-  <div class="w-full  p-8 ">
-    <!-- border rounded-md border-gray-300 dark:border-slate-500 -->
-    <div class="flex flex-col items-center text-center  max-w-sm w-full px-4 mx-auto">
+@if (dataLoading) {
 
-      <div class="p-3 mx-auto text-indigo-500 bg-indigo-100 rounded-full dark:bg-gray-800">
-        <tw-icon svgIcon="hero:search" />
-      </div>
-      <h1 class="mt-3 text-lg text-gray-800 dark:text-white">Aucune élément trouvé</h1>
-      <p class="mt-2 text-gray-500 dark:text-gray-400">La recherche n'a matché avec aucun élément. Réessayé ou ajoutez
-        un élément.</p>
-      <div class="flex items-center justify-center mt-4 sm:mx-auto gap-x-3">
-        <tw-button
-          type="outlined"
-          (click)="clearSearchClick.emit()"
-        >
-          Effacer la recherche
-        </tw-button>
+<div class="p-6 flex items-center justify-center w-100">
+  <tw-spinner />
+</div>
+}@else{
 
-        <tw-button
-          type="filled"
-          color="primary"
-          (click)="addItemClick.emit()"
-        >
-          <tw-icon svgIcon="hero:plus-circle" />
-          <span class="whitespace-nowrap">Ajouté un élément</span>
-        </tw-button>
-      </div>
-    </div>
-  </div>
-</ng-container>
+@if (dataSource && !dataSource.length) {
+<ng-content #emptyTemplate></ng-content>
+
+}@else {
+<ng-container *ngTemplateOutlet="dataTemplate"></ng-container>
+
+}
+
+}
 
 <ng-template #dataTemplate>
-  <section class="container mx-auto mb-4">
+  <section class="mx-auto mb-4">
     <div class="flex flex-col">
       <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -113,15 +98,15 @@
       *ngIf="displayPagination"
     >
       <div class="text-sm text-gray-500 dark:text-gray-400">
-        Page <span class="font-medium text-gray-700 dark:text-gray-100">1 of {{totalPagesCount}}</span>
+        Page <span class="font-medium text-gray-700 dark:text-gray-100">{{pageNumber}} of {{totalPagesCount}}</span>
       </div>
 
       <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
         <tw-select
           class="w-16"
           color="primary"
-          [value]="defaultPageSize"
-          [placeholder]="defaultPageSize.toString()"
+          [(ngModel)]="selectedPageSize"
+          [placeholder]="selectedPageSize.toString()"
         >
           <tw-option
             *ngFor="let item of pageSizes"
@@ -134,15 +119,19 @@
         <tw-button
           type="outlined"
           class="w-32"
+          [disabled]="pageNumber === 1"
+          (click)="movePrevious()"
         >
           <tw-icon svgIcon="hero:arrow-long-left" />
-          <span>Précédent</span>
+          <span>Previous</span>
         </tw-button>
         <tw-button
           type="outlined"
           class="w-32"
+          (click)="moveNext()"
+          [disabled]="pageNumber === totalPagesCount"
         >
-          <span>Suivant</span>
+          <span>Next</span>
           <tw-icon svgIcon="hero:arrow-long-right" />
         </tw-button>
       </div>

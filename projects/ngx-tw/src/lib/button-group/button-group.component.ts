@@ -20,7 +20,7 @@ import { TwButtonGroupItem } from './button-group-Item.component';
         *ngFor="let item of children; let i = index"
         class="tw-button-group-item"
         [class.selected-item]="selectedIndex === i"
-        (click)="selectedIndex = i; selectionChanged.emit(i)"
+        (click)="selectedIndex = i; selectedIndexChange.emit(i)"
       >
         <ng-container [ngTemplateOutlet]="item.content"></ng-container>
       </button>
@@ -31,8 +31,8 @@ export class TwButtonGroup implements AfterViewInit {
   @ContentChildren(TwButtonGroupItem)
   children?: QueryList<TwButtonGroupItem>;
 
-  @Output() selectionChanged = new EventEmitter<number>();
-  selectedIndex = 0;
+  @Output() selectedIndexChange = new EventEmitter<number>();
+  @Input() selectedIndex: number = 0;
 
   @Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
 

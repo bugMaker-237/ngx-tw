@@ -9,6 +9,9 @@ import { TwMenu } from './menu.component';
 export class TwMenuItemDirective {
   @Input({ required: false, alias: 'twMenuItem' })
   menu?: TwMenu | string;
+
+  @Input({ required: false, alias: 'twMenuItemDisabled' })
+  disabled: boolean = false;
   type: 'check' | 'radio' | 'classic' = 'classic';
 
   get triggerMenu() {

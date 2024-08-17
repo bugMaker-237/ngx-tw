@@ -41,6 +41,7 @@ import { TwMenuItemDirective } from './menu-item.directive';
           [cdkMenuItemChecked]="false"
           [cdkMenuTriggerFor]="item.triggerMenu"
           class="w-full tw-dropdown-menu-item"
+          [class.disabled]="item.disabled"
         >
           <ng-container *ngTemplateOutlet="item.template"></ng-container>
         </div>
@@ -50,6 +51,7 @@ import { TwMenuItemDirective } from './menu-item.directive';
           cdkMenuItemRadio
           [cdkMenuTriggerFor]="item.triggerMenu"
           class="w-full tw-dropdown-menu-item"
+          [class.disabled]="item.disabled"
         >
           <ng-container *ngTemplateOutlet="item.template"></ng-container>
         </div>
@@ -58,6 +60,7 @@ import { TwMenuItemDirective } from './menu-item.directive';
           cdkMenuItem
           [cdkMenuTriggerFor]="item.triggerMenu"
           class="w-full tw-dropdown-menu-item"
+          [class.disabled]="item.disabled"
         >
           <ng-container *ngTemplateOutlet="item.template"></ng-container>
         </div>

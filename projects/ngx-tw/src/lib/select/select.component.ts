@@ -56,7 +56,7 @@ let _uniqueIdCounter = 0;
     '[attr.aria-labelledby]': '"listbox-label"',
     '(keydown)': 'handleKeydown($event)',
     '(click)': 'openPanel()',
-    '[class]': '"tw-select " + (color || "")',
+    '[class]': '"tw-select " + (color || "") + (twClass ? " " + twClass : "")',
   },
   providers: [
     {
@@ -93,6 +93,7 @@ export class TwSelect
   public options!: QueryList<TwOption>;
 
   @Input() color?: ColorTypes;
+  @Input() twClass?: string;
 
   @Input() inputSticky = true;
 

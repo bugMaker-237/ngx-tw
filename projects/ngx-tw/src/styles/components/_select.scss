@@ -1,5 +1,5 @@
 .tw-select {
-  @apply relative border border-gray-300  block w-full md:min-w-48 transition-all;
+  @apply relative border border-gray-300  block w-full md:min-w-16 min-h-8 transition-all;
   @apply bg-white dark:bg-gray-900;
   @apply shadow-sm pr-1 py-1.5 pl-3 text-left cursor-default focus:outline-none;
   @apply border border-gray-200 rounded-md dark:border-gray-600;
