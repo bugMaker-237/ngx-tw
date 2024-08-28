@@ -11,6 +11,8 @@ import { TwInputField } from './input-field/input-field.component';
 import { TwMenuModule } from './menu';
 import { TwOption } from './select/option/option.component';
 import { TwSelect } from './select/select.component';
+import { TwSkeletonComponent } from './skeleton/skeleton.component';
+import { TwSkeletonDirective } from './skeleton/skeleton.directive';
 import { TwSpinner } from './spinner/spinner.component';
 import { TwStickyContentHeader } from './sticky-content-header/sticky-content-header.component';
 import { TwSwitch } from './switch/switch.component';
@@ -40,6 +42,8 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwChipList,
     TwSpinner,
     TwAlerts,
+    TwSkeletonComponent,
+    TwSkeletonDirective,
   ],
   providers: [TwDialog, TwAlertService],
   exports: [
@@ -61,6 +65,8 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwChipList,
     TwSpinner,
     TwAlerts,
+    TwSkeletonComponent,
+    TwSkeletonDirective,
   ],
 })
 export class NgxTwModule {}

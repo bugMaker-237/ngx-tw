@@ -92,3 +92,21 @@ table.tw-table tbody {
 [class*=" cdk-"]:focus-visible {
   outline: none;
 }
+
+.pulse {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: 0.5s;
+  background: rgb(239, 241, 246) no-repeat;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -20,6 +20,8 @@ export * from './lib/menu/menu.component';
 export * from './lib/ngx-tw.module';
 export * from './lib/select/option/option.component';
 export * from './lib/select/select.component';
+export * from './lib/skeleton/skeleton.component';
+export * from './lib/skeleton/skeleton.directive';
 export * from './lib/spinner/spinner.component';
 export * from './lib/sticky-content-header/sticky-content-header.component';
 export * from './lib/switch/switch.component';
