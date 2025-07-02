@@ -3,6 +3,7 @@
  */
 
 export * from './lib/alerts';
+export * from './lib/autocomplete/autocomplete.component';
 export * from './lib/button-group/button-group-Item.component';
 export * from './lib/button-group/button-group.component';
 export * from './lib/button/button-icon.component';

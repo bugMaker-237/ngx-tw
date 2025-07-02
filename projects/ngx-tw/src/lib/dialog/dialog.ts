@@ -19,12 +19,19 @@ export class TwDialog {
     component: ComponentType<C>,
     dialogConfig: DialogConfig<D, DialogRef<R, C>> = {}
   ) {
+    return this.openWithRef(component, dialogConfig).closed;
+  }
+
+  openWithRef<R = unknown, C = unknown, D = unknown>(
+    component: ComponentType<C>,
+    dialogConfig: DialogConfig<D, DialogRef<R, C>> = {}
+  ) {
     const config = {
       minWidth: '250px',
       backdropClass: 'acrylic-backdrop',
       panelClass: ['shadow-2xl', 'rounded-2xl'],
       ...dialogConfig,
     };
-    return this._dialog.open(component, config).closed;
+    return this._dialog.open(component, config);
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@ngx-tw/components",
+  "name": "ngx-tw",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/cdk": ">=16.0.0",

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { TwAlertService } from './alerts/alert.service';
 import { TwAlerts } from './alerts/alerts.component';
+import { TwAutocomplete } from './autocomplete/autocomplete.component';
 import { TwButtonGroup } from './button-group/button-group.component';
 import { TwButton } from './button/button.component';
 import { TwChipList } from './chip/chip-list.component';
@@ -44,6 +45,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwAlerts,
     TwSkeletonComponent,
     TwSkeletonDirective,
+    TwAutocomplete,
   ],
   providers: [TwDialog, TwAlertService],
   exports: [
@@ -67,6 +69,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwAlerts,
     TwSkeletonComponent,
     TwSkeletonDirective,
+    TwAutocomplete,
   ],
 })
 export class NgxTwModule {}

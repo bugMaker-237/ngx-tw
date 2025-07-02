@@ -1,0 +1,61 @@
+<div class="relative w-full">
+  <!-- Selected Items (Chips) -->
+  <div class="flex flex-wrap space-x-2 mb-2">
+    <span
+      *ngFor="let item of selectedItems; let i = index"
+      class="bg-blue-500 text-white px-2 py-1 rounded-full"
+    >
+      {{ getDisplayText(item) }}
+      <button
+        (click)="removeSelectedItem(i)"
+        class="ml-2 text-white font-bold"
+      >&times;</button>
+    </span>
+  </div>
+
+  <!-- Autocomplete Input -->
+  <input
+    type="text"
+    [formControl]="searchControl"
+    class="w-full p-2 border rounded focus:outline-none focus:ring"
+    #input
+    (keydown)="handleKeydown($event)"
+  />
+
+  <!-- Dropdown Suggestions -->
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayHasBackdrop]="true"
+    [cdkConnectedOverlayLockPosition]="true"
+    [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+    [cdkConnectedOverlayScrollStrategy]="blockScrollStrategy"
+    [cdkConnectedOverlayOrigin]="elementRef.nativeElement"
+    [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayPositions]="positions"
+    [cdkConnectedOverlayMinWidth]="elementRef.nativeElement.offsetWidth"
+    (backdropClick)="closeDropdown()"
+    (overlayKeydown)="handleKeydown($event)"
+    (detach)="closeDropdown()"
+  >
+    <div class="absolute w-full bg-white border rounded shadow-lg">
+      <ul *ngIf="filteredSuggestions.length > 0">
+        <li
+          *ngFor="let suggestion of filteredSuggestions"
+          (click)="selectSuggestion(suggestion)"
+          class="p-2 cursor-pointer hover:bg-blue-500 hover:text-white"
+        >
+          <ng-container *ngIf="optionTemplate; else defaultOption">
+            <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: suggestion }"></ng-container>
+          </ng-container>
+          <ng-template #defaultOption>{{ getDisplayText(suggestion) }}</ng-template>
+        </li>
+      </ul>
+      <div
+        *ngIf="filteredSuggestions.length === 0"
+        class="p-2 text-gray-500"
+      >
+        No suggestions found.
+      </div>
+    </div>
+  </ng-template>
+</div>

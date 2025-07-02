@@ -91,7 +91,7 @@ export class TwTable<T> implements OnDestroy, AfterViewInit {
       return;
     this._selectedPageSize = value;
 
-    if (this._initializedParams) this.queryChange.emit(this.querySnapshot);
+    if (this._initializedParams) this.changePageSize();
   }
 
   internalSource?: DataSource<T>;
@@ -163,6 +163,7 @@ export class TwTable<T> implements OnDestroy, AfterViewInit {
   }
 
   changePageSize() {
+    this.pageNumber = 1;
     this.queryChange.emit(this.querySnapshot);
   }
 }

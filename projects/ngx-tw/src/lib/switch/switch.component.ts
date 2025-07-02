@@ -79,7 +79,6 @@ export class TwSwitch implements ControlValueAccessor {
     const value = (event.target as any).checked;
     this.toggleChange.emit(value);
     this.value = value;
-    console.log({ value });
     this._onChangeFns?.forEach((fn) => fn(value));
     this._onTouchedFns?.forEach((fn) => fn(value));
   }
