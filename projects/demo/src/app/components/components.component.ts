@@ -6,7 +6,6 @@ import { InputsComponent } from './inupts/inputs.component';
 import { MenuComponent } from './menu/menu.component';
 import { SelectComponent } from './select/select.component';
 import { TablesComponent } from './tables/tables.component';
-import { AutoComplteDemoComponent } from "./autocomplete/autocomplete.component";
 
 @Component({
   selector: 'app-root',
@@ -19,8 +18,7 @@ import { AutoComplteDemoComponent } from "./autocomplete/autocomplete.component"
     ExpanderComponent,
     MenuComponent,
     InputsComponent,
-    AutoComplteDemoComponent
-],
+  ],
   templateUrl: './components.component.html',
   styleUrls: ['./components.component.scss'],
 })

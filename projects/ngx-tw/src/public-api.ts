@@ -8,6 +8,7 @@ export * from './lib/button-group/button-group-Item.component';
 export * from './lib/button-group/button-group.component';
 export * from './lib/button/button-icon.component';
 export * from './lib/button/button.component';
+export * from './lib/chip/chip-item-maker.component';
 export * from './lib/chip/chip-list.component';
 export * from './lib/chip/chip.component';
 export * from './lib/dialog/dialog';

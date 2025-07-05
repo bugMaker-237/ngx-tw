@@ -15,11 +15,11 @@ import { TwChipInterface } from './chip-interface';
         {{ label }}
       </div>
       @if(isDeletable){
-      <div class="icon">
+      <div class="icon w-4 h-4 min-w-4 max-w-4" role="button">
         <tw-icon
           (click)="deleteItem.emit()"
           svgIcon="hero:x-mark"
-          [size]="12"
+          [size]="10"
         />
       </div>
       }

@@ -4,6 +4,7 @@ import { TwAlerts } from './alerts/alerts.component';
 import { TwAutocomplete } from './autocomplete/autocomplete.component';
 import { TwButtonGroup } from './button-group/button-group.component';
 import { TwButton } from './button/button.component';
+import { TwChipItem } from './chip/chip-item-maker.component';
 import { TwChipList } from './chip/chip-list.component';
 import { TwChip } from './chip/chip.component';
 import { TwDialog } from './dialog/dialog';
@@ -46,6 +47,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwSkeletonComponent,
     TwSkeletonDirective,
     TwAutocomplete,
+    TwChipItem,
   ],
   providers: [TwDialog, TwAlertService],
   exports: [
@@ -70,6 +72,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwSkeletonComponent,
     TwSkeletonDirective,
     TwAutocomplete,
+    TwChipItem,
   ],
 })
 export class NgxTwModule {}

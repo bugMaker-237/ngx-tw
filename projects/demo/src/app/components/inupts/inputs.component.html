@@ -62,18 +62,39 @@
     <span>Chip list</span>
 
     <tw-chip-list
-      [chips]="chips"
       [isEditable]="true"
       color="accent"
-    />
+    >
+      @for (item of chips; track $index) {
+      <tw-chip-item
+        [label]="item.label"
+        [image]="item.image"
+        [isDeletable]="item.isDeletable"
+      />
+      }
+    </tw-chip-list>
 
     <tw-chip-list
-      [chips]="chips2"
       [isEditable]="true"
       color="accent"
+      placeholder="Insert item here"
+      [autoCompleteSuggestions]="[{ id: 1, name: 'Apple' }, { id: 2, name: 'Banana' }]"
+      [autoCompleteKeyFactory]="suggestionKeyFactory"
+      [autoCompleteFilterFn]="customFilter"
+      [autoCompleteOptionTemplate]="customTemplate"
+      [allowUnknownItemInsertion]="false"
       iconPrefix="hero:megaphone"
       iconSuffix="hero:presentation-chart-line"
-    />
+    >
+
+      @for (item of chips; track $index) {
+      <tw-chip-item
+        [label]="item.label"
+        [image]="item.image"
+        [isDeletable]="item.isDeletable"
+      />
+      }
+    </tw-chip-list>
 
   </div>
 

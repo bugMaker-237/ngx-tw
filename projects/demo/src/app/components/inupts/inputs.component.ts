@@ -9,6 +9,7 @@ import {
   TwAutocomplete,
   TwButton,
   TwChip,
+  TwChipItem,
   TwChipList,
   TwIcon,
   TwInputField,
@@ -30,6 +31,7 @@ import {
     FormsModule,
     ReactiveFormsModule,
     TwAutocomplete,
+    TwChipItem,
   ],
 })
 export class InputsComponent {

@@ -6,17 +6,14 @@
       [svgIcon]="iconPrefix"
     />
   </span>
-  } @if(chips.length === 0){
-  <span
-    class="absolute text-gray-500 opacity-50"
-    [class.ml-8]="iconPrefix"
-  >{{ placeholder }}</span>
   }
   <div
-    [class.ml-10]="iconPrefix"
-    class="flex flex-row gap-3 overflow-x-auto"
+    [class.ml-10]="iconPrefix && chipItems.length > 0"
+    [class.mr-6]="iconSuffix"
+    [class.ml-7]="iconPrefix && chipItems.length ===0"
+    class="flex flex-row gap-2 flex-wrap flex-grow"
   >
-    @for(chip of chips; track $index){
+    @for(chip of chipItems; track $index){
     <tw-chip
       twClass="max-w-32"
       [label]="chip.label"
@@ -25,15 +22,26 @@
       [isDeletable]="isEditable && chip.isDeletable"
     />
     }
+
+    <div class="relative flex-grow flex flex-row items-center overflow-hidden">
+      <span
+        class="absolute text-gray-500 opacity-50 pointer-events-none whitespace-nowrap text-nowrap overflow-hidden text-ellipsis max-w-full"
+        [class.hidden]="newItemContent?.nativeElement?.innerText"
+      >{{ placeholder }}
+      </span>
+
+      @if(isEditable){
+      <div
+        (keydown)="contentKeydown($event)"
+        #newItemContent
+        contentEditable
+        class="flex items-center border-0 flex-grow outline-0 wrap"
+      ></div>
+      }
+    </div>
   </div>
-  @if(isEditable){
-  <div
-    (keydown)="contentKeydown($event)"
-    #newItemContent
-    contentEditable
-    class="flex items-center border-0 flex-grow outline-0"
-  ></div>
-  } @if(iconSuffix){
+
+  @if(iconSuffix){
   <span class="absolute mr-2 right-0">
     <tw-icon
       class="text-gray-400 {{ iconSuffix }}"
@@ -48,25 +56,27 @@
   [cdkConnectedOverlayHasBackdrop]="true"
   [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
   [cdkConnectedOverlayOrigin]="elementRef.nativeElement.firstElementChild"
-  [cdkConnectedOverlayOpen]="isOpen"
+  [cdkConnectedOverlayOpen]="autoCompleteManager?.isOpen || false"
   [cdkConnectedOverlayPositions]="positions"
   [cdkConnectedOverlayMinWidth]="elementRef.nativeElement.firstElementChild.offsetWidth"
   [cdkConnectedOverlayScrollStrategy]="blockScrollStrategy"
-  (backdropClick)="closeDropdown()"
-  (detach)="closeDropdown()"
+  (backdropClick)="autoCompleteManager?.closeDropdown()"
+  (detach)="autoCompleteManager?.closeDropdown()"
 >
   <div class="w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-    @if (filteredSuggestions.length > 0) {
+    @if (filteredSuggestions && filteredSuggestions .length > 0) {
     <ul>
       @for (suggestion of filteredSuggestions; track $index) {
       <li
         (click)="selectSuggestion(suggestion)"
         class="p-2 tw-option"
       >
-        <ng-container *ngIf="optionTemplate; else defaultOption">
-          <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: suggestion }"></ng-container>
-        </ng-container>
-        <ng-template #defaultOption>{{ getDisplayText(suggestion) }}</ng-template>
+        @if (autoCompleteOptionTemplate) {
+        <ng-container *ngTemplateOutlet="autoCompleteOptionTemplate; context: { $implicit: suggestion }"></ng-container>
+
+        }@else {
+        <ng-template>{{ autoCompleteManager?.getDisplayText(suggestion) }}</ng-template>
+        }
       </li>
       }
     </ul>

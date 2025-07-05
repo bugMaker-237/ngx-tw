@@ -1,7 +1,7 @@
 <div class="relative w-full max-w-sm">
   <tw-input-field
     [formControl]="searchControl"
-    (focus)="isOpen = filteredSuggestions.length > 0"
+    (focus)="autoCompleteManager.isOpen = filteredSuggestions.length > 0"
     [iconSuffix]="iconSuffix"
     [iconSuffixClass]="iconSuffixClass"
     [iconPrefix]="iconPrefix"
@@ -25,12 +25,12 @@
     [cdkConnectedOverlayHasBackdrop]="true"
     [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
     [cdkConnectedOverlayOrigin]="elementRef.nativeElement.firstElementChild"
-    [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayOpen]="autoCompleteManager.isOpen"
     [cdkConnectedOverlayPositions]="positions"
     [cdkConnectedOverlayMinWidth]="elementRef.nativeElement.firstElementChild.offsetWidth"
     [cdkConnectedOverlayScrollStrategy]="blockScrollStrategy"
-    (backdropClick)="closeDropdown()"
-    (detach)="closeDropdown()"
+    (backdropClick)="autoCompleteManager.closeDropdown()"
+    (detach)="autoCompleteManager.closeDropdown()"
   >
     <div class="w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
       @if (filteredSuggestions.length > 0) {
@@ -40,10 +40,12 @@
           (click)="selectSuggestion(suggestion)"
           class="p-2 tw-option"
         >
-          <ng-container *ngIf="optionTemplate; else defaultOption">
-            <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: suggestion }"></ng-container>
-          </ng-container>
-          <ng-template #defaultOption>{{ getDisplayText(suggestion) }}</ng-template>
+          @if (optionTemplate) {
+          <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: suggestion }"></ng-container>
+
+          }@else {
+          <ng-template>{{ autoCompleteManager.getDisplayText(suggestion) }}</ng-template>
+          }
         </li>
         }
       </ul>
