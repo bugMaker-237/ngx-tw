@@ -19,7 +19,7 @@ import { TwChipInterface } from './chip-interface';
         <tw-icon
           (click)="deleteItem.emit()"
           svgIcon="hero:x-mark"
-          [size]="16"
+          [size]="12"
         />
       </div>
       }

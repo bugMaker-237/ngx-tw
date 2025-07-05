@@ -1,0 +1,80 @@
+<div class="flex relative tw-chip-list items-center gap-2 {{ color }}">
+  @if(iconPrefix){
+  <span class="absolute ml-2">
+    <tw-icon
+      class="text-gray-400 {{ iconPrefixClass }}"
+      [svgIcon]="iconPrefix"
+    />
+  </span>
+  } @if(chips.length === 0){
+  <span
+    class="absolute text-gray-500 opacity-50"
+    [class.ml-8]="iconPrefix"
+  >{{ placeholder }}</span>
+  }
+  <div
+    [class.ml-10]="iconPrefix"
+    class="flex flex-row gap-3 overflow-x-auto"
+  >
+    @for(chip of chips; track $index){
+    <tw-chip
+      twClass="max-w-32"
+      [label]="chip.label"
+      [image]="chip.image"
+      (deleteItem)="removeItem($index)"
+      [isDeletable]="isEditable && chip.isDeletable"
+    />
+    }
+  </div>
+  @if(isEditable){
+  <div
+    (keydown)="contentKeydown($event)"
+    #newItemContent
+    contentEditable
+    class="flex items-center border-0 flex-grow outline-0"
+  ></div>
+  } @if(iconSuffix){
+  <span class="absolute mr-2 right-0">
+    <tw-icon
+      class="text-gray-400 {{ iconSuffix }}"
+      [svgIcon]="iconSuffix"
+    />
+  </span>
+  }
+</div>
+<!-- Dropdown Suggestions -->
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+  [cdkConnectedOverlayOrigin]="elementRef.nativeElement.firstElementChild"
+  [cdkConnectedOverlayOpen]="isOpen"
+  [cdkConnectedOverlayPositions]="positions"
+  [cdkConnectedOverlayMinWidth]="elementRef.nativeElement.firstElementChild.offsetWidth"
+  [cdkConnectedOverlayScrollStrategy]="blockScrollStrategy"
+  (backdropClick)="closeDropdown()"
+  (detach)="closeDropdown()"
+>
+  <div class="w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+    @if (filteredSuggestions.length > 0) {
+    <ul>
+      @for (suggestion of filteredSuggestions; track $index) {
+      <li
+        (click)="selectSuggestion(suggestion)"
+        class="p-2 tw-option"
+      >
+        <ng-container *ngIf="optionTemplate; else defaultOption">
+          <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: suggestion }"></ng-container>
+        </ng-container>
+        <ng-template #defaultOption>{{ getDisplayText(suggestion) }}</ng-template>
+      </li>
+      }
+    </ul>
+    }
+    @else{
+    <div class="p-2 text-gray-500">
+      No suggestions found.
+    </div>
+    }
+  </div>
+</ng-template>

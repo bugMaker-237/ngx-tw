@@ -1,11 +1,8 @@
-import { ListKeyManager } from '@angular/cdk/a11y';
-import { BACKSPACE, ENTER, SPACE } from '@angular/cdk/keycodes';
 import {
   BlockScrollStrategy,
   CdkConnectedOverlay,
   ConnectedPosition,
   Overlay,
-  OverlayRef,
 } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import {
@@ -26,12 +23,20 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Observable, isObservable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
+import { ColorTypes } from '../color-types';
+import { InputField, InputTypes } from '../input-field/input-field-interface';
+import { TwInputField } from '../input-field/input-field.component';
 
 @Component({
   selector: 'tw-autocomplete',
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    CdkConnectedOverlay,
+    TwInputField,
+  ],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, CdkConnectedOverlay],
   templateUrl: './autocomplete.component.html',
   providers: [
     {
@@ -41,8 +46,34 @@ import { filter, map } from 'rxjs/operators';
     },
   ],
 })
-export class TwAutocomplete implements OnInit, ControlValueAccessor {
-  @ViewChild('input') input!: ElementRef;
+export class TwAutocomplete
+  implements OnInit, ControlValueAccessor, InputField
+{
+  @Input() iconSuffix?: string;
+  @Input() iconSuffixClass?: string;
+  @Input() iconPrefix?: string;
+  @Input() iconPrefixClass?: string;
+  @Input() twClass?: string;
+  @Input() name: string = '';
+  @Input() label: string = '';
+
+  @Input() maxLength?: number;
+  @Input() minLength?: number;
+  @Input() required: string | boolean = false;
+  @Input() pattern: string | RegExp = '';
+  @Input() placeholder: string = '';
+  @Input() set disabled(value: boolean) {
+    if (value) this.searchControl.disable();
+    else this.searchControl.enable();
+  }
+  get disabled() {
+    return this.searchControl.disabled;
+  }
+  @Input() inputType: InputTypes = 'text';
+  @Input() color?: ColorTypes;
+  @Input() showLabel: boolean = true;
+  multiline = false;
+
   @ViewChild('suggestions') suggestionsTemplate!: TemplateRef<any>;
 
   @Input() suggestions$: Observable<any[]> | null = null;
@@ -55,16 +86,11 @@ export class TwAutocomplete implements OnInit, ControlValueAccessor {
     value: string,
     item: any
   ) => this.getDisplayText(item).toLowerCase().includes(value.toLowerCase());
-
-  @Input() disabled: boolean = false;
-  @Output() selectionChanged: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output() selectionChanged: EventEmitter<any> = new EventEmitter<any>();
 
   searchControl = new FormControl();
   filteredSuggestions: any[] = [];
-  selectedItems: any[] = [];
-  overlayRef!: OverlayRef;
   isOpen: boolean = false;
-  keyManager!: ListKeyManager<any>;
 
   blockScrollStrategy: BlockScrollStrategy;
 
@@ -109,6 +135,11 @@ export class TwAutocomplete implements OnInit, ControlValueAccessor {
   ngOnInit(): void {
     this.searchControl.valueChanges
       .pipe(
+        tap(
+          (v) => (
+            console.log(v), v.length === 0 ? this.closeDropdown() : void 0
+          )
+        ),
         filter((value) => value.length >= 1),
         map((value) => this.filterSuggestions(value))
       )
@@ -145,11 +176,6 @@ export class TwAutocomplete implements OnInit, ControlValueAccessor {
     if (this.disabled === true) return;
 
     this.isOpen = true;
-
-    // Initialize the key manager
-    this.keyManager = new ListKeyManager(
-      this.filteredSuggestions
-    ).withVerticalOrientation();
   }
 
   closeDropdown() {
@@ -157,23 +183,17 @@ export class TwAutocomplete implements OnInit, ControlValueAccessor {
   }
 
   selectSuggestion(suggestion: any) {
-    if (!this.selectedItems.find((item) => item === suggestion)) {
-      this.selectedItems.push(suggestion);
-      this.onChange(this.selectedItems);
-      this.selectionChanged.emit(this.selectedItems); // Emit selection change
+    if (!this.filteredSuggestions.find((item) => item === suggestion)) {
+      return;
     }
-    this.searchControl.setValue(''); // Clear the input field
+    this.onChange(suggestion);
+    this.selectionChanged.emit(suggestion); // Emit selection change
+    this.searchControl.setValue(this.getDisplayText(suggestion)); // Clear the input field
     this.closeDropdown();
   }
 
-  removeSelectedItem(index: number) {
-    this.selectedItems.splice(index, 1);
-    this.onChange(this.selectedItems);
-    this.selectionChanged.emit(this.selectedItems); // Emit selection change
-  }
-
   writeValue(value: any): void {
-    this.selectedItems = value || [];
+    this.searchControl.setValue(this.getDisplayText(value));
   }
 
   registerOnChange(fn: any): void {
@@ -182,20 +202,5 @@ export class TwAutocomplete implements OnInit, ControlValueAccessor {
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
-  }
-
-  handleKeydown(event: KeyboardEvent) {
-    if (!this.keyManager) return;
-
-    if (event.keyCode === ENTER || event.keyCode === SPACE) {
-      const activeOption = this.keyManager.activeItem;
-      if (activeOption) {
-        this.selectSuggestion(activeOption);
-      }
-    }
-    if (event.keyCode === BACKSPACE && !this.searchControl.value) {
-      this.removeSelectedItem(this.selectedItems.length - 1);
-    }
-    this.keyManager.onKeydown(event);
   }
 }

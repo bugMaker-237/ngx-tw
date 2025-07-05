@@ -1,6 +1,11 @@
 .tw-chip-list {
   @apply focus:outline-none focus-within:ring-2 focus-within:ring-opacity-40;
   @apply border p-2 rounded-lg flex-wrap;
+  @apply block w-full md:min-w-5 transition-all py-1.5;
+  @apply bg-white dark:bg-gray-900; // ring-1 ring-inset ring-gray-300
+  @apply shadow-sm border border-gray-200 rounded-lg dark:border-gray-600;
+  @apply focus:outline-none focus:ring-[1.5px] focus:ring-opacity-40;
+  @apply text-gray-700  placeholder-gray-400/70 dark:text-gray-300;
 
   &.primary {
     @apply focus-within:border-primary-400 dark:focus-within:border-primary-300 focus-within:ring-primary-300;
@@ -13,22 +18,12 @@
   &.danger {
     @apply focus-within:border-danger-400 dark:focus-within:border-danger-300 focus-within:ring-danger-300;
   }
-
-  input[type="text"] {
-    width: auto;
-    min-width: 0px;
-    padding: 0px;
-    &:focus {
-      outline: none;
-      box-shadow: none;
-    }
-  }
 }
 
 .tw-chip {
-  @apply inline-flex flex-nowrap items-center bg-white border border-gray-200 rounded-full p-1.5 dark:bg-neutral-900 dark:border-neutral-700 justify-center text-gray-800;
+  @apply inline-flex flex-nowrap items-center bg-white border border-gray-200 rounded-full p-1.5 py-[0.125rem] dark:bg-neutral-900 dark:border-neutral-700 justify-center text-gray-800;
   & img {
-    @apply me-1.5 inline-block size-6 rounded-full;
+    @apply me-1.5 inline-block size-4 rounded-full;
   }
   & .label {
     @apply whitespace-nowrap px-1 text-sm font-medium text-inherit truncate dark:text-white;

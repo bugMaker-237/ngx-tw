@@ -4,21 +4,7 @@ import { Component, Input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NgControl } from '@angular/forms';
 import { ColorTypes } from '../color-types';
 import { TwIcon } from '../icon/icon.component';
-
-type InputTypes =
-  | 'text'
-  | 'password'
-  | 'email'
-  | 'color'
-  | 'date'
-  | 'email'
-  | 'number'
-  | 'month'
-  | 'search'
-  | 'tel'
-  | 'time'
-  | 'url'
-  | 'week';
+import { InputField, InputTypes } from './input-field-interface';
 
 @Component({
   imports: [TwIcon, NgClass, FormsModule, NgIf, TextFieldModule],
@@ -30,7 +16,7 @@ type InputTypes =
   templateUrl: './input-field.component.html',
   providers: [],
 })
-export class TwInputField implements ControlValueAccessor {
+export class TwInputField implements ControlValueAccessor, InputField {
   @Input() iconSuffix?: string;
   @Input() iconSuffixClass?: string;
   @Input() iconPrefix?: string;
@@ -84,6 +70,7 @@ export class TwInputField implements ControlValueAccessor {
 
   onChange(event: Event) {
     const value = (event as any).target.value;
+    console.log(value);
     this._onChangeFns?.forEach((fn) => fn(value));
     this._onTouchedFns?.forEach((fn) => fn(value));
   }

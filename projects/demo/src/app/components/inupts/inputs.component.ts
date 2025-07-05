@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
+  TwAutocomplete,
   TwButton,
   TwChip,
   TwChipList,
@@ -28,6 +29,7 @@ import {
     TwChipList,
     FormsModule,
     ReactiveFormsModule,
+    TwAutocomplete,
   ],
 })
 export class InputsComponent {
@@ -63,4 +65,16 @@ export class InputsComponent {
       isDeletable: true,
     },
   ];
+
+  chips2 = [...this.chips];
+
+  suggestionKeyFactory = (item: any) => ({ key: item.id, value: item.name });
+
+  customFilter = (value: string, item: any) => {
+    return item.name.toLowerCase().includes(value.toLowerCase());
+  };
+
+  onSelectionChange(selectedItems: any[]) {
+    console.log('Selected items:', selectedItems);
+  }
 }

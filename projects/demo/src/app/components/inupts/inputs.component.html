@@ -67,6 +67,14 @@
       color="accent"
     />
 
+    <tw-chip-list
+      [chips]="chips2"
+      [isEditable]="true"
+      color="accent"
+      iconPrefix="hero:megaphone"
+      iconSuffix="hero:presentation-chart-line"
+    />
+
   </div>
 
   <div class="flex flex-col gap-3">
@@ -76,6 +84,30 @@
       label="Run on next cycle"
       color="accent"
     />
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Auto complete</span>
+    <tw-autocomplete
+      name="Auto complete text"
+      [showLabel]="false"
+      placeholder="Fill this"
+      [suggestions]="[{ id: 1, name: 'Apple' }, { id: 2, name: 'Banana' }]"
+      [keyFactory]="suggestionKeyFactory"
+      [filterFn]="customFilter"
+      [optionTemplate]="customTemplate"
+      (selectionChanged)="onSelectionChange($event)"
+    ></tw-autocomplete>
+
+    <ng-template
+      #customTemplate
+      let-item
+    >
+      <div class="flex items-center">
+        <span>{{ item.name }}</span>
+        <small class="ml-2 text-gray-500">{{ item.id }}</small>
+      </div>
+    </ng-template>
   </div>
 
 

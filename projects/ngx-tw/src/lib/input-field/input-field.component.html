@@ -30,7 +30,7 @@
       [required]="required"
       [name]="name"
       [pattern]="pattern"
-      (change)="onChange($event)"
+      (input)="onChange($event)"
       class="tw-input-field w-full {{ color }} {{twClass}}"
       [ngClass]="{
       'icon-left': iconPrefix && !iconSuffix,
@@ -50,7 +50,7 @@
       [required]="required"
       [name]="name"
       [pattern]="pattern"
-      (change)="onChange($event)"
+      (input)="onChange($event)"
       class="tw-input-field w-full {{ color }} {{twClass}}"
       [ngClass]="{
         'icon-left': iconPrefix && !iconSuffix,

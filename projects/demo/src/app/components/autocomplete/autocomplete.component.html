@@ -1,27 +1,30 @@
 <h2 class="mb-8 mt-8 text-2xl">Auto complete</h2>
 
 <div class="divide-y divide-solid gap-4 dark:divide-slate-500 flex-col flex">
-  <div class="gap-8 items-center grid grid-cols-[80px,auto,auto]">
+  <form
+    [formGroup]="myForm"
+    class="block w-full"
+  >
+    <tw-autocomplete
+      name="Auto complete text"
+      label="Auto complete text"
+      placeholder="Fill this"
+      formControlName="myAutocomplete"
+      [suggestions]="[{ id: 1, name: 'Apple' }, { id: 2, name: 'Banana' }]"
+      [keyFactory]="suggestionKeyFactory"
+      [filterFn]="customFilter"
+      [optionTemplate]="customTemplate"
+      (selectionChanged)="onSelectionChange($event)"
+    ></tw-autocomplete>
 
-    <form [formGroup]="myForm">
-      <tw-autocomplete
-        formControlName="myAutocomplete"
-        [suggestions]="[{ id: 1, name: 'Apple' }, { id: 2, name: 'Banana' }]"
-        [keyFactory]="suggestionKeyFactory"
-        [filterFn]="customFilter"
-        [optionTemplate]="customTemplate"
-        (selectionChanged)="onSelectionChange($event)"
-      ></tw-autocomplete>
-
-      <ng-template
-        #customTemplate
-        let-item
-      >
-        <div class="flex items-center">
-          <span>{{ item.name }}</span>
-          <small class="ml-2 text-gray-500">{{ item.id }}</small>
-        </div>
-      </ng-template>
-    </form>
-  </div>
+    <ng-template
+      #customTemplate
+      let-item
+    >
+      <div class="flex items-center">
+        <span>{{ item.name }}</span>
+        <small class="ml-2 text-gray-500">{{ item.id }}</small>
+      </div>
+    </ng-template>
+  </form>
 </div>

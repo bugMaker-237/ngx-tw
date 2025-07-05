@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TwAutocomplete } from 'ngx-tw';
+import { AutocompleteComponent } from './other-autocomplete.component';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-autocomplete',
   standalone: true,
-  imports: [TwAutocomplete, ReactiveFormsModule],
+  imports: [TwAutocomplete, ReactiveFormsModule, AutocompleteComponent],
   templateUrl: './autocomplete.component.html',
 })
 export class AutoComplteDemoComponent {

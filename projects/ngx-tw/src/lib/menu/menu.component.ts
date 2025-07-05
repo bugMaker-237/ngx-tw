@@ -30,7 +30,7 @@ import { TwMenuItemDirective } from './menu-item.directive';
   template: `
     <ng-template>
       <div
-        class="bg-white dark:bg-slate-700 dark:text-white drop-shadow-lg rounded-lg w-full"
+        class="bg-white dark:bg-slate-700 dark:text-white border border-gray-200 rounded-lg shadow-lg  w-full"
         [style.width]="panelWidth"
         cdkMenu
       >
