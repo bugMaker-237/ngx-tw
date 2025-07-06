@@ -1,0 +1,140 @@
+<div class="tw-calendar font-medium">
+  <!-- Calendar Header -->
+  <div class="flex items-center justify-between mb-4">
+    @if(viewMode === 'days') {
+    <tw-button-icon
+      svgIcon="hero:chevron-left"
+      (click)="changeMonth(-1)"
+      [disabled]="isPrevMonthDisabled()"
+      [class.opacity-50]="isPrevMonthDisabled()"
+    ></tw-button-icon>
+    <div class="flex gap-1">
+      <button
+        type="button"
+        class="px-2 py-1 hover:bg-blue-100 rounded"
+        (click)="switchView('months')"
+      >
+        {{ currentMonthName }}
+      </button>
+      <button
+        type="button"
+        class="px-2 py-1 hover:bg-blue-100 rounded"
+        (click)="switchView('years')"
+      >
+        {{ currentYear }}
+      </button>
+    </div>
+    <tw-button-icon
+      svgIcon="hero:chevron-right"
+      (click)="changeMonth(1)"
+      [disabled]="isNextMonthDisabled()"
+      [class.opacity-50]="isNextMonthDisabled()"
+    ></tw-button-icon>
+    }
+    @if(viewMode === 'months') {
+    <tw-button-icon
+      svgIcon="hero:chevron-left"
+      (click)="changeYear(-1)"
+      [disabled]="isPrevYearDisabled()"
+      [class.opacity-50]="isPrevYearDisabled()"
+    >
+    </tw-button-icon>
+    <button
+      type="button"
+      class="px-2 py-1 hover:bg-blue-100 rounded"
+      (click)="switchView('years')"
+    >
+      {{ currentYear }}
+    </button>
+    <tw-button-icon
+      svgIcon="hero:chevron-right"
+      (click)="changeYear(1)"
+      [disabled]="isNextYearDisabled()"
+      [class.opacity-50]="isNextYearDisabled()"
+    ></tw-button-icon>
+    }
+    @if(viewMode === 'years') {
+    <tw-button-icon
+      svgIcon="hero:chevron-left"
+      (click)="changeYearRange(-1)"
+      [disabled]="isPrevYearRangeDisabled()"
+      [class.opacity-50]="isPrevYearRangeDisabled()"
+    >
+    </tw-button-icon>
+    <span class="px-2 py-1">{{ yearRangeStart }} - {{ yearRangeStart + 11 }}</span>
+    <tw-button-icon
+      svgIcon="hero:chevron-right"
+      (click)="changeYearRange(1)"
+      [disabled]="isNextYearRangeDisabled()"
+      [class.opacity-50]="isNextYearRangeDisabled()"
+    ></tw-button-icon>
+    }
+  </div>
+
+  <!-- Days View -->
+  @if(viewMode === 'days') {
+  <div class="grid grid-cols-7 gap-2 justify-items-center">
+    <!-- Weekday Headers -->
+    @for(day of weekdays; track $index) {
+    <div class="text-center text-gray-500 text-xs p-1">{{ day }}</div>
+    }
+
+    <!-- Calendar Days -->
+    @for(date of calendarDates; track $index) {
+    <button
+      type="button"
+      class="w-8 h-8 flex items-center justify-center rounded-full text-sm transition-colors duration-150"
+      [class.text-gray-400]="!date.isCurrentMonth"
+      [class.bg-primary-500]="date.isSelected || date.isRangeStart || date.isRangeEnd"
+      [class.text-white]="date.isSelected || date.isRangeStart || date.isRangeEnd"
+      [class.bg-primary-100]="date.isInRange && !date.isRangeStart && !date.isRangeEnd"
+      [class.hover:bg-primary-200]="!date.isSelected && !date.isRangeStart && !date.isRangeEnd"
+      [class.font-bold]="date.isToday"
+      [class.opacity-50]="date.isDisabled"
+      [disabled]="date.isDisabled"
+      (click)="selectDate(date)"
+    >
+      {{ date.date.getDate() }}
+    </button>
+    }
+  </div>
+  }
+
+  <!-- Months View -->
+  @if(viewMode === 'months') {
+  <div class="grid grid-cols-4 gap-2">
+    @for(month of months; track $index) {
+    <button
+      type="button"
+      class="py-2 px-1 rounded hover:bg-blue-100"
+      [class.bg-blue-500]="displayDate.getMonth() === $index"
+      [class.text-white]="displayDate.getMonth() === $index"
+      [class.opacity-50]="isMonthDisabled($index)"
+      [disabled]="isMonthDisabled($index)"
+      (click)="selectMonth($index)"
+    >
+      {{ month }}
+    </button>
+    }
+  </div>
+  }
+
+  <!-- Years View -->
+  @if(viewMode === 'years') {
+  <div class="grid grid-cols-4 gap-2">
+    @for(year of years; track $index) {
+    <button
+      type="button"
+      class="py-2 px-1 rounded hover:bg-blue-100"
+      [class.bg-blue-500]="displayDate.getFullYear() === year"
+      [class.text-white]="displayDate.getFullYear() === year"
+      [class.opacity-50]="isYearDisabled(year)"
+      [disabled]="isYearDisabled(year)"
+      (click)="selectYear(year)"
+    >
+      {{ year }}
+    </button>
+    }
+  </div>
+  }
+</div>

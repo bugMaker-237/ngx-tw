@@ -8,9 +8,11 @@ import {
 import {
   TwAutocomplete,
   TwButton,
+  TwCalendar,
   TwChip,
   TwChipItem,
   TwChipList,
+  TwDateRangePicker,
   TwIcon,
   TwInputField,
   TwSwitch,
@@ -32,6 +34,8 @@ import {
     ReactiveFormsModule,
     TwAutocomplete,
     TwChipItem,
+    TwDateRangePicker,
+    TwCalendar,
   ],
 })
 export class InputsComponent {

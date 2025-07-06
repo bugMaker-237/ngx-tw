@@ -14,11 +14,11 @@ import {
   host: {
     role: 'button',
     '[attr.type]': 'isSubmit ? "submit" : "button"',
-    class: 'block',
+    class: 'inline-block w-fit',
   },
   template: `
     <button
-      class="tw-button {{ twClass }} {{ type }} rounded-{{ rounded }} {{
+      class="tw-button w-fit {{ twClass }} {{ type }} rounded-{{ rounded }} {{
         color
       }}"
       [type]="isSubmit ? 'submit' : 'button'"

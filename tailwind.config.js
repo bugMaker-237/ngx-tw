@@ -1,8 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./projects/**/*.{html,ts}"],
+  content: {
+    files: ["./projects/**/*.{html,ts}"],
+    extract: {
+      html: require("./tailwindcss-class-extractor.js"),
+      ts: require("./tailwindcss-class-extractor.js"),
+    },
+  },
   important: true,
   darkMode: "selector",
+
   theme: {
     extend: {
       colors: {

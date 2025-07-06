@@ -1,0 +1,203 @@
+<div class="relative">
+  <!-- Main dropdown button -->
+  <tw-button
+    (click)="toggleOpen()"
+    [disabled]="disabled"
+  >
+    <span class="font-medium">{{ formatDateRangeDisplay() }}</span>
+    <tw-icon
+      svgIcon="hero:chevron-down"
+      class="ml-2 transition-transform"
+      [class.rotate-180]="isOpen"
+    ></tw-icon>
+  </tw-button>
+
+  <!-- Date range picker dropdown panel using cdkConnectedOverlay -->
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayHasBackdrop]="true"
+    [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+    [cdkConnectedOverlayOrigin]="elementRef.nativeElement.firstElementChild"
+    [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayPositions]="positions"
+    [cdkConnectedOverlayScrollStrategy]="blockScrollStrategy"
+    (backdropClick)="closeDropdown()"
+    (detach)="closeDropdown()"
+  >
+    <div
+      [ngClass]="{'bg-white rounded-lg shadow-lg border border-gray-200': true, 'w-[720px]': !isMobileView, 'w-full max-w-md': isMobileView}"
+    >
+      <!-- Mobile View -->
+      @if(isMobileView) {
+      <div class="p-4">
+        <!-- Date inputs for mobile -->
+        <div class="flex flex-col mb-4">
+          <div class="mb-4">
+            <label class="block text-sm text-gray-600 mb-1">Start</label>
+            <div class="relative">
+              <input
+                type="text"
+                [value]="formatDateForInput(selectedRange.start)"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                placeholder="DD / MM / YYYY"
+                (change)="onStartDateInput($event)"
+              />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm text-gray-600 mb-1">End</label>
+            <div class="relative">
+              <input
+                type="text"
+                [value]="formatDateForInput(selectedRange.end)"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                placeholder="DD / MM / YYYY"
+                (change)="onEndDateInput($event)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Presets for mobile -->
+        <div class="mb-4">
+          <label class="block text-sm text-gray-600 mb-2">Presets</label>
+          <div class="grid grid-cols-2 gap-2 max-h-40 overflow-y-auto">
+            @for(preset of presets; track preset.id) {
+            <button
+              class="px-3 py-2 text-sm border rounded-md text-center"
+              [class.bg-blue-50]="selectedPreset === preset.id"
+              [class.text-blue-700]="selectedPreset === preset.id"
+              [class.border-blue-500]="selectedPreset === preset.id"
+              (click)="selectPreset(preset.id)"
+            >
+              {{ preset.label }}
+            </button>
+            }
+          </div>
+        </div>
+
+        <!-- Footer with action buttons -->
+        <div class="flex justify-end mt-4 gap-2">
+          <tw-button
+            type="basic"
+            twClass="bg-white text-sm"
+            (click)="cancelSelection()"
+          >
+            Clear
+          </tw-button>
+          <tw-button
+            color="primary"
+            class="ml-2"
+            twClass="text-sm"
+            type="filled"
+            (click)="applySelection()"
+          >
+            Apply
+          </tw-button>
+        </div>
+      </div>
+      }
+
+      <!-- Desktop View -->
+      @if(!isMobileView) {
+      <div class="flex">
+        <!-- Left sidebar with preset date ranges -->
+        <div class="w-48 border-r border-gray-200">
+          <ul class="py-1">
+            @for(preset of presets; track preset.id) {
+            <li
+              class="px-4 py-2 text-sm cursor-pointer"
+              [class.bg-blue-50]="selectedPreset === preset.id"
+              [class.text-blue-700]="selectedPreset === preset.id"
+              [class.hover:bg-gray-100]="selectedPreset !== preset.id"
+              (click)="selectPreset(preset.id)"
+            >{{ preset.label }}</li>
+            }
+          </ul>
+        </div>
+
+        <!-- Right side with date inputs and calendars -->
+        <div class="flex-1 p-4">
+          <!-- Date inputs -->
+          <div class="flex items-center mb-4">
+            <div class="mr-4">
+              <label class="block text-sm text-gray-600 mb-1">Start</label>
+              <div class="relative">
+                <input
+                  type="text"
+                  [value]="formatDate(selectedRange.start)"
+                  class="block w-36 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                  readonly
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-600 mb-1">End</label>
+              <div class="relative">
+                <input
+                  type="text"
+                  [value]="formatDate(selectedRange.end)"
+                  class="block w-36 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Dual calendars -->
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Left calendar (for start date) -->
+            <div class="border rounded-md p-3">
+              <tw-calendar
+                [selectedDate]="null"
+                [rangeStart]="selectedRange.start"
+                [rangeEnd]="selectedRange.end"
+                [isRange]="true"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                (rangeSelected)="onRangeSelected($event)"
+                [displayDate]="leftCalendarDate"
+                (dateSelected)="onLeftCalendarChange($event)"
+              ></tw-calendar>
+            </div>
+
+            <!-- Right calendar (shows next month) -->
+            <div class="border rounded-md p-3">
+              <tw-calendar
+                [selectedDate]="null"
+                [rangeStart]="selectedRange.start"
+                [rangeEnd]="selectedRange.end"
+                [isRange]="true"
+                [minDate]="minDate"
+                [maxDate]="maxDate"
+                (rangeSelected)="onRangeSelected($event)"
+                [displayDate]="rightCalendarDate"
+              ></tw-calendar>
+            </div>
+          </div>
+
+          <!-- Footer with action buttons -->
+          <div class="flex justify-end mt-4 gap-2">
+            <tw-button
+              type="basic"
+              twClass="bg-white text-sm"
+              (click)="cancelSelection()"
+            >
+              Clear
+            </tw-button>
+            <tw-button
+              color="primary"
+              class="ml-2"
+              twClass="text-sm"
+              type="filled"
+              (click)="applySelection()"
+            >
+              Apply
+            </tw-button>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </ng-template>
+</div>

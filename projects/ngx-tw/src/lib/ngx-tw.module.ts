@@ -4,9 +4,11 @@ import { TwAlerts } from './alerts/alerts.component';
 import { TwAutocomplete } from './autocomplete/autocomplete.component';
 import { TwButtonGroup } from './button-group/button-group.component';
 import { TwButton } from './button/button.component';
+import { TwCalendar } from './calendar/calendar.component';
 import { TwChipItem } from './chip/chip-item-maker.component';
 import { TwChipList } from './chip/chip-list.component';
 import { TwChip } from './chip/chip.component';
+import { TwDateRangePicker } from './date-picker/date-range-picker.component';
 import { TwDialog } from './dialog/dialog';
 import { TwExpanderModule } from './expander';
 import { TwInputField } from './input-field/input-field.component';
@@ -48,6 +50,8 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwSkeletonDirective,
     TwAutocomplete,
     TwChipItem,
+    TwDateRangePicker,
+    TwCalendar,
   ],
   providers: [TwDialog, TwAlertService],
   exports: [
@@ -73,6 +77,8 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwSkeletonDirective,
     TwAutocomplete,
     TwChipItem,
+    TwDateRangePicker,
+    TwCalendar,
   ],
 })
 export class NgxTwModule {}

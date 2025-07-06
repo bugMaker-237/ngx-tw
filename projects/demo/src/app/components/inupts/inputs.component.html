@@ -99,15 +99,6 @@
   </div>
 
   <div class="flex flex-col gap-3">
-    <span>Switch</span>
-    <tw-switch
-      [formControl]="form.controls.runCycle"
-      label="Run on next cycle"
-      color="accent"
-    />
-  </div>
-
-  <div class="flex flex-col gap-3">
     <span>Auto complete</span>
     <tw-autocomplete
       name="Auto complete text"
@@ -131,5 +122,29 @@
     </ng-template>
   </div>
 
+
+  <div class="flex flex-col gap-3">
+    <span>Calendar</span>
+    <tw-calendar></tw-calendar>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Calendar Range</span>
+    <tw-calendar [isRange]="true"></tw-calendar>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Date range picker</span>
+    <tw-date-range-picker></tw-date-range-picker>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Switch</span>
+    <tw-switch
+      [formControl]="form.controls.runCycle"
+      label="Run on next cycle"
+      color="accent"
+    />
+  </div>
 
 </form>
