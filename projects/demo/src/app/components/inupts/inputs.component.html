@@ -183,4 +183,31 @@
     />
   </div>
 
+  <div class="flex flex-col gap-3">
+    <span>Alphanumeric Code (AA-9999-AA)</span>
+    <tw-masked-input
+      name="alphanumericCode"
+      inputType="text"
+      [formControl]="form.controls.alphanumericCode"
+      placeholder="XX-0000-XX"
+      [maskConfig]="alphanumericMask"
+      [allowAlphanumeric]="true"
+      [validator]="validateAlphanumericCode"
+    />
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Phone Number with Icons</span>
+    <tw-masked-input
+      name="phoneWithIcons"
+      inputType="tel"
+      [formControl]="form.controls.phoneWithIcons"
+      placeholder="Phone Number"
+      [maskConfig]="phoneWithIconsMask"
+      iconPrefix="hero:phone"
+      iconSuffix="hero:information-circle"
+      iconSuffixClass="text-blue-500"
+    />
+  </div>
+
 </form>

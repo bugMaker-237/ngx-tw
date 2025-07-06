@@ -48,51 +48,93 @@ export class InputsComponent {
     runCycle: new FormControl(false, []),
     phoneNumber: new FormControl('', []),
     dateMMYYYY: new FormControl('', []),
-    dateDDMMYYYY: new FormControl('', [])
+    dateDDMMYYYY: new FormControl('', []),
+    alphanumericCode: new FormControl('', []),
+    phoneWithIcons: new FormControl('', []),
   });
-  
+
   // Mask configurations
   phoneMask = {
     mask: '(999) 999-9999',
     guide: true,
     placeholderChar: '_',
-    showMask: true
+    showMask: true,
   };
-  
+
+  phoneWithIconsMask = {
+    mask: '(999) 999-9999',
+    guide: true,
+    placeholderChar: '_',
+    showMask: true,
+  };
+
+  alphanumericMask = {
+    mask: 'AA-9999-AA',
+    guide: true,
+    placeholderChar: '_',
+    showMask: true,
+  };
+
   dateMMYYYYMask = {
     mask: '99/9999',
     guide: true,
     placeholderChar: '_',
-    showMask: true
+    showMask: true,
   };
-  
+
   dateDDMMYYYYMask = {
     mask: '99-99-9999',
     guide: true,
     placeholderChar: '_',
-    showMask: true
+    showMask: true,
   };
-  
+
   validateDate = (value: string): boolean | string => {
     if (!value || value.length < 10) return true; // Allow incomplete input
-    
+
     // Extract day, month, year
     const parts = value.split('-');
     if (parts.length !== 3) return 'Invalid date format';
-    
+
     const day = parseInt(parts[0], 10);
     const month = parseInt(parts[1], 10);
     const year = parseInt(parts[2], 10);
-    
+
     // Basic validation
-    if (isNaN(day) || isNaN(month) || isNaN(year)) return 'Date contains non-numeric values';
+    if (isNaN(day) || isNaN(month) || isNaN(year))
+      return 'Date contains non-numeric values';
     if (month < 1 || month > 12) return 'Month must be between 1 and 12';
     if (day < 1 || day > 31) return 'Day must be between 1 and 31';
-    
+
     // Check days in month
     const daysInMonth = new Date(year, month, 0).getDate();
     if (day > daysInMonth) return `Invalid day for month ${month}`;
-    
+
+    return true;
+  };
+
+  validateAlphanumericCode = (value: string): boolean | string => {
+    if (!value || value.length < 9) return true; // Allow incomplete input
+
+    // Extract the parts of the code (AA-9999-AA)
+    const parts = value.split('-');
+    if (parts.length !== 3) return 'Invalid format';
+
+    // First part should be 2 letters
+    if (parts[0].length !== 2 || !/^[A-Za-z]{2}$/.test(parts[0])) {
+      return 'First part should be 2 letters';
+    }
+
+    // Second part should be 4 digits
+    if (parts[1].length !== 4 || !/^[0-9]{4}$/.test(parts[1])) {
+      return 'Second part should be 4 digits';
+    }
+
+    // Third part should be 2 letters
+    if (parts[2].length !== 2 || !/^[A-Za-z]{2}$/.test(parts[2])) {
+      return 'Third part should be 2 letters';
+    }
+
     return true;
   };
 

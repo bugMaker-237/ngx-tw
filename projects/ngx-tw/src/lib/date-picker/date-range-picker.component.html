@@ -35,24 +35,28 @@
           <div class="mb-4">
             <label class="block text-sm text-gray-600 mb-1">Start</label>
             <div class="relative">
-              <input
-                type="text"
+              <tw-masked-input
                 [value]="formatDateForInput(selectedRange.start)"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
-                placeholder="DD / MM / YYYY"
-                (change)="onStartDateInput($event)"
+                [placeholder]="'DD / MM / YYYY'"
+                [maskConfig]="dateMaskConfig"
+                [validator]="validateDate('start')"
+                name="startDate"
+                [(ngModel)]="startDateModel"
+                (ngModelChange)="onStartDateInput($event || '')"
               />
             </div>
           </div>
           <div>
             <label class="block text-sm text-gray-600 mb-1">End</label>
             <div class="relative">
-              <input
-                type="text"
+              <tw-masked-input
                 [value]="formatDateForInput(selectedRange.end)"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
-                placeholder="DD / MM / YYYY"
-                (change)="onEndDateInput($event)"
+                [placeholder]="'DD / MM / YYYY'"
+                [maskConfig]="dateMaskConfig"
+                [validator]="validateDate('end')"
+                name="endDate"
+                [(ngModel)]="endDateModel"
+                (ngModelChange)="onEndDateInput($event || '')"
               />
             </div>
           </div>
@@ -81,7 +85,7 @@
           <tw-button
             type="basic"
             twClass="bg-white text-sm"
-            (click)="cancelSelection()"
+            (click)="closeDropdown()"
           >
             Clear
           </tw-button>
@@ -90,6 +94,7 @@
             class="ml-2"
             twClass="text-sm"
             type="filled"
+            [disabled]="!isValid"
             (click)="applySelection()"
           >
             Apply
@@ -119,26 +124,34 @@
         <!-- Right side with date inputs and calendars -->
         <div class="flex-1 p-4">
           <!-- Date inputs -->
-          <div class="flex items-center mb-4">
-            <div class="mr-4">
+          <div class="flex w-full items-start mb-4">
+            <div class="mr-4 flex-grow">
               <label class="block text-sm text-gray-600 mb-1">Start</label>
               <div class="relative">
-                <input
-                  type="text"
-                  [value]="formatDate(selectedRange.start)"
-                  class="block w-36 px-3 py-2 border border-gray-300 rounded-md text-sm"
-                  readonly
+                <tw-masked-input
+                  [value]="formatDateForInput(selectedRange.start)"
+                  [placeholder]="'DD / MM / YYYY'"
+                  [maskConfig]="dateMaskConfig"
+                  [validator]="validateDate('start')"
+                  name="desktopStartDate"
+                  [(ngModel)]="startDateModel"
+                  (ngModelChange)="onStartDateInput($event || '')"
+                  twClass="w-36"
                 />
               </div>
             </div>
-            <div>
+            <div class="flex-grow">
               <label class="block text-sm text-gray-600 mb-1">End</label>
               <div class="relative">
-                <input
-                  type="text"
-                  [value]="formatDate(selectedRange.end)"
-                  class="block w-36 px-3 py-2 border border-gray-300 rounded-md text-sm"
-                  readonly
+                <tw-masked-input
+                  [value]="formatDateForInput(selectedRange.end)"
+                  [placeholder]="'DD / MM / YYYY'"
+                  [maskConfig]="dateMaskConfig"
+                  [validator]="validateDate('end')"
+                  name="desktopEndDate"
+                  [(ngModel)]="endDateModel"
+                  (ngModelChange)="onEndDateInput($event || '')"
+                  twClass="w-36"
                 />
               </div>
             </div>
@@ -181,7 +194,7 @@
             <tw-button
               type="basic"
               twClass="bg-white text-sm"
-              (click)="cancelSelection()"
+              (click)="closeDropdown()"
             >
               Clear
             </tw-button>
@@ -190,6 +203,7 @@
               class="ml-2"
               twClass="text-sm"
               type="filled"
+              [disabled]="!isValid"
               (click)="applySelection()"
             >
               Apply
