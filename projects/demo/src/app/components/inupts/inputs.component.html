@@ -147,4 +147,40 @@
     />
   </div>
 
+  <h3 class="my-4 text-xl mt-8">Masked Inputs</h3>
+
+  <div class="flex flex-col gap-3">
+    <span>Phone Number (999) 999-9999</span>
+    <tw-masked-input
+      name="phoneNumber"
+      inputType="tel"
+      [formControl]="form.controls.phoneNumber"
+      placeholder="Phone Number"
+      [maskConfig]="phoneMask"
+    />
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Date (MM/YYYY)</span>
+    <tw-masked-input
+      name="dateMMYYYY"
+      inputType="text"
+      [formControl]="form.controls.dateMMYYYY"
+      placeholder="MM/YYYY"
+      [maskConfig]="dateMMYYYYMask"
+    />
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span>Date (DD-MM-YYYY)</span>
+    <tw-masked-input
+      name="dateDDMMYYYY"
+      inputType="text"
+      [formControl]="form.controls.dateDDMMYYYY"
+      placeholder="DD-MM-YYYY"
+      [maskConfig]="dateDDMMYYYYMask"
+      [validator]="validateDate"
+    />
+  </div>
+
 </form>

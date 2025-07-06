@@ -17,6 +17,8 @@ export * from './lib/dialog/dialog';
 export * from './lib/expander';
 export * from './lib/icon/icon.component';
 export * from './lib/input-field/input-field.component';
+export * from './lib/input-field/masked-input.component';
+export * from './lib/input-field/masked-input-field-interface';
 export * from './lib/menu';
 export * from './lib/menu/menu-item.directive';
 export * from './lib/menu/menu-trigger.directive';

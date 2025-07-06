@@ -15,6 +15,7 @@ import {
   TwDateRangePicker,
   TwIcon,
   TwInputField,
+  TwMaskedInput,
   TwSwitch,
 } from 'ngx-tw';
 
@@ -26,7 +27,7 @@ import {
     TwIcon,
     TwInputField,
     TwButton,
-    TwInputField,
+    TwMaskedInput,
     TwSwitch,
     TwChip,
     TwChipList,
@@ -45,7 +46,55 @@ export class InputsComponent {
     nameIconPrefixSuffix: new FormControl('', []),
     description: new FormControl('', []),
     runCycle: new FormControl(false, []),
+    phoneNumber: new FormControl('', []),
+    dateMMYYYY: new FormControl('', []),
+    dateDDMMYYYY: new FormControl('', [])
   });
+  
+  // Mask configurations
+  phoneMask = {
+    mask: '(999) 999-9999',
+    guide: true,
+    placeholderChar: '_',
+    showMask: true
+  };
+  
+  dateMMYYYYMask = {
+    mask: '99/9999',
+    guide: true,
+    placeholderChar: '_',
+    showMask: true
+  };
+  
+  dateDDMMYYYYMask = {
+    mask: '99-99-9999',
+    guide: true,
+    placeholderChar: '_',
+    showMask: true
+  };
+  
+  validateDate = (value: string): boolean | string => {
+    if (!value || value.length < 10) return true; // Allow incomplete input
+    
+    // Extract day, month, year
+    const parts = value.split('-');
+    if (parts.length !== 3) return 'Invalid date format';
+    
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+    
+    // Basic validation
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return 'Date contains non-numeric values';
+    if (month < 1 || month > 12) return 'Month must be between 1 and 12';
+    if (day < 1 || day > 31) return 'Day must be between 1 and 31';
+    
+    // Check days in month
+    const daysInMonth = new Date(year, month, 0).getDate();
+    if (day > daysInMonth) return `Invalid day for month ${month}`;
+    
+    return true;
+  };
 
   chips = [
     {

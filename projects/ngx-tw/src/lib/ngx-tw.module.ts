@@ -12,6 +12,7 @@ import { TwDateRangePicker } from './date-picker/date-range-picker.component';
 import { TwDialog } from './dialog/dialog';
 import { TwExpanderModule } from './expander';
 import { TwInputField } from './input-field/input-field.component';
+import { TwMaskedInput } from './input-field/masked-input.component';
 import { TwMenuModule } from './menu';
 import { TwOption } from './select/option/option.component';
 import { TwSelect } from './select/select.component';
@@ -33,6 +34,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwExpanderModule,
     TwStickyContentHeader,
     TwInputField,
+    TwMaskedInput,
     TwMenuModule,
     TwSelect,
     TwStickyContentHeader,
@@ -60,6 +62,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwExpanderModule,
     TwStickyContentHeader,
     TwInputField,
+    TwMaskedInput,
     TwMenuModule,
     TwSelect,
     TwStickyContentHeader,
