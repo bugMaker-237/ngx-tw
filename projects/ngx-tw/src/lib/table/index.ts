@@ -6,7 +6,7 @@ import {
   TwRowDefDirective,
   TwTableColumnRowDefinitions,
 } from './column-definitions.directive';
-import { TwTable } from './table.component';
+import { ITableQueryChange, TwTable } from './table.component';
 
 @NgModule({
   declarations: [],
@@ -17,6 +17,7 @@ import { TwTable } from './table.component';
 export class TwTableModule {}
 
 export {
+  ITableQueryChange,
   TwCellDefDirective,
   TwColumnDefDirective,
   TwHeaderCellDefDirective,
