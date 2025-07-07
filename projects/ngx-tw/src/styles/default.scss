@@ -1,16 +1,15 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@use "tailwindcss/base";
+@use "tailwindcss/components";
+@use "tailwindcss/utilities";
+@use "@angular/cdk/overlay-prebuilt.css";
 
-@import "./components/buttons";
-@import "./components/inputs";
-@import "./components/select";
-@import "./components/tabs";
-@import "./components/chips";
-@import "./fonts/blinker";
-@import "./fonts/montserrat";
-
-@import "@angular/cdk/overlay-prebuilt.css";
+@use "./components/buttons";
+@use "./components/inputs";
+@use "./components/select";
+@use "./components/tabs";
+@use "./components/chips";
+@use "./fonts/blinker";
+@use "./fonts/montserrat";
 
 body {
   @apply text-gray-600 bg-gray-100 dark:text-white dark:bg-gray-900;
@@ -25,8 +24,8 @@ h3,
 h4,
 h5,
 h6 {
-  // font-family: -apple-system, BlinkMacSystemFont, Montserrat, Blinker,
-  //   Helvetica Neue, Ubuntu, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Montserrat, Blinker,
+    Helvetica Neue, Ubuntu, sans-serif;
 }
 
 .tw-dropdown-menu-item {

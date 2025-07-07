@@ -97,4 +97,4 @@ const danger = {
   },
 };
 
-export default { primary, accent, danger };
+module.exports = { primary, accent, danger };

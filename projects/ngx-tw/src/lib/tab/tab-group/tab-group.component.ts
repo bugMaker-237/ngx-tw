@@ -1,4 +1,4 @@
-import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -21,7 +21,7 @@ import { TwTabItem } from '../tab-item-maker.component';
 import { __TwTabItem } from '../tab.component';
 
 @Component({
-    imports: [__TwTabItem, NgFor, NgTemplateOutlet, NgIf, RouterOutlet],
+    imports: [__TwTabItem, NgTemplateOutlet, RouterOutlet],
     selector: 'tw-tab-group',
     templateUrl: './tab-group.component.html',
     styleUrls: ['./tab-group.component.scss']

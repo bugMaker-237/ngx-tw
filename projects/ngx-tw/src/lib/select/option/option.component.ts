@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -30,7 +30,7 @@ export class OptionSelectionChange<T = any> {
 
 @Component({
     selector: 'tw-option',
-    imports: [NgClass, TwIcon, NgIf],
+    imports: [NgClass, TwIcon],
     templateUrl: './option.component.html',
     host: {
         '[attr.id]': 'id',

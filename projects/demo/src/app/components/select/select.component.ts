@@ -1,11 +1,11 @@
-import { NgFor } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TwOption, TwSelect } from 'ngx-tw';
 
 @Component({
     selector: 'app-select',
-    imports: [TwSelect, TwOption, NgFor, FormsModule],
+    imports: [TwSelect, TwOption, FormsModule],
     templateUrl: './select.component.html',
     styleUrl: './select.component.scss'
 })

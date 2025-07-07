@@ -1,17 +1,17 @@
 @if (dataLoading) {
 
-<div class="p-6 flex items-center justify-center w-100">
-  <tw-spinner />
-</div>
-}@else{
+  <div class="p-6 flex items-center justify-center w-100">
+    <tw-spinner />
+  </div>
+  }@else{
 
-@if (dataSource && !dataSource.length) {
-<ng-content #emptyTemplate></ng-content>
+  @if (dataSource && !dataSource.length) {
+    <ng-content #emptyTemplate></ng-content>
 
-}@else {
-<ng-container *ngTemplateOutlet="dataTemplate"></ng-container>
+    }@else {
+    <ng-container *ngTemplateOutlet="dataTemplate"></ng-container>
 
-}
+  }
 
 }
 
@@ -26,53 +26,55 @@
               cdk-table
               [dataSource]="dataSource"
               class="tw-table min-w-full divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
-            >
-              <ng-container
-                cdkColumnDef="checkbox"
-                *ngIf="displayCheckbox"
               >
-                <th
-                  cdk-header-cell
-                  *cdkHeaderCellDef
-                  scope="col"
-                  class="py-2.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                >
-                  <input
-                    type="checkbox"
-                    class="text-blue-500 shadow-sm border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                  > </th>
-                <td
-                  cdk-cell
-                  *cdkCellDef="let element"
-                  class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap"
-                >
-                  <input
-                    type="checkbox"
-                    class="text-blue-500 shadow-sm border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
-                  > </td>
-              </ng-container>
-
-              <ng-container
-                *ngFor="let col of columns"
-                [cdkColumnDef]="col.name"
-              >
-                <th
-                  cdk-header-cell
-                  *cdkHeaderCellDef
-                  scope="col"
-                  class="px-4 py-2.5 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                >
-                  <ng-container *ngTemplateOutlet="col.headerCellDef!.template"></ng-container>
-                </th>
-                <td
-                  cdk-cell
-                  *cdkCellDef="let element"
-                  class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
-                >
-                  <ng-container *ngTemplateOutlet="col.cellDef!.template;context: {$implicit: element}">
+              @if (displayCheckbox) {
+                <ng-container
+                  cdkColumnDef="checkbox"
+                  >
+                  <th
+                    cdk-header-cell
+                    *cdkHeaderCellDef
+                    scope="col"
+                    class="py-2.5 px-4 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                    >
+                    <input
+                      type="checkbox"
+                      class="text-blue-500 shadow-sm border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                    > </th>
+                    <td
+                      cdk-cell
+                      *cdkCellDef="let element"
+                      class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                      >
+                    <input
+                      type="checkbox"
+                      class="text-blue-500 shadow-sm border-gray-300 rounded dark:bg-gray-900 dark:ring-offset-gray-900 dark:border-gray-700"
+                    > </td>
                   </ng-container>
-                </td>
-              </ng-container>
+                }
+
+                @for (col of columns; track col) {
+                  <ng-container
+                    [cdkColumnDef]="col.name"
+                    >
+                  <th
+                    cdk-header-cell
+                    *cdkHeaderCellDef
+                    scope="col"
+                    class="px-4 py-2.5 text-sm font-semibold text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                    >
+                    <ng-container *ngTemplateOutlet="col.headerCellDef!.template"></ng-container>
+                  </th>
+                  <td
+                    cdk-cell
+                    *cdkCellDef="let element"
+                    class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                    >
+                    <ng-container *ngTemplateOutlet="col.cellDef!.template;context: {$implicit: element}">
+                    </ng-container>
+                  </td>
+                </ng-container>
+              }
 
               <tr
                 cdk-header-row
@@ -86,56 +88,57 @@
                 [routerLink]="rowDef?.getLink?.(row)"
                 (click)="itemClick.emit(row)"
                 class="cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-200 transition-colors"
-              >
+                >
               </tr>
             </table>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="mt-6 sm:flex sm:items-center sm:justify-between"
-      *ngIf="displayPagination"
-    >
-      <div class="text-sm text-gray-500 dark:text-gray-400">
-        Page <span class="font-medium text-gray-700 dark:text-gray-100">{{pageNumber}} of {{totalPagesCount}}</span>
+    @if (displayPagination) {
+      <div
+        class="mt-6 sm:flex sm:items-center sm:justify-between"
+        >
+        <div class="text-sm text-gray-500 dark:text-gray-400">
+          Page <span class="font-medium text-gray-700 dark:text-gray-100">{{pageNumber}} of {{totalPagesCount}}</span>
+        </div>
+        <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
+          <tw-select
+            class="w-16"
+            color="primary"
+            [(ngModel)]="selectedPageSize"
+            [placeholder]="selectedPageSize.toString()"
+            >
+            @for (item of pageSizes; track item) {
+              <tw-option
+                [useSelectedIndicator]="false"
+                [value]="item"
+                >
+                {{item}}
+              </tw-option>
+            }
+          </tw-select>
+          <tw-button
+            type="outlined"
+            class="w-32"
+            [disabled]="pageNumber === 1"
+            (click)="movePrevious()"
+            >
+            <tw-icon svgIcon="hero:arrow-long-left" />
+            <span>Previous</span>
+          </tw-button>
+          <tw-button
+            type="outlined"
+            class="w-32"
+            (click)="moveNext()"
+            [disabled]="pageNumber === totalPagesCount"
+            >
+            <span>Next</span>
+            <tw-icon svgIcon="hero:arrow-long-right" />
+          </tw-button>
+        </div>
       </div>
-
-      <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-        <tw-select
-          class="w-16"
-          color="primary"
-          [(ngModel)]="selectedPageSize"
-          [placeholder]="selectedPageSize.toString()"
-        >
-          <tw-option
-            *ngFor="let item of pageSizes"
-            [useSelectedIndicator]="false"
-            [value]="item"
-          >
-            {{item}}
-          </tw-option>
-        </tw-select>
-        <tw-button
-          type="outlined"
-          class="w-32"
-          [disabled]="pageNumber === 1"
-          (click)="movePrevious()"
-        >
-          <tw-icon svgIcon="hero:arrow-long-left" />
-          <span>Previous</span>
-        </tw-button>
-        <tw-button
-          type="outlined"
-          class="w-32"
-          (click)="moveNext()"
-          [disabled]="pageNumber === totalPagesCount"
-        >
-          <span>Next</span>
-          <tw-icon svgIcon="hero:arrow-long-right" />
-        </tw-button>
-      </div>
-    </div>
+    }
 
 
   </section>

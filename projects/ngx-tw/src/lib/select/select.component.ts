@@ -12,7 +12,7 @@ import {
   ConnectedPosition,
   Overlay,
 } from '@angular/cdk/overlay';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -40,7 +40,7 @@ let _uniqueIdCounter = 0;
 
 @Component({
     selector: 'tw-select',
-    imports: [NgClass, NgIf, CdkConnectedOverlay],
+    imports: [NgClass, CdkConnectedOverlay],
     templateUrl: './select.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {

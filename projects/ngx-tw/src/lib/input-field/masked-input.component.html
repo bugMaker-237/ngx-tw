@@ -1,20 +1,21 @@
 <div class="flex flex-col gap-2">
   @if (showLabel) {
-  <label
-    [for]="name"
-    class="font-semibold"
-  >{{label || placeholder}}</label>
+    <label
+      [for]="name"
+      class="font-semibold"
+    >{{label || placeholder}}</label>
   }
   <div class="relative flex items-center w-full">
-    <span
-      class="absolute ml-2"
-      *ngIf="iconPrefix"
-    >
-      <tw-icon
-        class="text-gray-400 {{ iconPrefixClass }}"
-        [svgIcon]="iconPrefix"
-      />
-    </span>
+    @if (iconPrefix) {
+      <span
+        class="absolute ml-2"
+        >
+        <tw-icon
+          class="text-gray-400 {{ iconPrefixClass }}"
+          [svgIcon]="iconPrefix"
+          />
+      </span>
+    }
 
     <input
       #inputElement
@@ -35,19 +36,20 @@
         'icon-right': iconSuffix && !iconPrefix,
         'icon-left-right': iconSuffix && iconPrefix
       }"
-    />
-
-    <span
-      class="absolute mr-2 right-0"
-      *ngIf="iconSuffix"
-    >
-      <tw-icon
-        class="text-gray-400 {{ iconSuffixClass }}"
-        [svgIcon]="iconSuffix"
       />
-    </span>
+
+    @if (iconSuffix) {
+      <span
+        class="absolute mr-2 right-0"
+        >
+        <tw-icon
+          class="text-gray-400 {{ iconSuffixClass }}"
+          [svgIcon]="iconSuffix"
+          />
+      </span>
+    }
   </div>
   @if (errors) {
-  <span class="bg-red-100 text-red-900 rounded-lg shadow-sm px-2 py-1 text-sm">{{errors}}</span>
+    <span class="bg-red-100 text-red-900 rounded-lg shadow-sm px-2 py-1 text-sm">{{errors}}</span>
   }
 </div>

@@ -7,36 +7,30 @@ import {
 } from '@angular/forms';
 import {
   TwAutocomplete,
-  TwButton,
   TwCalendar,
-  TwChip,
   TwChipItem,
   TwChipList,
   TwDateRangePicker,
-  TwIcon,
   TwInputField,
   TwMaskedInput,
   TwSwitch,
 } from 'ngx-tw';
 
 @Component({
-    selector: 'app-inputs',
-    templateUrl: './inputs.component.html',
-    imports: [
-        TwIcon,
-        TwInputField,
-        TwButton,
-        TwMaskedInput,
-        TwSwitch,
-        TwChip,
-        TwChipList,
-        FormsModule,
-        ReactiveFormsModule,
-        TwAutocomplete,
-        TwChipItem,
-        TwDateRangePicker,
-        TwCalendar,
-    ]
+  selector: 'app-inputs',
+  templateUrl: './inputs.component.html',
+  imports: [
+    TwInputField,
+    TwMaskedInput,
+    TwSwitch,
+    TwChipList,
+    FormsModule,
+    ReactiveFormsModule,
+    TwAutocomplete,
+    TwChipItem,
+    TwDateRangePicker,
+    TwCalendar,
+  ],
 })
 export class InputsComponent {
   form = new FormGroup({

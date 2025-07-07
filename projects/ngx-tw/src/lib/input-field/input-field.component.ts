@@ -1,5 +1,5 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, Input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NgControl } from '@angular/forms';
 import { ColorTypes } from '../color-types';
@@ -7,7 +7,7 @@ import { TwIcon } from '../icon/icon.component';
 import { InputField, InputTypes } from './input-field-interface';
 
 @Component({
-    imports: [TwIcon, NgClass, FormsModule, NgIf, TextFieldModule],
+    imports: [TwIcon, NgClass, FormsModule, TextFieldModule],
     selector: 'tw-input-field',
     host: {
         class: 'tw-input-wrapper',

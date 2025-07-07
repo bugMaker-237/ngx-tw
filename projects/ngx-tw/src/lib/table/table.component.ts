@@ -1,6 +1,6 @@
 import { ArrayDataSource } from '@angular/cdk/collections';
 import { CdkTableModule, DataSource } from '@angular/cdk/table';
-import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -33,18 +33,16 @@ export interface ITableQueryChange {
 
 @Component({
     imports: [
-        TwIcon,
-        TwButton,
-        NgIf,
-        NgFor,
-        NgTemplateOutlet,
-        TwSelect,
-        TwOption,
-        CdkTableModule,
-        RouterLink,
-        TwSpinner,
-        FormsModule,
-    ],
+    TwIcon,
+    TwButton,
+    NgTemplateOutlet,
+    TwSelect,
+    TwOption,
+    CdkTableModule,
+    RouterLink,
+    TwSpinner,
+    FormsModule
+],
     selector: 'tw-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss']

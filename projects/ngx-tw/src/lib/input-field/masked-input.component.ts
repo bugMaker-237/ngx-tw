@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -15,7 +15,7 @@ import { InputTypes } from './input-field-interface';
 import { MaskConfig, MaskedInputField } from './masked-input-field-interface';
 
 @Component({
-    imports: [TwIcon, NgClass, FormsModule, NgIf],
+    imports: [TwIcon, NgClass, FormsModule],
     selector: 'tw-masked-input',
     host: {
         class: 'tw-masked-input-wrapper',

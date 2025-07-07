@@ -1,4 +1,4 @@
-import { NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -11,19 +11,20 @@ import {
 import { TwButtonGroupItem } from './button-group-Item.component';
 
 @Component({
-    imports: [NgFor, NgTemplateOutlet],
+    imports: [NgTemplateOutlet],
     selector: 'tw-btn-group',
     template: ` <div class="tw-button-group {{ orientation }}">
-    <button
-      *ngFor="let item of children; let i = index"
-      class="tw-button-group-item"
-      [disabled]="item.disabled"
-      [class.selected-item]="selectedIndex === i"
-      (click)="changeSelection(i, item.value)"
-    >
-      <ng-container [ngTemplateOutlet]="item.content"></ng-container>
-    </button>
-  </div>`
+      @for (item of children; track item; let i = $index) {
+        <button
+          class="tw-button-group-item"
+          [disabled]="item.disabled"
+          [class.selected-item]="selectedIndex === i"
+          (click)="changeSelection(i, item.value)"
+          >
+          <ng-container [ngTemplateOutlet]="item.content"></ng-container>
+        </button>
+      }
+    </div>`
 })
 export class TwButtonGroup implements AfterViewInit {
   @ContentChildren(TwButtonGroupItem)
