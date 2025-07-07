@@ -17,17 +17,16 @@ import {
 import { TwMenuItemDirective } from './menu-item.directive';
 
 @Component({
-  selector: 'tw-menu',
-  standalone: true,
-  imports: [
-    CdkMenu,
-    CdkMenuTrigger,
-    NgTemplateOutlet,
-    CdkMenuItem,
-    CdkMenuItemCheckbox,
-    CdkMenuItemRadio,
-  ],
-  template: `
+    selector: 'tw-menu',
+    imports: [
+        CdkMenu,
+        CdkMenuTrigger,
+        NgTemplateOutlet,
+        CdkMenuItem,
+        CdkMenuItemCheckbox,
+        CdkMenuItemRadio,
+    ],
+    template: `
     <ng-template>
       <div
         class="bg-white dark:bg-slate-700 dark:text-white border border-gray-200 rounded-lg shadow-lg  w-full"
@@ -67,7 +66,7 @@ import { TwMenuItemDirective } from './menu-item.directive';
         } } }
       </div>
     </ng-template>
-  `,
+  `
 })
 export class TwMenu {
   @ViewChild(TemplateRef, { static: true }) menuTemplate?: TemplateRef<unknown>;

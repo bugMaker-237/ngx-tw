@@ -33,27 +33,26 @@ export interface DateRange {
 }
 
 @Component({
-  selector: 'tw-date-range-picker',
-  standalone: true,
-  templateUrl: 'date-range-picker.component.html',
-  imports: [
-    TwButton,
-    CommonModule,
-    TwCalendar,
-    FormsModule,
-    ReactiveFormsModule,
-    CdkConnectedOverlay,
-    NgClass,
-    TwIcon,
-    TwMaskedInput,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TwDateRangePicker),
-      multi: true,
-    },
-  ],
+    selector: 'tw-date-range-picker',
+    templateUrl: 'date-range-picker.component.html',
+    imports: [
+        TwButton,
+        CommonModule,
+        TwCalendar,
+        FormsModule,
+        ReactiveFormsModule,
+        CdkConnectedOverlay,
+        NgClass,
+        TwIcon,
+        TwMaskedInput,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TwDateRangePicker),
+            multi: true,
+        },
+    ]
 })
 export class TwDateRangePicker implements OnInit, ControlValueAccessor {
   @Input() isOpen = false;

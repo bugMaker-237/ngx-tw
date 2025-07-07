@@ -29,22 +29,21 @@ import { OverlayPositions } from '../TwElement';
 import { AutoCompleteManager } from './autocomplete-manager';
 
 @Component({
-  selector: 'tw-autocomplete',
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    CdkConnectedOverlay,
-    TwInputField,
-  ],
-  standalone: true,
-  templateUrl: './autocomplete.component.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TwAutocomplete),
-      multi: true,
-    },
-  ],
+    selector: 'tw-autocomplete',
+    imports: [
+        ReactiveFormsModule,
+        CommonModule,
+        CdkConnectedOverlay,
+        TwInputField,
+    ],
+    templateUrl: './autocomplete.component.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TwAutocomplete),
+            multi: true,
+        },
+    ]
 })
 export class TwAutocomplete
   implements OnInit, ControlValueAccessor, InputField

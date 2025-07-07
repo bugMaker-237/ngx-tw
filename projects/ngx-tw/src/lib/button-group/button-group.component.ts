@@ -11,10 +11,9 @@ import {
 import { TwButtonGroupItem } from './button-group-Item.component';
 
 @Component({
-  imports: [NgFor, NgTemplateOutlet],
-  selector: 'tw-btn-group',
-  standalone: true,
-  template: ` <div class="tw-button-group {{ orientation }}">
+    imports: [NgFor, NgTemplateOutlet],
+    selector: 'tw-btn-group',
+    template: ` <div class="tw-button-group {{ orientation }}">
     <button
       *ngFor="let item of children; let i = index"
       class="tw-button-group-item"
@@ -24,7 +23,7 @@ import { TwButtonGroupItem } from './button-group-Item.component';
     >
       <ng-container [ngTemplateOutlet]="item.content"></ng-container>
     </button>
-  </div>`,
+  </div>`
 })
 export class TwButtonGroup implements AfterViewInit {
   @ContentChildren(TwButtonGroupItem)

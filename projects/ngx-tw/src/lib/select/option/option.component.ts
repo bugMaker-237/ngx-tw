@@ -29,16 +29,15 @@ export class OptionSelectionChange<T = any> {
 }
 
 @Component({
-  selector: 'tw-option',
-  standalone: true,
-  imports: [NgClass, TwIcon, NgIf],
-  templateUrl: './option.component.html',
-  host: {
-    '[attr.id]': 'id',
-    '[attr.role]': 'option',
-    '(click)': 'select(true)',
-    class: 'tw-option',
-  },
+    selector: 'tw-option',
+    imports: [NgClass, TwIcon, NgIf],
+    templateUrl: './option.component.html',
+    host: {
+        '[attr.id]': 'id',
+        '[attr.role]': 'option',
+        '(click)': 'select(true)',
+        class: 'tw-option',
+    }
 })
 export class TwOption<T = any> implements OnInit {
   public selected: boolean = false;

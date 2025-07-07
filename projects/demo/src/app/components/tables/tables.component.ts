@@ -11,11 +11,10 @@ type Payment = {
 };
 
 @Component({
-  selector: 'app-tables',
-  standalone: true,
-  imports: [TwButton, TwButtonIcon, TwTableModule, TwIcon],
-  templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.scss'],
+    selector: 'app-tables',
+    imports: [TwButton, TwButtonIcon, TwTableModule, TwIcon],
+    templateUrl: './tables.component.html',
+    styleUrls: ['./tables.component.scss']
 })
 export class TablesComponent {
   displayedColumns = [

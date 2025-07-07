@@ -8,18 +8,17 @@ import { SelectComponent } from './select/select.component';
 import { TablesComponent } from './tables/tables.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    ButtonsComponent,
-    TablesComponent,
-    SelectComponent,
-    DragDropComponent,
-    ExpanderComponent,
-    MenuComponent,
-    InputsComponent,
-  ],
-  templateUrl: './components.component.html',
-  styleUrls: ['./components.component.scss'],
+    selector: 'app-root',
+    imports: [
+        ButtonsComponent,
+        TablesComponent,
+        SelectComponent,
+        DragDropComponent,
+        ExpanderComponent,
+        MenuComponent,
+        InputsComponent,
+    ],
+    templateUrl: './components.component.html',
+    styleUrls: ['./components.component.scss']
 })
 export class ComponentsComponent {}

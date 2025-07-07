@@ -3,10 +3,9 @@ import { TwIcon } from '../icon/icon.component';
 import { TwChipInterface } from './chip-interface';
 
 @Component({
-  selector: 'tw-chip',
-  standalone: true,
-  imports: [TwIcon],
-  template: `
+    selector: 'tw-chip',
+    imports: [TwIcon],
+    template: `
     <div class="tw-chip {{ twClass }}">
       @if(image){
       <img [src]="image" alt="Image Description" />
@@ -24,7 +23,7 @@ import { TwChipInterface } from './chip-interface';
       </div>
       }
     </div>
-  `,
+  `
 })
 export class TwChip implements TwChipInterface {
   @Input({ required: true }) label!: string;

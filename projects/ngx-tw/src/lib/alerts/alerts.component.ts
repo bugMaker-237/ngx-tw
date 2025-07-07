@@ -15,15 +15,14 @@ import { AlertType, IAlert } from './alert';
 import { TwAlertService } from './alert.service';
 
 @Component({
-  selector: 'tw-alerts',
-  standalone: true,
-  imports: [TwIcon, TwButtonIcon, TwButton],
-  templateUrl: './alerts.component.html',
-  styles: `
+    selector: 'tw-alerts',
+    imports: [TwIcon, TwButtonIcon, TwButton],
+    templateUrl: './alerts.component.html',
+    styles: `
     ::ng-deep :has(> .tw-alerts-overlayed-alert){
       z-index: 2000;
     }
-  `,
+  `
 })
 export class TwAlerts implements OnInit {
   private static _notificationRef = 0;

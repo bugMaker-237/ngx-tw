@@ -5,10 +5,9 @@ import { TwIcon } from '../icon/icon.component';
 import { ButtonType, TwButtonInterface } from './button-interface';
 
 @Component({
-  standalone: true,
-  imports: [NgClass, TwIcon],
-  selector: 'tw-button-icon',
-  template: `
+    imports: [NgClass, TwIcon],
+    selector: 'tw-button-icon',
+    template: `
     @if(href){
     <a
       class="tw-button-icon {{ twClass }} {{ type }} {{ color }}"
@@ -32,7 +31,7 @@ import { ButtonType, TwButtonInterface } from './button-interface';
     </button>
 
     }
-  `,
+  `
 })
 export class TwButtonIcon implements OnInit, TwButtonInterface {
   @Input() type?: ButtonType = 'basic';

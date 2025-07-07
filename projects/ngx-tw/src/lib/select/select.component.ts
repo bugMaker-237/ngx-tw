@@ -39,32 +39,31 @@ import { OptionSelectionChange, TwOption } from './option/option.component';
 let _uniqueIdCounter = 0;
 
 @Component({
-  selector: 'tw-select',
-  standalone: true,
-  imports: [NgClass, NgIf, CdkConnectedOverlay],
-  templateUrl: './select.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '[attr.tabindex]': '0',
-    '[attr.role]': 'combobox',
-    '[attr.aria-autocomplete]': 'none',
-    '[attr.id]': 'id',
-    '[attr.aria-controls]': 'isOpen ? id + "-panel" : null',
-    '[attr.aria-expanded]': 'isOpen',
-    '[attr.aria-disabled]': 'disabled.toString()',
-    '[attr.aria-haspopup]': '"listbox"',
-    '[attr.aria-labelledby]': '"listbox-label"',
-    '(keydown)': 'handleKeydown($event)',
-    '(click)': 'openPanel()',
-    '[class]': '"tw-select " + (color || "") + (twClass ? " " + twClass : "")',
-  },
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TwSelect),
-      multi: true,
+    selector: 'tw-select',
+    imports: [NgClass, NgIf, CdkConnectedOverlay],
+    templateUrl: './select.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[attr.tabindex]': '0',
+        '[attr.role]': 'combobox',
+        '[attr.aria-autocomplete]': 'none',
+        '[attr.id]': 'id',
+        '[attr.aria-controls]': 'isOpen ? id + "-panel" : null',
+        '[attr.aria-expanded]': 'isOpen',
+        '[attr.aria-disabled]': 'disabled.toString()',
+        '[attr.aria-haspopup]': '"listbox"',
+        '[attr.aria-labelledby]': '"listbox-label"',
+        '(keydown)': 'handleKeydown($event)',
+        '(click)': 'openPanel()',
+        '[class]': '"tw-select " + (color || "") + (twClass ? " " + twClass : "")',
     },
-  ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TwSelect),
+            multi: true,
+        },
+    ]
 })
 export class TwSelect
   implements ControlValueAccessor, OnInit, AfterContentInit

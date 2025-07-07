@@ -5,10 +5,9 @@ import { TwIcon } from '../icon/icon.component';
 import { TwStickyContentHeader } from '../sticky-content-header/sticky-content-header.component';
 
 @Component({
-  selector: 'tw-toolbar',
-  templateUrl: './toolbar.component.html',
-  imports: [TwStickyContentHeader, TwIcon, TwButtonIcon, TwButton],
-  standalone: true,
+    selector: 'tw-toolbar',
+    templateUrl: './toolbar.component.html',
+    imports: [TwStickyContentHeader, TwIcon, TwButtonIcon, TwButton]
 })
 export class TwToolbar {
   @Input() header?: string;

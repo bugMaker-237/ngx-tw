@@ -2,21 +2,20 @@ import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { Component, ElementRef, Input, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'tw-skeleton-rect',
-  imports: [NgTemplateOutlet, NgIf],
-  host: {
-    class: '',
-  },
-  template: `<ng-container
+    selector: 'tw-skeleton-rect',
+    imports: [NgTemplateOutlet, NgIf],
+    host: {
+        class: '',
+    },
+    template: `<ng-container
       *ngIf="template; elseTemplate"
       [ngTemplateOutlet]="template"
     ></ng-container>
     <ng-template #elseTemplate>
       <div class="pulse default"></div>
     </ng-template> `,
-  standalone: true,
-  styles: [
-    `
+    styles: [
+        `
       .default {
         animation: pulse 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         animation-delay: 0.5s;
@@ -34,7 +33,7 @@ import { Component, ElementRef, Input, TemplateRef } from '@angular/core';
         border-radius: 4px;
       }
     `,
-  ],
+    ]
 })
 export class TwSkeletonComponent {
   @Input() width?: string;

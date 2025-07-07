@@ -4,11 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { TwOption, TwSelect } from 'ngx-tw';
 
 @Component({
-  selector: 'app-select',
-  standalone: true,
-  imports: [TwSelect, TwOption, NgFor, FormsModule],
-  templateUrl: './select.component.html',
-  styleUrl: './select.component.scss',
+    selector: 'app-select',
+    imports: [TwSelect, TwOption, NgFor, FormsModule],
+    templateUrl: './select.component.html',
+    styleUrl: './select.component.scss'
 })
 export class SelectComponent {
   selectWithModel = 'value-10';

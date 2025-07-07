@@ -28,10 +28,9 @@ import { TwChipItem } from './chip-item-maker.component';
 import { TwChip } from './chip.component';
 
 @Component({
-  selector: 'tw-chip-list',
-  standalone: true,
-  imports: [TwChip, TwIcon, NgTemplateOutlet, CdkConnectedOverlay],
-  templateUrl: './chip-list.component.html',
+    selector: 'tw-chip-list',
+    imports: [TwChip, TwIcon, NgTemplateOutlet, CdkConnectedOverlay],
+    templateUrl: './chip-list.component.html'
 })
 export class TwChipList implements AfterViewInit, ControlValueAccessor {
   @ContentChildren(TwChipItem) children?: QueryList<TwChipItem>;

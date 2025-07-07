@@ -21,11 +21,10 @@ import { TwTabItem } from '../tab-item-maker.component';
 import { __TwTabItem } from '../tab.component';
 
 @Component({
-  imports: [__TwTabItem, NgFor, NgTemplateOutlet, NgIf, RouterOutlet],
-  standalone: true,
-  selector: 'tw-tab-group',
-  templateUrl: './tab-group.component.html',
-  styleUrls: ['./tab-group.component.scss'],
+    imports: [__TwTabItem, NgFor, NgTemplateOutlet, NgIf, RouterOutlet],
+    selector: 'tw-tab-group',
+    templateUrl: './tab-group.component.html',
+    styleUrls: ['./tab-group.component.scss']
 })
 export class TwTabGroup implements AfterViewInit {
   @ContentChildren(TwTabItem)

@@ -11,11 +11,11 @@ import {
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'tw-icon',
-  template: `<ng-content></ng-content>`,
-  imports: [CdkObserveContent],
-  styles: [
-    `
+    selector: 'tw-icon',
+    template: `<ng-content></ng-content>`,
+    imports: [CdkObserveContent],
+    styles: [
+        `
       :host {
         display: block;
         width: var(--c-icon-width) !important;
@@ -30,9 +30,8 @@ import { Subscription } from 'rxjs';
         min-height: var(--c-icon-height) !important;
       }
     `,
-  ],
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TwIcon implements AfterViewInit, OnDestroy {
   private static _iconRegistry = new Map<string, string>();

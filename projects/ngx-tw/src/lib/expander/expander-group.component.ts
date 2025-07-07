@@ -10,14 +10,13 @@ import {
 import { TwExpanderItem } from './expander-item.component';
 
 @Component({
-  selector: 'tw-expander-group',
-  standalone: true,
-  imports: [CdkAccordion],
-  template: `
+    selector: 'tw-expander-group',
+    imports: [CdkAccordion],
+    template: `
     <div cdkAccordion [multi]="multi" class="flex gap-4 flex-col">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class TwExpanderGroup implements AfterContentInit {
   @Input() multi = false;

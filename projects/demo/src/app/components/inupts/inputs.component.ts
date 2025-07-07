@@ -20,24 +20,23 @@ import {
 } from 'ngx-tw';
 
 @Component({
-  selector: 'app-inputs',
-  templateUrl: './inputs.component.html',
-  standalone: true,
-  imports: [
-    TwIcon,
-    TwInputField,
-    TwButton,
-    TwMaskedInput,
-    TwSwitch,
-    TwChip,
-    TwChipList,
-    FormsModule,
-    ReactiveFormsModule,
-    TwAutocomplete,
-    TwChipItem,
-    TwDateRangePicker,
-    TwCalendar,
-  ],
+    selector: 'app-inputs',
+    templateUrl: './inputs.component.html',
+    imports: [
+        TwIcon,
+        TwInputField,
+        TwButton,
+        TwMaskedInput,
+        TwSwitch,
+        TwChip,
+        TwChipList,
+        FormsModule,
+        ReactiveFormsModule,
+        TwAutocomplete,
+        TwChipItem,
+        TwDateRangePicker,
+        TwCalendar,
+    ]
 })
 export class InputsComponent {
   form = new FormGroup({

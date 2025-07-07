@@ -8,15 +8,14 @@ import {
 } from './button-interface';
 
 @Component({
-  standalone: true,
-  imports: [NgClass],
-  selector: 'tw-button',
-  host: {
-    role: 'button',
-    '[attr.type]': 'isSubmit ? "submit" : "button"',
-    class: 'inline-block w-fit',
-  },
-  template: `
+    imports: [NgClass],
+    selector: 'tw-button',
+    host: {
+        role: 'button',
+        '[attr.type]': 'isSubmit ? "submit" : "button"',
+        class: 'inline-block w-fit',
+    },
+    template: `
     <button
       class="tw-button w-fit {{ twClass }} {{ type }} rounded-{{ rounded }} {{
         color
@@ -26,7 +25,7 @@ import {
     >
       <ng-content></ng-content>
     </button>
-  `,
+  `
 })
 export class TwButton implements TwButtonInterface {
   @Input() type?: ButtonType = 'basic';

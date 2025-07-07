@@ -7,14 +7,13 @@ import { TwIcon } from '../icon/icon.component';
 import { InputField, InputTypes } from './input-field-interface';
 
 @Component({
-  imports: [TwIcon, NgClass, FormsModule, NgIf, TextFieldModule],
-  standalone: true,
-  selector: 'tw-input-field',
-  host: {
-    class: 'tw-input-wrapper',
-  },
-  templateUrl: './input-field.component.html',
-  providers: [],
+    imports: [TwIcon, NgClass, FormsModule, NgIf, TextFieldModule],
+    selector: 'tw-input-field',
+    host: {
+        class: 'tw-input-wrapper',
+    },
+    templateUrl: './input-field.component.html',
+    providers: []
 })
 export class TwInputField implements ControlValueAccessor, InputField {
   @Input() iconSuffix?: string;

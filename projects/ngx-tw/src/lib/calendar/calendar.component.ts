@@ -23,10 +23,9 @@ export interface CalendarDate {
 }
 
 @Component({
-  selector: 'tw-calendar',
-  templateUrl: './calendar.component.html',
-  standalone: true,
-  imports: [CommonModule, FormsModule, TwButtonIcon],
+    selector: 'tw-calendar',
+    templateUrl: './calendar.component.html',
+    imports: [CommonModule, FormsModule, TwButtonIcon]
 })
 export class TwCalendar implements OnInit, OnChanges {
   @Input() selectedDate: Date | null = null;

@@ -15,14 +15,13 @@ import { InputTypes } from './input-field-interface';
 import { MaskConfig, MaskedInputField } from './masked-input-field-interface';
 
 @Component({
-  imports: [TwIcon, NgClass, FormsModule, NgIf],
-  standalone: true,
-  selector: 'tw-masked-input',
-  host: {
-    class: 'tw-masked-input-wrapper',
-  },
-  templateUrl: './masked-input.component.html',
-  providers: [],
+    imports: [TwIcon, NgClass, FormsModule, NgIf],
+    selector: 'tw-masked-input',
+    host: {
+        class: 'tw-masked-input-wrapper',
+    },
+    templateUrl: './masked-input.component.html',
+    providers: []
 })
 export class TwMaskedInput
   implements ControlValueAccessor, MaskedInputField, OnInit

@@ -15,10 +15,9 @@ import { TwExpanderGroup } from './expander-group.component';
 import { TwExpanderHeader } from './expander-header.component';
 
 @Component({
-  selector: 'tw-expander',
-  imports: [CdkAccordionItem, TwButtonIcon, NgTemplateOutlet, NgClass],
-  standalone: true,
-  template: `
+    selector: 'tw-expander',
+    imports: [CdkAccordionItem, TwButtonIcon, NgTemplateOutlet, NgClass],
+    template: `
     <div
       #expander="cdkAccordionItem"
       cdkAccordionItem
@@ -61,7 +60,7 @@ import { TwExpanderHeader } from './expander-header.component';
         </div>
       </div>
     </div>
-  `,
+  `
 })
 export class TwExpanderItem implements AfterContentInit {
   @Input() expanded = false;

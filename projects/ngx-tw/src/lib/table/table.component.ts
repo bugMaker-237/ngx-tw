@@ -32,23 +32,22 @@ export interface ITableQueryChange {
 }
 
 @Component({
-  standalone: true,
-  imports: [
-    TwIcon,
-    TwButton,
-    NgIf,
-    NgFor,
-    NgTemplateOutlet,
-    TwSelect,
-    TwOption,
-    CdkTableModule,
-    RouterLink,
-    TwSpinner,
-    FormsModule,
-  ],
-  selector: 'tw-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+    imports: [
+        TwIcon,
+        TwButton,
+        NgIf,
+        NgFor,
+        NgTemplateOutlet,
+        TwSelect,
+        TwOption,
+        CdkTableModule,
+        RouterLink,
+        TwSpinner,
+        FormsModule,
+    ],
+    selector: 'tw-table',
+    templateUrl: './table.component.html',
+    styleUrls: ['./table.component.scss']
 })
 export class TwTable<T> implements OnDestroy, AfterViewInit {
   private _dataSource?: T[];

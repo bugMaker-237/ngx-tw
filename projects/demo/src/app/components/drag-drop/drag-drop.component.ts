@@ -8,11 +8,10 @@ import {
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-drag-drop',
-  standalone: true,
-  imports: [CdkDropList, CdkDrag],
-  templateUrl: './drag-drop.component.html',
-  styleUrl: './drag-drop.component.scss',
+    selector: 'app-drag-drop',
+    imports: [CdkDropList, CdkDrag],
+    templateUrl: './drag-drop.component.html',
+    styleUrl: './drag-drop.component.scss'
 })
 export class DragDropComponent {
   todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];

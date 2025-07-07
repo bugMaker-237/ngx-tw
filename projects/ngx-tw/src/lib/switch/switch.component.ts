@@ -13,9 +13,8 @@ import {
 import { ColorTypes } from '../color-types';
 
 @Component({
-  selector: 'tw-switch',
-  standalone: true,
-  template: `
+    selector: 'tw-switch',
+    template: `
     <span class="tw-switch {{ twClass }}">
       <span class="mr-2">{{ label }}</span>
       <input
@@ -29,14 +28,14 @@ import { ColorTypes } from '../color-types';
       />
     </span>
   `,
-  imports: [FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TwSwitch),
-      multi: true,
-    },
-  ],
+    imports: [FormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TwSwitch),
+            multi: true,
+        },
+    ]
 })
 export class TwSwitch implements ControlValueAccessor {
   @Input() label?: string;
