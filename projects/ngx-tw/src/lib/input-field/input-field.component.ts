@@ -69,7 +69,6 @@ export class TwInputField implements ControlValueAccessor, InputField {
 
   onChange(event: Event) {
     const value = (event as any).target.value;
-    console.log(value);
     this._onChangeFns?.forEach((fn) => fn(value));
     this._onTouchedFns?.forEach((fn) => fn(value));
   }

@@ -31,7 +31,6 @@ export class TwMenuTriggerDirective extends CdkMenuTrigger {
 
   @HostListener('click', ['$event'])
   onClick(event: Event) {
-    console.log('clicking');
     event.stopPropagation();
   }
 

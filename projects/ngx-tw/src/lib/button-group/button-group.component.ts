@@ -43,9 +43,6 @@ export class TwButtonGroup implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
-    this.children!.forEach((element) => {
-      console.log(element.disabled);
-    });
   }
 
   changeSelection(index: number, value: any): void {

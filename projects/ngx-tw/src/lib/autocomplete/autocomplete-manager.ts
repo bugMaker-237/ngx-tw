@@ -27,11 +27,7 @@ export class AutoCompleteManager<T> {
   init(): void {
     this.valueChangeObservable
       .pipe(
-        tap(
-          (v) => (
-            console.log(v), v.length === 0 ? this.closeDropdown() : void 0
-          )
-        ),
+        tap((v) => (v.length === 0 ? this.closeDropdown() : void 0)),
         filter((value) => value.length >= 1),
         map((value) => this.filterSuggestions(value))
       )
