@@ -70,7 +70,7 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
   // Flag to check if in mobile view
   isMobileView = false;
 
-  @Output() dateRangeChanged = new EventEmitter<DateRange>();
+  @Output() dateRangeChange = new EventEmitter<DateRange>();
   @Output() openChanged = new EventEmitter<boolean>();
 
   @Input() dateRange: DateRange = {
@@ -323,7 +323,7 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
       };
 
       // Emit event for the parent component
-      this.dateRangeChanged.emit(this.dateRange);
+      this.dateRangeChange.emit(this.dateRange);
 
       // Update form control value
       this.onChange(this.dateRange);
