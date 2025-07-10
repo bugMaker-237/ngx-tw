@@ -35,7 +35,7 @@
             <label class="block text-sm text-gray-600 mb-1">Start</label>
             <div class="relative">
               <tw-masked-input
-                [value]="formatDateForInput(selectedRange.start)"
+                [value]="formatDateForInput(dateRange.start)"
                 [placeholder]="'DD / MM / YYYY'"
                 [maskConfig]="dateMaskConfig"
                 [validator]="validateDate('start')"
@@ -49,7 +49,7 @@
             <label class="block text-sm text-gray-600 mb-1">End</label>
             <div class="relative">
               <tw-masked-input
-                [value]="formatDateForInput(selectedRange.end)"
+                [value]="formatDateForInput(dateRange.end)"
                 [placeholder]="'DD / MM / YYYY'"
                 [maskConfig]="dateMaskConfig"
                 [validator]="validateDate('end')"
@@ -128,7 +128,7 @@
               <label class="block text-sm text-gray-600 mb-1">Start</label>
               <div class="relative">
                 <tw-masked-input
-                  [value]="formatDateForInput(selectedRange.start)"
+                  [value]="formatDateForInput(dateRange.start)"
                   [placeholder]="'DD / MM / YYYY'"
                   [maskConfig]="dateMaskConfig"
                   [validator]="validateDate('start')"
@@ -143,7 +143,7 @@
               <label class="block text-sm text-gray-600 mb-1">End</label>
               <div class="relative">
                 <tw-masked-input
-                  [value]="formatDateForInput(selectedRange.end)"
+                  [value]="formatDateForInput(dateRange.end)"
                   [placeholder]="'DD / MM / YYYY'"
                   [maskConfig]="dateMaskConfig"
                   [validator]="validateDate('end')"
@@ -162,8 +162,8 @@
             <div class="border rounded-md p-3">
               <tw-calendar
                 [selectedDate]="null"
-                [rangeStart]="selectedRange.start"
-                [rangeEnd]="selectedRange.end"
+                [rangeStart]="dateRange.start"
+                [rangeEnd]="dateRange.end"
                 [isRange]="true"
                 [minDate]="minDate"
                 [maxDate]="maxDate"
@@ -177,8 +177,8 @@
             <div class="border rounded-md p-3">
               <tw-calendar
                 [selectedDate]="null"
-                [rangeStart]="selectedRange.start"
-                [rangeEnd]="selectedRange.end"
+                [rangeStart]="dateRange.start"
+                [rangeEnd]="dateRange.end"
                 [isRange]="true"
                 [minDate]="minDate"
                 [maxDate]="maxDate"
