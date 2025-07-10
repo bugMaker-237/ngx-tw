@@ -22,7 +22,6 @@
     [cdkConnectedOverlayPositions]="positions"
     [cdkConnectedOverlayScrollStrategy]="blockScrollStrategy"
     (backdropClick)="closeDropdown()"
-    (detach)="closeDropdown()"
   >
     <div
       [ngClass]="{'bg-white rounded-lg shadow-lg border border-gray-200': true, 'w-[720px]': !isMobileView, 'w-full max-w-md': isMobileView}"

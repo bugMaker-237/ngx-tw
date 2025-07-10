@@ -33,26 +33,26 @@ export interface DateRange {
 }
 
 @Component({
-    selector: 'tw-date-range-picker',
-    templateUrl: 'date-range-picker.component.html',
-    imports: [
-        TwButton,
-        CommonModule,
-        TwCalendar,
-        FormsModule,
-        ReactiveFormsModule,
-        CdkConnectedOverlay,
-        NgClass,
-        TwIcon,
-        TwMaskedInput,
-    ],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => TwDateRangePicker),
-            multi: true,
-        },
-    ]
+  selector: 'tw-date-range-picker',
+  templateUrl: 'date-range-picker.component.html',
+  imports: [
+    TwButton,
+    CommonModule,
+    TwCalendar,
+    FormsModule,
+    ReactiveFormsModule,
+    CdkConnectedOverlay,
+    NgClass,
+    TwIcon,
+    TwMaskedInput,
+  ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TwDateRangePicker),
+      multi: true,
+    },
+  ],
 })
 export class TwDateRangePicker implements OnInit, ControlValueAccessor {
   @Input() isOpen = false;
@@ -70,10 +70,10 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
   // Flag to check if in mobile view
   isMobileView = false;
 
-  @Output() rangeSelected = new EventEmitter<DateRange>();
+  @Output() dateRangeChanged = new EventEmitter<DateRange>();
   @Output() openChanged = new EventEmitter<boolean>();
 
-  selectedRange: DateRange = {
+  @Input() dateRange: DateRange = {
     start: new Date(),
     end: new Date(),
   };
@@ -119,10 +119,10 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
 
   get isValid() {
     return (
-      this.checkDateInterval(this.selectedRange.start) === true &&
-      this.selectedRange.end &&
-      this.checkDateInterval(this.selectedRange.end) === true &&
-      this.selectedRange.end >= this.selectedRange.start
+      this.checkDateInterval(this.dateRange.start) === true &&
+      this.dateRange.end &&
+      this.checkDateInterval(this.dateRange.end) === true &&
+      this.dateRange.end >= this.dateRange.start
     );
   }
 
@@ -137,15 +137,15 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
   ngOnInit() {
     // Set default values
     if (this.startDate) {
-      this.selectedRange.start = new Date(this.startDate);
+      this.dateRange.start = new Date(this.startDate);
       this.originalRange.start = new Date(this.startDate);
     }
 
     if (this.endDate) {
-      this.selectedRange.end = new Date(this.endDate);
+      this.dateRange.end = new Date(this.endDate);
       this.originalRange.end = new Date(this.endDate);
     } else if (this.startDate) {
-      this.selectedRange.end = new Date(this.startDate);
+      this.dateRange.end = new Date(this.startDate);
       this.originalRange.end = new Date(this.startDate);
     }
 
@@ -163,8 +163,8 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
     this.checkMobileView();
 
     // Initialize the model values for the masked inputs
-    this.startDateModel = this.formatDateForInput(this.selectedRange.start);
-    this.endDateModel = this.formatDateForInput(this.selectedRange.end);
+    this.startDateModel = this.formatDateForInput(this.dateRange.start);
+    this.endDateModel = this.formatDateForInput(this.dateRange.end);
 
     // Add resize event listener to detect mobile/desktop changes
     window.addEventListener('resize', () => {
@@ -178,7 +178,7 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
   } // ControlValueAccessor methods implementation
   writeValue(value: DateRange | null): void {
     if (value) {
-      this.selectedRange = {
+      this.dateRange = {
         start: value.start ? new Date(value.start) : new Date(),
         end: value.end ? new Date(value.end) : new Date(),
         preset: value.preset,
@@ -230,20 +230,18 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
   }
 
   closeDropdown(): void {
-    if (!this.isValid) {
-      this.cancelSelection();
-    }
+    this.cancelSelection();
     this.isOpen = false;
     this.openChanged.emit(this.isOpen);
   }
 
   onRangeSelected(range: { start: Date; end: Date | null }): void {
-    this.selectedRange = { ...range, preset: 'custom' };
+    this.dateRange = { ...range, preset: 'custom' };
     this.selectedPreset = 'custom';
 
     // Update model values
-    this.startDateModel = this.formatDateForInput(this.selectedRange.start);
-    this.endDateModel = this.formatDateForInput(this.selectedRange.end);
+    this.startDateModel = this.formatDateForInput(this.dateRange.start);
+    this.endDateModel = this.formatDateForInput(this.dateRange.end);
   }
 
   // Update left calendar when right calendar changes
@@ -265,100 +263,88 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
 
     switch (presetId) {
       case 'today':
-        this.selectedRange = { start: today, end: today, preset: presetId };
+        this.dateRange = { start: today, end: today, preset: presetId };
         break;
       case 'last7days':
         start.setDate(today.getDate() - 6);
-        this.selectedRange = { start, end: today, preset: presetId };
+        this.dateRange = { start, end: today, preset: presetId };
         break;
       case 'last4weeks':
         start.setDate(today.getDate() - 27);
-        this.selectedRange = { start, end: today, preset: presetId };
+        this.dateRange = { start, end: today, preset: presetId };
         break;
       case 'last3months':
         start.setMonth(today.getMonth() - 3);
-        this.selectedRange = { start, end: today, preset: presetId };
+        this.dateRange = { start, end: today, preset: presetId };
         break;
       case 'last12months':
         start.setFullYear(today.getFullYear() - 1);
-        this.selectedRange = { start, end: today, preset: presetId };
+        this.dateRange = { start, end: today, preset: presetId };
         break;
       case 'monthToDate':
         start.setDate(1);
-        this.selectedRange = { start, end: today, preset: presetId };
+        this.dateRange = { start, end: today, preset: presetId };
         break;
       case 'quarterToDate':
         const quarterMonth = Math.floor(today.getMonth() / 3) * 3;
         start.setMonth(quarterMonth);
         start.setDate(1);
-        this.selectedRange = { start, end: today, preset: presetId };
+        this.dateRange = { start, end: today, preset: presetId };
         break;
       case 'yearToDate':
         start.setMonth(0);
         start.setDate(1);
-        this.selectedRange = { start, end: today, preset: presetId };
+        this.dateRange = { start, end: today, preset: presetId };
         break;
       case 'allTime':
         start.setFullYear(2000); // Example for "all time"
-        this.selectedRange = { start, end: today, preset: presetId };
+        this.dateRange = { start, end: today, preset: presetId };
         break;
     }
 
     // Update calendars based on the selected range
-    this.leftCalendarDate = new Date(this.selectedRange.start);
+    this.leftCalendarDate = new Date(this.dateRange.start);
     this.rightCalendarDate = new Date(
-      this.selectedRange.end || this.selectedRange.start
+      this.dateRange.end || this.dateRange.start
     );
 
     // Update model values for inputs
-    this.startDateModel = this.formatDateForInput(this.selectedRange.start);
-    this.endDateModel = this.formatDateForInput(this.selectedRange.end);
+    this.startDateModel = this.formatDateForInput(this.dateRange.start);
+    this.endDateModel = this.formatDateForInput(this.dateRange.end);
   }
 
   applySelection(): void {
-    if (this.selectedRange.start && this.selectedRange.end) {
+    if (this.dateRange.start && this.dateRange.end) {
       // Save the original range for potential reset
       this.originalRange = {
-        start: new Date(this.selectedRange.start),
-        end: this.selectedRange.end ? new Date(this.selectedRange.end) : null,
+        start: new Date(this.dateRange.start),
+        end: this.dateRange.end ? new Date(this.dateRange.end) : null,
+        preset: this.selectedPreset,
       };
 
-      // Also preserve the selected preset
-      const previousPreset = this.selectedPreset;
-
       // Emit event for the parent component
-      this.rangeSelected.emit(this.selectedRange);
+      this.dateRangeChanged.emit(this.dateRange);
 
       // Update form control value
-      this.onChange(this.selectedRange);
+      this.onChange(this.dateRange);
       this.onTouched();
 
-      // Update model values for inputs
-      this.startDateModel = this.formatDateForInput(this.selectedRange.start);
-      this.endDateModel = this.formatDateForInput(this.selectedRange.end);
-
-      // Make sure the preset is preserved after closing
-      this.selectedPreset = previousPreset;
-
-      this.closeDropdown();
+      this.isOpen = false;
+      this.openChanged.emit(this.isOpen);
     }
   }
 
   cancelSelection(): void {
     // Reset to original values without applying changes
-    this.selectedRange = {
+    this.dateRange = {
       start: new Date(this.originalRange.start),
       end: this.originalRange.end ? new Date(this.originalRange.end) : null,
     };
-    this.startDateModel = this.formatDateForInput(this.selectedRange.start);
-    this.endDateModel = this.formatDateForInput(this.selectedRange.end);
+    this.startDateModel = this.formatDateForInput(this.dateRange.start);
+    this.endDateModel = this.formatDateForInput(this.dateRange.end);
 
     // Reset preset to original value
     this.selectedPreset = this.originalRange.preset || 'custom';
-
-    // Emit change event with the original range
-    this.onChange(this.selectedRange);
-    this.rangeSelected.emit(this.selectedRange);
   }
 
   formatDate(date: Date | null): string {
@@ -392,12 +378,10 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
     }
 
     // Otherwise, format and show the date range
-    if (!this.selectedRange.start) return '';
+    if (!this.dateRange.start) return '';
 
-    const start = this.formatDate(this.selectedRange.start);
-    const end = this.selectedRange.end
-      ? this.formatDate(this.selectedRange.end)
-      : '';
+    const start = this.formatDate(this.dateRange.start);
+    const end = this.dateRange.end ? this.formatDate(this.dateRange.end) : '';
 
     return end ? `${start} → ${end}` : start;
   }
@@ -453,8 +437,8 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
       // Make sure end date is not before start date
       if (
         dateType === 'end' &&
-        this.selectedRange.start &&
-        date < this.selectedRange.start
+        this.dateRange.start &&
+        date < this.dateRange.start
       ) {
         return 'End date cannot be before start date';
       }
@@ -482,19 +466,15 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
 
     if (date) {
       // Update the start date
-      this.selectedRange.start = date;
+      this.dateRange.start = date;
 
       // If end date is before start date, adjust it
-      if (this.selectedRange.end && this.selectedRange.end < date) {
-        this.selectedRange.end = new Date(date);
+      if (this.dateRange.end && this.dateRange.end < date) {
+        this.dateRange.end = new Date(date);
       }
 
       // Set to custom preset
       this.selectedPreset = 'custom';
-
-      // Emit change
-      this.onChange(this.selectedRange);
-      this.rangeSelected.emit(this.selectedRange);
     }
   }
 
@@ -504,14 +484,10 @@ export class TwDateRangePicker implements OnInit, ControlValueAccessor {
 
     if (date) {
       // Update the end date
-      this.selectedRange.end = date;
+      this.dateRange.end = date;
 
       // Set to custom preset
       this.selectedPreset = 'custom';
-
-      // Emit change
-      this.onChange(this.selectedRange);
-      this.rangeSelected.emit(this.selectedRange);
     }
   }
 
