@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "demo": "ng serve --project demo",
-    "build": "ng build",
+    "build": "ng build --project ngx-tw",
     "ngp": "ng-packagr",
     "pack": "ng-packagr -p ./projects/ngx-tw/ng-package.json",
     "watch": "ng build --watch --configuration development --project ngx-tw",
