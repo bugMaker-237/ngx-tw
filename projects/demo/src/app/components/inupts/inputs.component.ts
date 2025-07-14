@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormControl,
@@ -30,6 +31,7 @@ import {
     TwChipItem,
     TwDateRangePicker,
     TwCalendar,
+    JsonPipe,
   ],
 })
 export class InputsComponent {
@@ -44,6 +46,7 @@ export class InputsComponent {
     dateDDMMYYYY: new FormControl('', []),
     alphanumericCode: new FormControl('', []),
     phoneWithIcons: new FormControl('', []),
+    chips: new FormControl([], []),
   });
 
   // Mask configurations
@@ -157,6 +160,26 @@ export class InputsComponent {
   ];
 
   chips2 = [...this.chips];
+  formValue: Partial<{
+    nameClassic: string | null;
+    nameIconPrefix: string | null;
+    nameIconPrefixSuffix: string | null;
+    description: string | null;
+    runCycle: boolean | null;
+    phoneNumber: string | null;
+    dateMMYYYY: string | null;
+    dateDDMMYYYY: string | null;
+    alphanumericCode: string | null;
+    phoneWithIcons: string | null;
+    chips: never[] | null;
+  }>;
+
+  constructor() {
+    this.formValue = this.form.value;
+    this.form.valueChanges.subscribe((value) => {
+      this.formValue = value;
+    });
+  }
 
   suggestionKeyFactory = (item: any) => ({ key: item.id, value: item.name });
 

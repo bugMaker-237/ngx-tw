@@ -11,13 +11,14 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
+  forwardRef,
   Input,
   Output,
   QueryList,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent, Observable, switchMap } from 'rxjs';
 import { AutoCompleteManager } from '../autocomplete/autocomplete-manager';
 import { ColorTypes } from '../color-types';
@@ -28,9 +29,16 @@ import { TwChipItem } from './chip-item-maker.component';
 import { TwChip } from './chip.component';
 
 @Component({
-    selector: 'tw-chip-list',
-    imports: [TwChip, TwIcon, NgTemplateOutlet, CdkConnectedOverlay],
-    templateUrl: './chip-list.component.html'
+  selector: 'tw-chip-list',
+  imports: [TwChip, TwIcon, NgTemplateOutlet, CdkConnectedOverlay],
+  templateUrl: './chip-list.component.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TwChipList),
+      multi: true,
+    },
+  ],
 })
 export class TwChipList implements AfterViewInit, ControlValueAccessor {
   @ContentChildren(TwChipItem) children?: QueryList<TwChipItem>;
@@ -71,7 +79,8 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
   @Input() autoCompleteSuggestions?: any[] | Observable<any[]>;
 
   positions = OverlayPositions;
-  chipItems: TwChipItem[] = [];
+
+  @Input() chipItems: TwChipItem[] = [];
 
   onChange: (value: any) => void = () => {};
   onTouched: () => void = () => {};
@@ -112,6 +121,7 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
     }
 
     this.chipItems = this.children?.toArray() || [];
+    this.writeValue(this.chipItems);
     this._cd.detectChanges();
     this.children?.changes.subscribe((newValue) => {
       this.writeValue(newValue);
