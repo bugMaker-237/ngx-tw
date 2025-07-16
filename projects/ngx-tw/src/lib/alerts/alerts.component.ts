@@ -15,14 +15,14 @@ import { AlertType, IAlert } from './alert';
 import { TwAlertService } from './alert.service';
 
 @Component({
-    selector: 'tw-alerts',
-    imports: [TwIcon, TwButtonIcon, TwButton],
-    templateUrl: './alerts.component.html',
-    styles: `
+  selector: 'tw-alerts',
+  imports: [TwIcon, TwButtonIcon, TwButton],
+  templateUrl: './alerts.component.html',
+  styles: `
     ::ng-deep :has(> .tw-alerts-overlayed-alert){
       z-index: 2000;
     }
-  `
+  `,
 })
 export class TwAlerts implements OnInit {
   private static _notificationRef = 0;
@@ -107,20 +107,31 @@ export class TwAlerts implements OnInit {
         embeddedViewRef,
       });
       setTimeout(() => {
-        embeddedViewRef.destroy();
+        this.close(ref);
         this._cd.detectChanges();
       }, notification.duration);
     }
-
-    this._cd.detectChanges();
   }
+
   close(notificationRef: number) {
     const evf = this._embeddedViewRefs.findIndex(
       (e) => e.ref === notificationRef
     );
     if (evf > -1) {
-      this._embeddedViewRefs[evf].embeddedViewRef.destroy();
+      const embeddedViewRef = this._embeddedViewRefs[evf].embeddedViewRef;
+      const index = this.alertsContainer?.indexOf(embeddedViewRef);
+      if (index !== undefined && index > -1) {
+        console.log('Removing alert at index:', index);
+        this.alertsContainer?.detach(index);
+      }
+      embeddedViewRef.destroy();
       this._embeddedViewRefs.splice(evf, 1);
+
+      // Remove cdk-global-scrollblock from html if no more alerts
+      if (this._embeddedViewRefs.length === 0) {
+        // document.documentElement.classList.remove('cdk-global-scrollblock');
+        this._alertService.clearContainer();
+      }
     }
   }
 }

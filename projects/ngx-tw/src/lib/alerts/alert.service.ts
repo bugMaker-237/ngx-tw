@@ -159,6 +159,12 @@ export class TwAlertService {
     this._alertsContainerOverlay.attach(filePreviewPortal);
   }
 
+  clearContainer() {
+    this._alertsContainerOverlay?.detach();
+    this._alertsContainerOverlay?.dispose();
+    this._alertsContainerOverlay = undefined;
+  }
+
   get alerts() {
     return this._alert$.asObservable();
   }

@@ -1,4 +1,3 @@
-import { CdkObserveContent } from '@angular/cdk/observers';
 import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
@@ -11,11 +10,10 @@ import {
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'tw-icon',
-    template: `<ng-content></ng-content>`,
-    imports: [CdkObserveContent],
-    styles: [
-        `
+  selector: 'tw-icon',
+  template: `<ng-content></ng-content>`,
+  styles: [
+    `
       :host {
         display: block;
         width: var(--c-icon-width) !important;
@@ -30,11 +28,11 @@ import { Subscription } from 'rxjs';
         min-height: var(--c-icon-height) !important;
       }
     `,
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TwIcon implements AfterViewInit, OnDestroy {
-  private static _iconRegistry = new Map<string, string>();
+  private static ICON_REGISTRY = new Map<string, string>();
   private _retrievalSubscription$?: Subscription;
   private _svgIcon?: string;
   private _size = 20;
@@ -97,10 +95,11 @@ export class TwIcon implements AfterViewInit, OnDestroy {
         'tw-icon: Could not determine icon namespace and name from ' + iconName
       );
 
-    if (!TwIcon._iconRegistry.has(iconName))
+    if (!TwIcon.ICON_REGISTRY.has(iconName)) {
       this._retriveIcon(nativeElement, iconName, namespace, name);
-    else {
-      const icon = TwIcon._iconRegistry.get(iconName)!;
+    } else {
+      console.log('tw-icon: using cached icon', iconName);
+      const icon = TwIcon.ICON_REGISTRY.get(iconName)!;
       nativeElement.innerHTML = icon;
     }
   }
@@ -120,7 +119,7 @@ export class TwIcon implements AfterViewInit, OnDestroy {
         responseType: 'text' as any,
       })
       .subscribe((v) => {
-        TwIcon._iconRegistry.set(iconName, v);
+        TwIcon.ICON_REGISTRY.set(iconName, v);
         elt.innerHTML = v;
         const svg = elt.firstElementChild as SVGElement;
         svg.classList.value = '';

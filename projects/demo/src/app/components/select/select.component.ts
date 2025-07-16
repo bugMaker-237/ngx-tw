@@ -1,15 +1,23 @@
-
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { TwOption, TwSelect } from 'ngx-tw';
 
 @Component({
-    selector: 'app-select',
-    imports: [TwSelect, TwOption, FormsModule],
-    templateUrl: './select.component.html',
-    styleUrl: './select.component.scss'
+  selector: 'app-select',
+  imports: [TwSelect, TwOption, FormsModule, ReactiveFormsModule],
+  templateUrl: './select.component.html',
+  styleUrl: './select.component.scss',
 })
 export class SelectComponent {
+  formGroup = new FormGroup({
+    selectWithFormControl: new FormControl('value-10'),
+  });
+
   selectWithModel = 'value-10';
   public options: any[] = [
     { label: 'One', value: 'value-1' },

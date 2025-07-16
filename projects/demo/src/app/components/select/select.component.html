@@ -7,14 +7,12 @@
       class="w-64 max-w-full"
       color="primary"
       #selectControl
-      >
+    >
       <tw-option>Select an option</tw-option>
       @for (item of options; track item) {
-        <tw-option
-          [value]="item.value"
-          >
-          {{item.label}}
-        </tw-option>
+      <tw-option [value]="item.value">
+        {{item.label}}
+      </tw-option>
       }
     </tw-select>
     <span> Selected Value: {{ selectControl.value ? selectControl.value : '---' }}</span>
@@ -25,39 +23,53 @@
       class="w-64 max-w-full"
       color="accent"
       #selectControlWithInput
-      >
+    >
       <input
         type="text"
         class="focus:ring-0 focus:ring-offset-0 focus:outline-0 min-w-full sm:text-sm border-b border-gray-200 -m-3 -mt-4 p-3 mb-0"
         placeholder="Search.."
         #searchField
         (input)="search(searchField.value)"
-        />
-        @for (item of options2; track item) {
-          <tw-option
-            [value]="item.value"
-            >
-            {{item.label}}
-          </tw-option>
-        }
-      </tw-select>
-      <span> Selected Value: {{ selectControlWithInput.value ? selectControlWithInput.value : '---' }}</span>
-    </div>
-    <div class="gap-8 items-center grid grid-cols-[80px,auto,auto] pt-8">
-      <span>With NgModel</span>
-      <tw-select
-        class="w-64 max-w-full"
-        color="accent"
-        [(ngModel)]="selectWithModel"
-        >
-        @for (item of options; track item) {
-          <tw-option
-            [value]="item.value"
-            >
-            {{item.label}}
-          </tw-option>
-        }
-      </tw-select>
-      <span> Selected Value: {{ selectWithModel ? selectWithModel : '---' }}</span>
-    </div>
+      />
+      @for (item of options2; track item) {
+      <tw-option [value]="item.value">
+        {{item.label}}
+      </tw-option>
+      }
+    </tw-select>
+    <span> Selected Value: {{ selectControlWithInput.value ? selectControlWithInput.value : '---' }}</span>
   </div>
+  <div class="gap-8 items-center grid grid-cols-[80px,auto,auto] pt-8">
+    <span>With NgModel</span>
+    <tw-select
+      class="w-64 max-w-full"
+      color="accent"
+      [(ngModel)]="selectWithModel"
+    >
+      @for (item of options; track item) {
+      <tw-option [value]="item.value">
+        {{item.label}}
+      </tw-option>
+      }
+    </tw-select>
+    <span> Selected Value: {{ selectWithModel ? selectWithModel : '---' }}</span>
+  </div>
+  <form
+    [formGroup]="formGroup"
+    class="gap-8 items-center grid grid-cols-[80px,auto,auto] pt-8"
+  >
+    <span>With NgModel</span>
+    <tw-select
+      class="w-64 max-w-full"
+      color="accent"
+      formControlName="selectWithFormControl"
+    >
+      @for (item of options; track item) {
+      <tw-option [value]="item.value">
+        {{item.label}}
+      </tw-option>
+      }
+    </tw-select>
+    <span> Selected Value: {{ selectWithModel ? selectWithModel : '---' }}</span>
+  </form>
+</div>

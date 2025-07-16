@@ -120,9 +120,11 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
       this.autoCompleteManager.init();
     }
 
-    this.chipItems = this.children?.toArray() || [];
-    this.writeValue(this.chipItems);
-    this._cd.detectChanges();
+    if (this.children?.length) {
+      this.writeValue(this.children.toArray());
+      this._cd.detectChanges();
+    }
+
     this.children?.changes.subscribe((newValue) => {
       this.writeValue(newValue);
     });

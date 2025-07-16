@@ -46,7 +46,7 @@ export class InputsComponent {
     dateDDMMYYYY: new FormControl('', []),
     alphanumericCode: new FormControl('', []),
     phoneWithIcons: new FormControl('', []),
-    chips: new FormControl([], []),
+    chips: new FormControl([{ label: 'hello' }], []),
   });
 
   // Mask configurations
@@ -171,7 +171,7 @@ export class InputsComponent {
     dateDDMMYYYY: string | null;
     alphanumericCode: string | null;
     phoneWithIcons: string | null;
-    chips: never[] | null;
+    chips: any[] | null;
   }>;
 
   constructor() {
