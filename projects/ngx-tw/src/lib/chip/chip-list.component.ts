@@ -19,7 +19,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { fromEvent, Observable, switchMap } from 'rxjs';
+import { fromEvent, map, Observable } from 'rxjs';
 import { AutoCompleteManager } from '../autocomplete/autocomplete-manager';
 import { ColorTypes } from '../color-types';
 import { TwIcon } from '../icon/icon.component';
@@ -76,22 +76,32 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
     | ((value: string, item: any) => boolean)
     | undefined;
 
-  @Input() autoCompleteSuggestions?: any[] | Observable<any[]>;
+  @Input() set autoCompleteSuggestions(value: any[] | Observable<any[]>) {
+    this._autoCompleteSuggestions = value;
+
+    if (!this.autoCompleteManager) return;
+    this.autoCompleteManager.suggestions = value;
+  }
+
+  get autoCompleteSuggestions() {
+    return this._autoCompleteSuggestions!;
+  }
 
   positions = OverlayPositions;
 
   @Input() chipItems: TwChipItem[] = [];
 
-  onChange: (value: any) => void = () => {};
-  onTouched: () => void = () => {};
-
-  autoCompleteManager?: AutoCompleteManager<any>;
+  _onChange: ((value: any) => void)[] = [];
+  _onTouched: (() => void)[] = [];
 
   blockScrollStrategy: BlockScrollStrategy;
 
   get filteredSuggestions() {
     return this.autoCompleteManager?.filteredSuggestions;
   }
+
+  autoCompleteManager?: AutoCompleteManager<any>;
+  private _autoCompleteSuggestions?: any[] | Observable<any[]>;
 
   constructor(
     public elementRef: ElementRef,
@@ -104,8 +114,8 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
   ngAfterViewInit(): void {
     if (this.autoCompleteSuggestions) {
       this.autoCompleteManager = new AutoCompleteManager(
-        fromEvent(this.newItemContent!.nativeElement, 'input').pipe(
-          switchMap((ev) => (ev.target as HTMLDivElement).innerHTML)
+        fromEvent(this.newItemContent!.nativeElement, 'keyup').pipe(
+          map((ev) => (ev.target as HTMLDivElement).innerHTML)
         )
       );
 
@@ -122,9 +132,9 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
 
     if (this.children?.length) {
       this.writeValue(this.children.toArray());
-      this._cd.detectChanges();
     }
 
+    this._cd.detectChanges();
     this.children?.changes.subscribe((newValue) => {
       this.writeValue(newValue);
     });
@@ -192,6 +202,11 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
   }
 
   writeValue(value: any): void {
+    if (value === undefined || value === null) {
+      this.chipItems = [];
+      return;
+    }
+
     value = Array.isArray(value) ? value : [value];
 
     this.chipItems = value.map((v: any) => ({
@@ -199,13 +214,29 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
       image: v.image,
       isDeletable: v.isDeletable,
     }));
+
+    this._cd.detectChanges();
   }
 
   registerOnChange(fn: any): void {
-    this.onChange = fn;
+    this._onChange.push(fn);
   }
 
   registerOnTouched(fn: any): void {
-    this.onTouched = fn;
+    this._onTouched.push(fn);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.isEditable = !isDisabled;
+  }
+
+  onChange(value: any) {
+    this._onChange.forEach((fn) => fn(value));
+    this.onTouched();
+    this._cd.markForCheck();
+  }
+
+  onTouched() {
+    this._onTouched.forEach((fn) => fn());
   }
 }

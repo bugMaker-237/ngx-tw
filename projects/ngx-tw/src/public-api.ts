@@ -9,6 +9,7 @@ export * from './lib/button-group/button-group.component';
 export * from './lib/button/button-icon.component';
 export * from './lib/button/button.component';
 export * from './lib/calendar/calendar.component';
+export * from './lib/chip/chip-interface';
 export * from './lib/chip/chip-item-maker.component';
 export * from './lib/chip/chip-list.component';
 export * from './lib/chip/chip.component';

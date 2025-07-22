@@ -1,4 +1,12 @@
-import { filter, isObservable, map, Observable, of, tap } from 'rxjs';
+import {
+  filter,
+  isObservable,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 export class AutoCompleteManager<T> {
   filteredSuggestions: T[] = [];
@@ -29,7 +37,7 @@ export class AutoCompleteManager<T> {
       .pipe(
         tap((v) => (v.length === 0 ? this.closeDropdown() : void 0)),
         filter((value) => value.length >= 1),
-        map((value) => this.filterSuggestions(value))
+        switchMap((value) => this.filterSuggestions(value))
       )
       .subscribe((filtered) => {
         this.filteredSuggestions = filtered;
@@ -37,20 +45,14 @@ export class AutoCompleteManager<T> {
       });
   }
 
-  filterSuggestions(value: string): T[] {
+  filterSuggestions(value: string): Observable<T[]> {
     const suggestionsArray$ = isObservable(this._suggestions)
       ? this._suggestions
       : of(this._suggestions || []);
 
-    let filtered: T[] = [];
-
-    suggestionsArray$.subscribe((suggestions) => {
-      filtered = suggestions.filter((suggestion) =>
-        this.filterFn(value, suggestion)
-      );
-    });
-
-    return filtered;
+    return suggestionsArray$.pipe(
+      map((suggestions) => suggestions.filter((s) => this.filterFn(value, s)))
+    );
   }
 
   getDisplayText(item: any): string {

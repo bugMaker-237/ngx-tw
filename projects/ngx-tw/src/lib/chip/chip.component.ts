@@ -3,10 +3,10 @@ import { TwIcon } from '../icon/icon.component';
 import { TwChipInterface } from './chip-interface';
 
 @Component({
-    selector: 'tw-chip',
-    imports: [TwIcon],
-    template: `
-    <div class="tw-chip {{ twClass }}">
+  selector: 'tw-chip',
+  imports: [TwIcon],
+  template: `
+    <div class="tw-chip {{ twClass }}" [title]="label">
       @if(image){
       <img [src]="image" alt="Image Description" />
       }
@@ -14,7 +14,7 @@ import { TwChipInterface } from './chip-interface';
         {{ label }}
       </div>
       @if(isDeletable){
-      <div class="icon w-4 h-4 min-w-4 max-w-4" role="button">
+      <div class="icon" role="button">
         <tw-icon
           (click)="deleteItem.emit()"
           svgIcon="hero:x-mark"
@@ -23,7 +23,7 @@ import { TwChipInterface } from './chip-interface';
       </div>
       }
     </div>
-  `
+  `,
 })
 export class TwChip implements TwChipInterface {
   @Input({ required: true }) label!: string;

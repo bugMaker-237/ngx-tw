@@ -98,7 +98,6 @@ export class TwIcon implements AfterViewInit, OnDestroy {
     if (!TwIcon.ICON_REGISTRY.has(iconName)) {
       this._retriveIcon(nativeElement, iconName, namespace, name);
     } else {
-      console.log('tw-icon: using cached icon', iconName);
       const icon = TwIcon.ICON_REGISTRY.get(iconName)!;
       nativeElement.innerHTML = icon;
     }

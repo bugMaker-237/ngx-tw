@@ -84,7 +84,7 @@
       color="accent"
       formControlName="chips"
       placeholder="Insert item here"
-      [autoCompleteSuggestions]="[{ id: 1, name: 'Apple' }, { id: 2, name: 'Banana' }]"
+      [autoCompleteSuggestions]="observableSuggestions"
       [autoCompleteKeyFactory]="suggestionKeyFactory"
       [autoCompleteFilterFn]="customFilter"
       [autoCompleteOptionTemplate]="customTemplate"

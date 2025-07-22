@@ -16,6 +16,7 @@ import {
   TwMaskedInput,
   TwSwitch,
 } from 'ngx-tw';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-inputs',
@@ -173,6 +174,11 @@ export class InputsComponent {
     phoneWithIcons: string | null;
     chips: any[] | null;
   }>;
+
+  observableSuggestions = of([
+    { id: 1, name: 'Apple' },
+    { id: 2, name: 'Banana' },
+  ]);
 
   constructor() {
     this.formValue = this.form.value;
