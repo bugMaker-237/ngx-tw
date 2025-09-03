@@ -1,11 +1,39 @@
 {
   "name": "ngx-tw",
   "version": "0.0.1",
+  "description": "A comprehensive Angular component library built with Tailwind CSS, providing a modern and customizable set of UI components for Angular applications.",
+  "keywords": [
+    "angular",
+    "tailwind",
+    "tailwindcss",
+    "ui",
+    "components",
+    "library",
+    "typescript",
+    "css",
+    "responsive",
+    "dark-mode"
+  ],
+  "author": "bugMaker-237",
+  "license": "MIT",
+  "homepage": "https://github.com/bugMaker-237/ngx-tw#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bugMaker-237/ngx-tw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bugMaker-237/ngx-tw/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "peerDependencies": {
     "@angular/cdk": ">=16.0.0",
     "@angular/common": ">=16.0.0",
     "@angular/core": ">=16.0.0",
-    "@angular/forms": ">=16.0.0"
+    "@angular/forms": ">=16.0.0",
+    "tailwindcss": ">=3.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

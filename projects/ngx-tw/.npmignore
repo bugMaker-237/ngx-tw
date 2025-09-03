@@ -1,0 +1,48 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Build files
+*.tsbuildinfo
+tsconfig*.json
+ng-package.json
+
+# Development files
+.editorconfig
+.gitignore
+.git/
+.github/
+.vscode/
+.angular/
+
+# Test files
+*.spec.ts
+karma.conf.js
+**/*.spec.ts
+
+# Demo and examples
+demo/
+projects/demo/
+
+# Documentation source
+docs/
+*.md
+!README.md
+
+# Node modules and dependencies
+node_modules/
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp

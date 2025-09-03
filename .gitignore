@@ -40,3 +40,26 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# NPM
+*.tgz
+*.tar.gz
+.npm/
+
+# Build artifacts
+build/
+lib/
+
+# Logs
+*.log
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary files
+temp_status.txt

@@ -6,10 +6,15 @@
     "start": "ng serve",
     "demo": "ng serve --project demo",
     "build": "ng build --project ngx-tw",
+    "build:lib": "ng build --project ngx-tw",
     "ngp": "ng-packagr",
     "pack": "ng-packagr -p ./projects/ngx-tw/ng-package.json",
     "watch": "ng build --watch --configuration development --project ngx-tw",
-    "test": "ng test"
+    "test": "ng test",
+    "test:lib": "ng test --project ngx-tw",
+    "lint": "ng lint",
+    "release": "npm run build:lib && npm publish dist/ngx-tw",
+    "release:dry": "npm run build:lib && npm publish dist/ngx-tw --dry-run"
   },
   "dependencies": {
     "@angular/animations": "^20.0.6",
