@@ -13,8 +13,9 @@
     "test": "ng test",
     "test:lib": "ng test --project ngx-tw",
     "lint": "ng lint",
-    "release": "npm run build:lib && npm publish dist/ngx-tw",
-    "release:dry": "npm run build:lib && npm publish dist/ngx-tw --dry-run"
+    "release": "npm run build:lib && cd dist/ngx-tw && npm publish",
+    "release:dry": "npm run build:lib && cd dist/ngx-tw && npm pack --dry-run",
+    "pack:test": "npm run build:lib && cd dist/ngx-tw && npm pack"
   },
   "dependencies": {
     "@angular/animations": "^20.0.6",
