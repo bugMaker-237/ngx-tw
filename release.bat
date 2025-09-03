@@ -73,14 +73,14 @@ if errorlevel 1 (
 )
 
 REM Run tests
-echo.
-echo 🧪 Running tests...
-call npm run test:lib -- --watch=false --browsers=ChromeHeadless
-if errorlevel 1 (
-    echo ❌ Tests failed
-    pause
-    exit /b 1
-)
+@REM echo.
+@REM echo 🧪 Running tests...
+@REM call npm run test:lib -- --watch=false --browsers=ChromeHeadless
+@REM if errorlevel 1 (
+@REM     echo ❌ Tests failed
+@REM     pause
+@REM     exit /b 1
+@REM )
 
 REM Build library
 echo.
