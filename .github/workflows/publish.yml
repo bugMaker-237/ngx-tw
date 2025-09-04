@@ -4,6 +4,11 @@ on:
   push:
     branches: [main, master]
 
+permissions:
+  contents: write
+  packages: write
+  pull-requests: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,6 +43,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.PAT }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -54,8 +60,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
 
       - name: Bump version and create tag
         id: version
@@ -89,22 +95,35 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create Git tag
+      - name: Create Git tag and push
         run: |
           git tag v${{ steps.version.outputs.version }}
-          git push origin v${{ steps.version.outputs.version }}
+          git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git v${{ steps.version.outputs.version }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+
+      - name: Create Git tag with GitHub CLI (fallback)
+        if: failure()
+        run: |
+          gh api repos/${{ github.repository }}/git/refs \
+            --method POST \
+            --field ref="refs/tags/v${{ steps.version.outputs.version }}" \
+            --field sha="${{ github.sha }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        continue-on-error: true
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@v7
         with:
-          tag_name: v${{ steps.version.outputs.version }}
-          release_name: Release v${{ steps.version.outputs.version }}
-          body: |
-            ## Changes in v${{ steps.version.outputs.version }}
+          github-token: ${{ secrets.PAT }}
+          script: |
+            const { data: release } = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: 'v${{ steps.version.outputs.version }}',
+              name: 'Release v${{ steps.version.outputs.version }}',
+              body: `## Changes in v${{ steps.version.outputs.version }}
 
             ### 🚀 Features
             - See commit history for detailed changes
@@ -113,8 +132,10 @@ jobs:
             - See commit history for detailed changes
 
             ### 📦 Installation
-            ```bash
+            \`\`\`bash
             npm install ngx-tw@${{ steps.version.outputs.version }}
-            ```
-          draft: false
-          prerelease: false
+            \`\`\``,
+              draft: false,
+              prerelease: false
+            });
+            console.log('Release created:', release.html_url);
