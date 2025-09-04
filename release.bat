@@ -113,6 +113,10 @@ if not "%VERSION_TYPE%"=="skip" (
 
     for /f "delims=" %%i in ('node -p "require('./package.json').version"') do set NEW_VERSION=%%i
     cd ..\..
+
+    REM Update root package.json to match
+    call npm version !NEW_VERSION! --no-git-tag-version --allow-same-version
+
     echo New version: !NEW_VERSION!
 ) else (
     set NEW_VERSION=%CURRENT_VERSION%
@@ -159,7 +163,7 @@ REM Create git tag if version was bumped
 if not "%VERSION_TYPE%"=="skip" (
     echo.
     echo 🏷️  Creating git tag...
-    git add projects\ngx-tw\package.json
+    git add package.json projects\ngx-tw\package.json
     git commit -m "chore: bump version to %NEW_VERSION%"
     git tag "v%NEW_VERSION%"
 

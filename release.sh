@@ -107,6 +107,10 @@ if [ "$VERSION_TYPE" != "skip" ]; then
 
     NEW_VERSION=$(node -p "require('./package.json').version")
     cd ../..
+
+    # Update root package.json to match
+    npm version "$NEW_VERSION" --no-git-tag-version --allow-same-version
+
     echo -e "New version: ${GREEN}$NEW_VERSION${NC}"
 else
     NEW_VERSION=$CURRENT_VERSION
@@ -143,7 +147,7 @@ cd ../..
 if [ "$VERSION_TYPE" != "skip" ]; then
     echo ""
     echo -e "${GREEN}🏷️  Creating git tag...${NC}"
-    git add projects/ngx-tw/package.json
+    git add package.json projects/ngx-tw/package.json
     git commit -m "chore: bump version to $NEW_VERSION"
     git tag "v$NEW_VERSION"
 

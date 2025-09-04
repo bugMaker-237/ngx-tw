@@ -63,12 +63,11 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-      - name: Bump version and create tag
+      - name: Bump version and update source files
         id: version
         run: |
-          cd dist/ngx-tw
-          # Get current version
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          # Get current version from source
+          CURRENT_VERSION=$(node -p "require('./projects/ngx-tw/package.json').version")
           echo "Current version: $CURRENT_VERSION"
 
           # Determine version bump type based on commit messages
@@ -82,11 +81,25 @@ jobs:
 
           echo "Version bump type: $VERSION_TYPE"
 
-          # Bump version
+          # Bump version in source library package.json
+          cd projects/ngx-tw
           npm version $VERSION_TYPE --no-git-tag-version
           NEW_VERSION=$(node -p "require('./package.json').version")
+          cd ../..
+
+          # Update root package.json version to match
+          npm version $NEW_VERSION --no-git-tag-version --allow-same-version
+
           echo "New version: $NEW_VERSION"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Rebuild library with new version
+        run: npm run build:lib
+
+      - name: Commit version changes
+        run: |
+          git add package.json projects/ngx-tw/package.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }}"
 
       - name: Publish to NPM
         run: |
@@ -95,8 +108,12 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create Git tag and push
+      - name: Create Git tag and push changes
         run: |
+          # Create and push the version commit
+          git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git main
+
+          # Create and push the tag
           git tag v${{ steps.version.outputs.version }}
           git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git v${{ steps.version.outputs.version }}
         env:
@@ -105,6 +122,12 @@ jobs:
       - name: Create Git tag with GitHub CLI (fallback)
         if: failure()
         run: |
+          # Try to push the commit first
+          gh api repos/${{ github.repository }}/git/refs/heads/main \
+            --method PATCH \
+            --field sha="${{ github.sha }}" || true
+
+          # Create the tag
           gh api repos/${{ github.repository }}/git/refs \
             --method POST \
             --field ref="refs/tags/v${{ steps.version.outputs.version }}" \

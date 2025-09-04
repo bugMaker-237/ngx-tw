@@ -10,16 +10,16 @@ npm install ngx-tw
 
 ## 🚀 Quick Start
 
-1. Import the NgxTwModule in your Angular module:
+1. Import the tailwind component in your Angular component:
 
 ```typescript
-import { NgxTwModule } from "ngx-tw";
+import { TwButton } from "ngx-tw";
 
 @NgModule({
-  imports: [NgxTwModule],
+  imports: [TwButton],
   // ...
 })
-export class AppModule {}
+export class AppComponent {}
 ```
 
 2. Import the default styles in your `styles.scss`:
