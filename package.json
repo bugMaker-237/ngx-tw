@@ -1,6 +1,6 @@
 {
   "name": "ngx-tw",
-  "version": "0.0.952",
+  "version": "0.0.953",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
