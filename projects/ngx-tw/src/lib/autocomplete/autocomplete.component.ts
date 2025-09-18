@@ -11,19 +11,18 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  forwardRef,
   Input,
   OnDestroy,
   OnInit,
-  Optional,
   Output,
-  Self,
   TemplateRef,
 } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
   FormControl,
-  NgControl,
+  NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   ValidationErrors,
   Validator,
@@ -46,6 +45,13 @@ import { AutoCompleteManager, SuggestionsType } from './autocomplete-manager';
     TwSpinner,
   ],
   templateUrl: './autocomplete.component.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TwAutocomplete),
+      multi: true,
+    },
+  ],
 })
 export class TwAutocomplete<T = any>
   implements
@@ -190,17 +196,12 @@ export class TwAutocomplete<T = any>
   constructor(
     public elementRef: ElementRef,
     private overlay: Overlay,
-    private cdr: ChangeDetectorRef,
-    @Self() @Optional() private readonly _ngControl?: NgControl
+    private cdr: ChangeDetectorRef
   ) {
     this.blockScrollStrategy = this.overlay.scrollStrategies.block();
-    if (this._ngControl) {
-      this._ngControl.valueAccessor = this;
-    }
   }
 
   ngOnInit(): void {
-    this.autoCompleteManager.init();
     this.updateValidators();
   }
 
@@ -218,6 +219,8 @@ export class TwAutocomplete<T = any>
       });
       this.resizeObserver.observe(this.elementRef.nativeElement);
     }
+
+    this.autoCompleteManager.init();
   }
 
   ngOnDestroy(): void {
@@ -246,7 +249,9 @@ export class TwAutocomplete<T = any>
     }
 
     this.searchControl.setValidators(validators);
-    this.searchControl.updateValueAndValidity();
+    this.searchControl.updateValueAndValidity({
+      emitEvent: false,
+    });
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
