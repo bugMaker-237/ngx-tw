@@ -1,4 +1,5 @@
 import {
+  debounceTime,
   filter,
   isObservable,
   map,
@@ -8,21 +9,33 @@ import {
   tap,
 } from 'rxjs';
 
+export type SuggestionsType<T> =
+  | T[]
+  | Observable<T[]>
+  | ((searchTerm: string, item?: T) => Observable<T[]>)
+  | ((searchTerm: string, item?: T) => T[]);
+
+function isFunction(value: any): value is (...args: any[]) => any {
+  return typeof value === 'function';
+}
+
 export class AutoCompleteManager<T> {
   filteredSuggestions: T[] = [];
   filterFn: (value: string, item: T) => boolean = (value: string, item: T) =>
     this.getDisplayText(item).toLowerCase().includes(value.toLowerCase());
 
-  keyFactory: ((item: T) => { key: string; value: string }) | undefined =
+  displayFactory: ((item: T) => { key: string; text: string }) | undefined =
     void 0;
 
   isOpen = false;
 
   disabled = false;
 
-  private _suggestions: T[] | Observable<T[]> = [];
+  suggestionsLoading = false;
 
-  set suggestions(value: T[] | Observable<T[]>) {
+  private _suggestions: SuggestionsType<T> = [];
+
+  set suggestions(value: SuggestionsType<T>) {
     this._suggestions = value;
   }
 
@@ -30,34 +43,46 @@ export class AutoCompleteManager<T> {
     return this._suggestions;
   }
 
-  constructor(private valueChangeObservable: Observable<string>) {}
+  constructor(private valueChangeObservable: Observable<string | null>) {}
 
   init(): void {
     this.valueChangeObservable
       .pipe(
-        tap((v) => (v.length === 0 ? this.closeDropdown() : void 0)),
-        filter((value) => value.length >= 1),
-        switchMap((value) => this.filterSuggestions(value))
+        debounceTime(300),
+        tap((v) => (v?.length === 0 ? this.closeDropdown() : void 0)),
+        filter((value) => !!value && value.length >= 1),
+        tap(() => ((this.suggestionsLoading = true), this.openDropdown())),
+        switchMap((value) => this.filterSuggestions(value!))
       )
       .subscribe((filtered) => {
+        this.suggestionsLoading = false;
         this.filteredSuggestions = filtered;
-        this.openDropdown();
       });
   }
 
   filterSuggestions(value: string): Observable<T[]> {
-    const suggestionsArray$ = isObservable(this._suggestions)
-      ? this._suggestions
-      : of(this._suggestions || []);
+    const filterObs = (obs: Observable<T[]>) =>
+      obs.pipe(
+        map((suggestions) => suggestions.filter((s) => this.filterFn(value, s)))
+      );
 
-    return suggestionsArray$.pipe(
-      map((suggestions) => suggestions.filter((s) => this.filterFn(value, s)))
-    );
+    const resolveObs = (fn: (searchTerm: string) => Observable<T[]> | T[]) => {
+      const result = fn(value);
+      return isObservable(result) ? result : of(result);
+    };
+
+    const suggestionsArray$ = isObservable(this._suggestions)
+      ? filterObs(this._suggestions)
+      : isFunction(this._suggestions)
+      ? resolveObs(this._suggestions)
+      : of(this._suggestions.filter((s) => this.filterFn(value, s)));
+
+    return suggestionsArray$;
   }
 
   getDisplayText(item: any): string {
-    if (this.keyFactory) {
-      return this.keyFactory(item).value;
+    if (this.displayFactory) {
+      return this.displayFactory(item).text;
     }
     return typeof item === 'string' ? item : JSON.stringify(item);
   }

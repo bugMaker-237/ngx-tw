@@ -1,4 +1,10 @@
-name: Publish to NPM
+# Prevent infinite publish loop by ignoring "chore:" commits
+# Only run on push to main/master if the last commit is NOT a "chore:" commit
+# This uses a workflow-level conditional
+if: |
+  github.event_name == 'push' &&
+  (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') &&
+  !startsWith(github.event.head_commit.message, 'chore:')
 
 on:
   push:

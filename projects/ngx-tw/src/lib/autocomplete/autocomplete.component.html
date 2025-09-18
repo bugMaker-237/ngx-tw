@@ -27,12 +27,13 @@
     [cdkConnectedOverlayOrigin]="elementRef.nativeElement.firstElementChild"
     [cdkConnectedOverlayOpen]="autoCompleteManager.isOpen"
     [cdkConnectedOverlayPositions]="positions"
-    [cdkConnectedOverlayMinWidth]="elementRef.nativeElement.firstElementChild.offsetWidth"
+    cdkConnectedOverlayMinWidth="100px"
     [cdkConnectedOverlayScrollStrategy]="blockScrollStrategy"
     (backdropClick)="autoCompleteManager.closeDropdown()"
     (detach)="autoCompleteManager.closeDropdown()"
   >
     <div class="w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+      @if(!suggestionsLoading){
       @if (filteredSuggestions.length > 0) {
       <ul>
         @for (suggestion of filteredSuggestions; track $index) {
@@ -44,7 +45,7 @@
           <ng-container *ngTemplateOutlet="optionTemplate; context: { $implicit: suggestion }"></ng-container>
 
           }@else {
-          <ng-template>{{ autoCompleteManager.getDisplayText(suggestion) }}</ng-template>
+          <ng-container>{{ autoCompleteManager.getDisplayText(suggestion) }}</ng-container>
           }
         </li>
         }
@@ -53,6 +54,11 @@
       @else{
       <div class="p-2 text-gray-500">
         No suggestions found.
+      </div>
+      }
+      }@else {
+      <div class="flex justify-center p-4">
+        <tw-spinner></tw-spinner>
       </div>
       }
     </div>
