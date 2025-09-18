@@ -40,7 +40,7 @@ Interactive notification components for displaying important messages to users.
 
 **Features:**
 
-- Multiple alert types: `info`, `error`, `warning`
+- Multiple alert types: `info`, `error`, `warning`, `success`
 - Customizable duration and actions
 - Icon support with custom colors
 - Primary and secondary action buttons
