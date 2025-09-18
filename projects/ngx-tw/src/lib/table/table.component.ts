@@ -32,7 +32,7 @@ export interface ITableQueryChange {
 }
 
 @Component({
-    imports: [
+  imports: [
     TwIcon,
     TwButton,
     NgTemplateOutlet,
@@ -41,21 +41,21 @@ export interface ITableQueryChange {
     CdkTableModule,
     RouterLink,
     TwSpinner,
-    FormsModule
-],
-    selector: 'tw-table',
-    templateUrl: './table.component.html',
-    styleUrls: ['./table.component.scss']
+    FormsModule,
+  ],
+  selector: 'tw-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss'],
 })
 export class TwTable<T> implements OnDestroy, AfterViewInit {
   private _dataSource?: T[];
-  get dataSource(): T[] {
-    return this._dataSource || [];
+  get dataSource(): T[] | undefined {
+    return this._dataSource;
   }
 
-  @Input() set dataSource(value: T[]) {
+  @Input() set dataSource(value: T[] | undefined) {
     this._dataSource = value;
-    this.internalSource = value ? new ArrayDataSource(value) : void 0;
+    this.internalSource = new ArrayDataSource(value || []);
   }
 
   @Input() dataLoading?: boolean;
@@ -91,7 +91,7 @@ export class TwTable<T> implements OnDestroy, AfterViewInit {
     if (this._initializedParams) this.changePageSize();
   }
 
-  internalSource?: DataSource<T>;
+  internalSource: DataSource<T> = new ArrayDataSource<T>([]);
 
   private _pageNumber = 1;
 

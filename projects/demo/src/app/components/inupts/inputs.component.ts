@@ -36,6 +36,16 @@ import { of } from 'rxjs';
   ],
 })
 export class InputsComponent {
+  allAutoCompleteItems = [
+    { id: 1, name: 'Apple' },
+    { id: 2, name: 'Banana' },
+    { id: 3, name: 'Orange' },
+    { id: 4, name: 'Mango' },
+    { id: 5, name: 'Pineapple' },
+    { id: 6, name: 'Grapes' },
+  ];
+  autoCompleteValue = this.allAutoCompleteItems[0];
+
   form = new FormGroup({
     nameClassic: new FormControl('', []),
     nameIconPrefix: new FormControl('', []),
@@ -47,6 +57,7 @@ export class InputsComponent {
     dateDDMMYYYY: new FormControl('', []),
     alphanumericCode: new FormControl('', []),
     phoneWithIcons: new FormControl('', []),
+    autoCompleteValue: new FormControl(this.autoCompleteValue, []),
     chips: new FormControl([{ label: 'hello' }], []),
   });
 
@@ -175,10 +186,19 @@ export class InputsComponent {
     chips: any[] | null;
   }>;
 
-  observableSuggestions = of([
+  observableSuggestions = of(this.allAutoCompleteItems);
+
+  fnObservableSuggestions = (searchTerm: string) => {
+    const filtered = this.allAutoCompleteItems.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return of(filtered);
+  };
+
+  autoCompleteSugesstions = [
     { id: 1, name: 'Apple' },
     { id: 2, name: 'Banana' },
-  ]);
+  ];
 
   constructor() {
     this.formValue = this.form.value;
@@ -187,7 +207,7 @@ export class InputsComponent {
     });
   }
 
-  suggestionKeyFactory = (item: any) => ({ key: item.id, value: item.name });
+  suggestionKeyFactory = (item: any) => ({ key: item.id, text: item.name });
 
   customFilter = (value: string, item: any) => {
     return item.name.toLowerCase().includes(value.toLowerCase());

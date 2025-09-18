@@ -19,8 +19,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { fromEvent, map, Observable } from 'rxjs';
-import { AutoCompleteManager } from '../autocomplete/autocomplete-manager';
+import { fromEvent, map } from 'rxjs';
+import {
+  AutoCompleteManager,
+  SuggestionsType,
+} from '../autocomplete/autocomplete-manager';
 import { ColorTypes } from '../color-types';
 import { TwIcon } from '../icon/icon.component';
 import { OverlayPositions } from '../TwElement';
@@ -66,8 +69,8 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
 
   @ViewChild('newItemContent') newItemContent?: ElementRef<HTMLDivElement>;
 
-  @Input() autoCompleteKeyFactory:
-    | ((item: any) => { key: string; value: string })
+  @Input() autoCompleteDisplayFactory:
+    | ((item: any) => { key: string; text: string })
     | undefined;
 
   @Input() autoCompleteOptionTemplate: TemplateRef<any> | null = null;
@@ -76,7 +79,7 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
     | ((value: string, item: any) => boolean)
     | undefined;
 
-  @Input() set autoCompleteSuggestions(value: any[] | Observable<any[]>) {
+  @Input() set autoCompleteSuggestions(value: SuggestionsType<any>) {
     this._autoCompleteSuggestions = value;
 
     if (!this.autoCompleteManager) return;
@@ -101,7 +104,7 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
   }
 
   autoCompleteManager?: AutoCompleteManager<any>;
-  private _autoCompleteSuggestions?: any[] | Observable<any[]>;
+  private _autoCompleteSuggestions?: SuggestionsType<any>;
 
   constructor(
     public elementRef: ElementRef,
@@ -121,8 +124,9 @@ export class TwChipList implements AfterViewInit, ControlValueAccessor {
 
       this.autoCompleteManager.suggestions = this.autoCompleteSuggestions;
 
-      if (this.autoCompleteKeyFactory)
-        this.autoCompleteManager.keyFactory = this.autoCompleteKeyFactory;
+      if (this.autoCompleteDisplayFactory)
+        this.autoCompleteManager.displayFactory =
+          this.autoCompleteDisplayFactory;
 
       if (this.autoCompleteFilterFn)
         this.autoCompleteManager.filterFn = this.autoCompleteFilterFn;
