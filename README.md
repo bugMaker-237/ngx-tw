@@ -2,6 +2,26 @@
 
 A comprehensive Angular component library built with Tailwind CSS, providing a modern and customizable set of UI components for Angular applications.
 
+> **⚠️ WARNING: Pre-Production Software**
+>
+> **This library is currently in active development and is NOT production-ready.**
+>
+> - 🚧 **Breaking changes** may be introduced in any release without prior notice
+> - 🧪 **APIs are experimental** and subject to major modifications
+> - 📝 **Documentation** may be incomplete or outdated
+> - 🐛 **Bugs and instability** should be expected
+>
+> **Use at your own risk.** This library is intended for experimental use, prototyping, and development purposes only. Do not use in production applications until a stable v1.0.0 release is announced.
+
+## 🙏 Credits
+
+This library includes components adapted from [ng-tw](https://github.com/matheusdavidson/ng-tw) by the Matheus Davidson. Specifically:
+
+- **Select Component** - Based on the select implementation from ng-tw
+- **Alerts/Notification Components** - Adapted from the notification system in ng-tw
+
+We thank the ng-tw contributors for their excellent work that helped inspire and accelerate the development of these components.
+
 ## 📦 Installation
 
 ```bash

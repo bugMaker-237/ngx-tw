@@ -1,4 +1,6 @@
-export type AlertType = 'info' | 'error' | 'warning';
+import { TwNotificationType } from '../notification/notification-config';
+
+export type AlertType = TwNotificationType;
 export interface IAlert {
   title: string;
   description?: string;

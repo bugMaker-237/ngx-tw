@@ -38,7 +38,7 @@ export class AlertsComponent {
     this._alertService.info({
       title: 'Information',
       description: 'This is an informational alert.',
-      duration: 3000,
+      duration: 3000000,
     });
   }
   showAlertWarning() {

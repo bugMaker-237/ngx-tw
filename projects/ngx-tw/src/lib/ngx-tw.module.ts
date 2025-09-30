@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { TwAlertService } from './alerts/alert.service';
-import { TwAlerts } from './alerts/alerts.component';
 import { TwAutocomplete } from './autocomplete/autocomplete.component';
 import { TwButtonGroup } from './button-group/button-group.component';
 import { TwButton } from './button/button.component';
@@ -14,6 +13,7 @@ import { TwExpanderModule } from './expander';
 import { TwInputField } from './input-field/input-field.component';
 import { TwMaskedInput } from './input-field/masked-input.component';
 import { TwMenuModule } from './menu';
+import { TwNotification } from './notification';
 import { TwOption } from './select/option/option.component';
 import { TwSelect } from './select/select.component';
 import { TwSkeletonComponent } from './skeleton/skeleton.component';
@@ -47,7 +47,6 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwChip,
     TwChipList,
     TwSpinner,
-    TwAlerts,
     TwSkeletonComponent,
     TwSkeletonDirective,
     TwAutocomplete,
@@ -55,7 +54,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwDateRangePicker,
     TwCalendar,
   ],
-  providers: [TwDialog, TwAlertService],
+  providers: [TwDialog, TwAlertService, TwNotification],
   exports: [
     TwButton,
     TwButtonGroup,
@@ -75,7 +74,6 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwChip,
     TwChipList,
     TwSpinner,
-    TwAlerts,
     TwSkeletonComponent,
     TwSkeletonDirective,
     TwAutocomplete,

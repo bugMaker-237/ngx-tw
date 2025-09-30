@@ -1,22 +1,26 @@
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { TwNotification } from '../notification/notification.service';
 import { AlertType, IAlert } from './alert';
-import { TwAlerts } from './alerts.component';
 
 @Injectable({
   providedIn: 'root',
 })
+/** @deprecated This service is deprecated use TwNotification */
 export class TwAlertService {
   private _alert$ = new BehaviorSubject<IAlert | null>(null);
   private _alertsContainerOverlay?: OverlayRef;
 
-  constructor(private readonly _overlay: Overlay) {}
+  constructor(private readonly _twNotification: TwNotification) {}
 
+  /**
+   *
+   * @deprecated This method is deprecated use TwNotification.show() instead
+   */
   info({
     title,
-    description = null,
+    description = void 0,
     icon = null,
     iconColor = null,
     duration = 3000,
@@ -25,7 +29,7 @@ export class TwAlertService {
     secondaryActionText = null,
   }: {
     title: string;
-    description?: string | null;
+    description?: string;
     icon?: string | null;
     iconColor?: string | null;
     duration?: number;
@@ -45,9 +49,14 @@ export class TwAlertService {
       showActions,
     });
   }
+
+  /**
+   *
+   * @deprecated This method is deprecated use TwNotification.show() instead
+   */
   warning({
     title,
-    description = null,
+    description = void 0,
     icon = null,
     iconColor = null,
     duration = 3000,
@@ -56,7 +65,7 @@ export class TwAlertService {
     secondaryActionText = null,
   }: {
     title: string;
-    description?: string | null;
+    description?: string;
     icon?: string | null;
     iconColor?: string | null;
     duration?: number;
@@ -76,9 +85,14 @@ export class TwAlertService {
       showActions,
     });
   }
+
+  /**
+   *
+   * @deprecated This method is deprecated use TwNotification.show() instead
+   */
   error({
     title,
-    description = null,
+    description = void 0,
     icon = null,
     iconColor = null,
     duration = 3000,
@@ -87,7 +101,7 @@ export class TwAlertService {
     secondaryActionText = null,
   }: {
     title: string;
-    description?: string | null;
+    description?: string;
     icon?: string | null;
     iconColor?: string | null;
     duration?: number;
@@ -97,7 +111,7 @@ export class TwAlertService {
   }) {
     this.notify({
       title,
-      type: 'error',
+      type: 'danger',
       description,
       icon,
       iconColor,
@@ -110,7 +124,7 @@ export class TwAlertService {
   private notify({
     title,
     type,
-    description = null,
+    description = void 0,
     icon = null,
     iconColor = null,
     duration = 3000,
@@ -120,7 +134,7 @@ export class TwAlertService {
   }: {
     title: string;
     type: AlertType;
-    description?: string | null;
+    description?: string;
     icon?: string | null;
     iconColor?: string | null;
     duration?: number;
@@ -128,44 +142,11 @@ export class TwAlertService {
     secondaryActionText?: string | null;
     primaryActionText?: string | null;
   }) {
-    this._createContainer();
-    duration = !duration ? 3000 : duration;
-    this._alert$.next({
+    this._twNotification.show({
       title,
-      type: type,
-      description,
-      icon,
-      iconColor,
-      duration: duration,
-      primaryActionText,
-      secondaryActionText,
-      showActions,
-    } as IAlert);
-  }
-  private _createContainer() {
-    if (!!this._alertsContainerOverlay) return;
-    // Returns an OverlayRef (which is a PortalHost)
-    this._alertsContainerOverlay = this._overlay.create({
-      hasBackdrop: false,
-      positionStrategy: this._overlay.position().global().end('0').top('0'),
-      scrollStrategy: this._overlay.scrollStrategies.block(),
-      panelClass: 'tw-alerts-overlayed-alert',
+      type,
+      text: description,
+      autoCloseTimeout: duration,
     });
-
-    // Create ComponentPortal that can be attached to a PortalHost
-    const filePreviewPortal = new ComponentPortal(TwAlerts);
-
-    // Attach ComponentPortal to PortalHost
-    this._alertsContainerOverlay.attach(filePreviewPortal);
-  }
-
-  clearContainer() {
-    this._alertsContainerOverlay?.detach();
-    this._alertsContainerOverlay?.dispose();
-    this._alertsContainerOverlay = undefined;
-  }
-
-  get alerts() {
-    return this._alert$.asObservable();
   }
 }

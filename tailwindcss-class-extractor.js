@@ -3,6 +3,9 @@ module.exports = (content) => {
   const classMatches = content.match(/class=["']([^"']+)["']/g) || [];
   const twClassMatches = content.match(/twClass=["']([^"']+)["']/g) || [];
 
+  // Template function tw`classes` pattern
+  const twTemplateLiteralMatches = content.match(/tw`([^`]+)`/g) || [];
+
   // Angular specific patterns
   const ngClassMatches = content.match(/ngClass=["']([^"']+)["']/g) || [];
   const ngClassBindingObjects =
@@ -25,6 +28,11 @@ module.exports = (content) => {
 
   const twClasses = twClassMatches.map((match) =>
     match.replace(/twClass=["']/, "").replace(/["']$/, "")
+  );
+
+  // Process tw template literals
+  const twTemplateLiteralClasses = twTemplateLiteralMatches.map((match) =>
+    match.replace(/tw`/, "").replace(/`$/, "")
   );
 
   const ngClasses = ngClassMatches.map((match) =>
@@ -54,6 +62,7 @@ module.exports = (content) => {
   return [
     ...classes,
     ...twClasses,
+    ...twTemplateLiteralClasses,
     ...ngClasses,
     ...objectBindingClasses,
     ...arrayBindingClasses,
