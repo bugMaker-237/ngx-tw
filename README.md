@@ -1,5 +1,7 @@
 # ngx-tw
 
+[![.github/workflows/publish.yml](https://github.com/bugMaker-237/ngx-tw/actions/workflows/publish.yml/badge.svg)](https://github.com/bugMaker-237/ngx-tw/actions/workflows/publish.yml)
+
 A comprehensive Angular component library built with Tailwind CSS, providing a modern and customizable set of UI components for Angular applications.
 
 > **⚠️ WARNING: Pre-Production Software**
