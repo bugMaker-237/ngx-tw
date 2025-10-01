@@ -24,10 +24,7 @@ export class TwNotification {
     @Inject(TW_NOTIFICATION_CONFIG_TOKEN)
     private notificationConfig: TwNotificationConfig = defaultTwNotificationConfig
   ) {
-    console.log(notificationConfig || defaultTwNotificationConfig);
     this.notificationConfig = notificationConfig || defaultTwNotificationConfig;
-
-    console.log('TwNotification initialized', this.notificationConfig);
   }
 
   show(data: TwNotificationData) {
@@ -62,7 +59,6 @@ export class TwNotification {
   }
 
   getPosition() {
-    console.log(defaultTwNotificationConfig, this.notificationConfig);
     const lastNotificationIsVisible =
       this.lastNotification && this.lastNotification.isVisible();
     const position = lastNotificationIsVisible
@@ -88,7 +84,6 @@ export class TwNotification {
         {
           provide: TW_NOTIFICATION_CONFIG_TOKEN,
           useValue: this.notificationConfig,
-
         },
         { provide: TwNotificationData, useValue: data },
         { provide: TwNotificationRef, useValue: notificationRef },
