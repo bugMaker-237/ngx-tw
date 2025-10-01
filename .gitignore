@@ -51,7 +51,7 @@ ngx-tw-*.tgz
 
 # Build artifacts
 build/
-lib/
+/lib/
 
 # Logs
 *.log
