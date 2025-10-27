@@ -21,10 +21,10 @@ import { TwTabItem } from '../tab-item-maker.component';
 import { __TwTabItem } from '../tab.component';
 
 @Component({
-    imports: [__TwTabItem, NgTemplateOutlet, RouterOutlet],
-    selector: 'tw-tab-group',
-    templateUrl: './tab-group.component.html',
-    styleUrls: ['./tab-group.component.scss']
+  imports: [__TwTabItem, NgTemplateOutlet, RouterOutlet],
+  selector: 'tw-tab-group',
+  templateUrl: './tab-group.component.html',
+  styleUrls: ['./tab-group.component.scss'],
 })
 export class TwTabGroup implements AfterViewInit {
   @ContentChildren(TwTabItem)
@@ -52,7 +52,10 @@ export class TwTabGroup implements AfterViewInit {
     for (let i = 0; i < this.children.length; i++) {
       const c = this.children.get(i);
       const path = '/' + c?.route?.path?.join('/');
-      if (path === this._router.url) {
+      if (
+        path === this._router.url ||
+        this._router.url.startsWith(path + '/')
+      ) {
         this.selectedIndex = i;
         found = true;
       }
