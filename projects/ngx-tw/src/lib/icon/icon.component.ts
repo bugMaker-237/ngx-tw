@@ -7,7 +7,7 @@ import {
   Input,
   OnDestroy,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, finalize, shareReplay, tap } from 'rxjs';
 
 @Component({
   selector: 'tw-icon',
@@ -33,6 +33,10 @@ import { Subscription } from 'rxjs';
 })
 export class TwIcon implements AfterViewInit, OnDestroy {
   private static ICON_REGISTRY = new Map<string, string>();
+  private static PENDING_ICON_REQUESTS = new Map<
+    string,
+    ReturnType<typeof TwIcon.prototype._createIconRequest>
+  >();
   private _retrievalSubscription$?: Subscription;
   private _svgIcon?: string;
   private _size = 20;
@@ -95,34 +99,53 @@ export class TwIcon implements AfterViewInit, OnDestroy {
         'tw-icon: Could not determine icon namespace and name from ' + iconName
       );
 
-    if (!TwIcon.ICON_REGISTRY.has(iconName)) {
-      this._retriveIcon(nativeElement, iconName, namespace, name);
-    } else {
+    if (TwIcon.ICON_REGISTRY.has(iconName)) {
       const icon = TwIcon.ICON_REGISTRY.get(iconName)!;
       nativeElement.innerHTML = icon;
+      return;
     }
+
+    this._retrieveIcon(nativeElement, iconName, namespace, name);
   }
 
   ngOnDestroy(): void {
     this._retrievalSubscription$?.unsubscribe();
   }
 
-  private _retriveIcon(
+  private _retrieveIcon(
     elt: Element,
     iconName: string,
     namespace: string,
     name: string
   ) {
-    this._retrievalSubscription$ = this._httpClient
+    const existingRequest = TwIcon.PENDING_ICON_REQUESTS.get(iconName);
+
+    const request$ =
+      existingRequest ?? this._createIconRequest(iconName, namespace, name);
+
+    if (!existingRequest) TwIcon.PENDING_ICON_REQUESTS.set(iconName, request$);
+
+    this._retrievalSubscription$ = request$.subscribe((v) => {
+      elt.innerHTML = v;
+      const svg = elt.firstElementChild as SVGElement;
+      svg.classList.value = '';
+      svg.style.cssText = `width: ${this.size}px!important; height: ${this.size}px!important;`;
+    });
+  }
+
+  private _createIconRequest(
+    iconName: string,
+    namespace: string,
+    name: string
+  ) {
+    return this._httpClient
       .get<string>(`/assets/icons/${namespace}/${name}.svg`, {
         responseType: 'text' as any,
       })
-      .subscribe((v) => {
-        TwIcon.ICON_REGISTRY.set(iconName, v);
-        elt.innerHTML = v;
-        const svg = elt.firstElementChild as SVGElement;
-        svg.classList.value = '';
-        svg.style.cssText = `width: ${this.size}px!important; height: ${this.size}px!important;`;
-      });
+      .pipe(
+        tap((v) => TwIcon.ICON_REGISTRY.set(iconName, v)),
+        finalize(() => TwIcon.PENDING_ICON_REQUESTS.delete(iconName)),
+        shareReplay(1)
+      );
   }
 }
