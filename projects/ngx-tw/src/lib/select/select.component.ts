@@ -71,10 +71,10 @@ export class TwSelect
   @Input() public placeholder: string = 'Select an option';
   @Input() public disabled: boolean = false;
   @Input() public id: string = `tw-select-${_uniqueIdCounter++}`;
-  @Input() public compareWith: (o1: any, o2: any) => boolean = (
-    o1: any,
+  @Input() public compareWith: (o: any, o2: any) => boolean = (
+    o: any,
     o2: any
-  ) => o1 === o2;
+  ) => o === o2;
   @Input()
   get value(): any {
     return this.innerValue;
