@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { TwButton, TwButtonIcon } from 'ngx-tw';
+import { TwButton, TwButtonIcon, TwButtonGroup, TwButtonGroupItem } from 'ngx-tw';
 
 @Component({
-    selector: 'app-buttons',
-    imports: [TwButton, TwButtonIcon],
-    templateUrl: './buttons.component.html',
-    styleUrls: ['./buttons.component.scss']
+  selector: 'app-buttons',
+  imports: [TwButton, TwButtonIcon, TwButtonGroup, TwButtonGroupItem],
+  templateUrl: './buttons.component.html',
+  styleUrls: ['./buttons.component.scss'],
 })
 export class ButtonsComponent {}

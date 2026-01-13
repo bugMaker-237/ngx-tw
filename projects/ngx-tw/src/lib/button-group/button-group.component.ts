@@ -8,23 +8,24 @@ import {
   Output,
   QueryList,
 } from '@angular/core';
+import { ColorTypes } from '../color-types';
 import { TwButtonGroupItem } from './button-group-Item.component';
 
 @Component({
-    imports: [NgTemplateOutlet],
-    selector: 'tw-btn-group',
-    template: ` <div class="tw-button-group {{ orientation }}">
-      @for (item of children; track item; let i = $index) {
-        <button
-          class="tw-button-group-item"
-          [disabled]="item.disabled"
-          [class.selected-item]="selectedIndex === i"
-          (click)="changeSelection(i, item.value)"
-          >
-          <ng-container [ngTemplateOutlet]="item.content"></ng-container>
-        </button>
-      }
-    </div>`
+  imports: [NgTemplateOutlet],
+  selector: 'tw-btn-group',
+  template: ` <div class="tw-button-group {{ orientation }}">
+    @for (item of children; track item; let i = $index) {
+    <button
+      class="tw-button-group-item  {{ item.color || color }}"
+      [disabled]="item.disabled"
+      [class.selected-item]="selectedIndex === i"
+      (click)="changeSelection(i, item.value)"
+    >
+      <ng-container [ngTemplateOutlet]="item.content"></ng-container>
+    </button>
+    }
+  </div>`,
 })
 export class TwButtonGroup implements AfterViewInit {
   @ContentChildren(TwButtonGroupItem)
@@ -38,12 +39,13 @@ export class TwButtonGroup implements AfterViewInit {
   }>();
   @Input() selectedIndex: number = -1;
 
+  @Input() color?: ColorTypes;
+
   @Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
 
   constructor() {}
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void {}
 
   changeSelection(index: number, value: any): void {
     this.itemSelected.emit({

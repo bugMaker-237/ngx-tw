@@ -128,10 +128,10 @@ Icon-only button for compact interfaces.
 Grouped button controls for related actions.
 
 ```html
-<tw-button-group>
-  <tw-button-group-item label="Option 1" value="1"></tw-button-group-item>
-  <tw-button-group-item label="Option 2" value="2"></tw-button-group-item>
-</tw-button-group>
+<tw-btn-group>
+  <tw-btn-group-item value="1">Option 1</tw-btn-group-item>
+  <tw-btn-group-item value="2">"Option 2</tw-btn-group-item>
+</tw-btn-group>
 ```
 
 ### 📅 Calendar
