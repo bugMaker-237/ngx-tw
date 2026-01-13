@@ -6,16 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import {
-  TwAutocomplete,
-  TwCalendar,
-  TwChipItem,
-  TwChipList,
-  TwDateRangePicker,
-  TwInputField,
-  TwMaskedInput,
-  TwSwitch,
-} from 'ngx-tw';
+import { TwAutocomplete, TwCalendar, TwChipItem, TwChipList, TwDateRangePicker, TwInputField, TwMaskedInput, TwSwitch, TwButtonGroup, TwButtonGroupItem } from 'ngx-tw';
 import { of } from 'rxjs';
 
 @Component({
@@ -33,7 +24,9 @@ import { of } from 'rxjs';
     TwDateRangePicker,
     TwCalendar,
     JsonPipe,
-  ],
+    TwButtonGroup,
+    TwButtonGroupItem
+],
 })
 export class InputsComponent {
   allAutoCompleteItems = [
@@ -59,6 +52,7 @@ export class InputsComponent {
     phoneWithIcons: new FormControl('', []),
     autoCompleteValue: new FormControl(this.autoCompleteValue, []),
     chips: new FormControl([{ label: 'hello' }], []),
+    buttonGroupValue: new FormControl(null, []),
   });
 
   // Mask configurations
