@@ -1,10 +1,12 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ContentChildren,
   EventEmitter,
   forwardRef,
+  inject,
   Input,
   Output,
   QueryList,
@@ -21,7 +23,9 @@ import { TwButtonGroupItem } from './button-group-Item.component';
     <button
       class="tw-button-group-item  {{ item.color || color }}"
       [disabled]="disabled || item.disabled"
-      [class.selected-item]="selectedIndex === i"
+      [class.selected-item]="
+        selectedIndex === i || selectedValue === item.value
+      "
       (click)="changeSelection(i, item.value)"
     >
       <ng-container [ngTemplateOutlet]="item.content"></ng-container>
@@ -60,7 +64,8 @@ export class TwButtonGroup implements ControlValueAccessor, AfterViewInit {
   onChange: any;
   onTouch: any;
 
-  constructor() {}
+  private readonly _cd = inject(ChangeDetectorRef);
+
   writeValue(obj: any): void {
     this.selectedValue = obj;
   }
@@ -74,7 +79,16 @@ export class TwButtonGroup implements ControlValueAccessor, AfterViewInit {
     this.disabled = isDisabled;
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    if (this.selectedValue) {
+      this.selectedIndex = this.children
+        ? this.children
+            .toArray()
+            .findIndex((c) => c.value === this.selectedValue)
+        : -1;
+      this._cd.detectChanges();
+    }
+  }
 
   changeSelection(index: number, value: any): void {
     this.itemSelected.emit({
