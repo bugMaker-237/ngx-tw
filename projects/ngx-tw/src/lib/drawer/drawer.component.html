@@ -23,7 +23,7 @@
     </div>
 
     <!-- Navigation Links -->
-    <nav class="flex-1 py-6 overflow-y-auto overflow-x-hidden">
+    <nav class="flex-1 py-2 overflow-y-auto overflow-x-hidden">
       @for (section of sections; track section) {
         @if (section.title && !isCollapsed) {
           <div class="mt-8 px-4 mb-2">
@@ -155,6 +155,7 @@
   <main
     class="flex-1 overflow-y-auto bg-gray-50"
     [class.h-screen]="useAsAppShell"
+    [class.max-h-dvh]="useAsAppShell"
   >
     <ng-content></ng-content>
   </main>
