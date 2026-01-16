@@ -1,256 +1,237 @@
 <h2 class="my-4 text-2xl mt-4">Inputs</h2>
 
+<div class="relative">
+  <div
+    class="mb-6 p-4 bg-gray-100 rounded-lg sticky ml-auto top-0 right-0 w-full w-80 right-0 top-16 z-50"
+  >
+    <h3 class="text-lg font-semibold mb-2">Form Value (JSON)</h3>
+    <pre class="bg-white p-3 rounded border overflow-auto text-sm">{{
+      formValue | json
+    }}</pre>
+  </div>
+  <form [formGroup]="form" class="gap-6 flex flex-col max-w-2xl">
+    <div class="flex flex-col gap-3">
+      <span>Classic</span>
+      <tw-input-field
+        name="name"
+        inputType="text"
+        [required]="true"
+        [formControl]="form.controls.nameClassic"
+        placeholder="Name"
+      />
+    </div>
 
-<div class="mb-6 p-4 bg-gray-100 rounded-lg fixed w-full max-w-xl right-0 top-16 z-50">
-  <h3 class="text-lg font-semibold mb-2">Form Value (JSON)</h3>
-  <pre class="bg-white p-3 rounded border overflow-auto text-sm">{{ formValue | json }}</pre>
+    <div class="flex flex-col gap-3">
+      <span>Icon prefix</span>
+      <tw-input-field
+        name="name"
+        inputType="text"
+        color="accent"
+        [required]="true"
+        [formControl]="form.controls.nameIconPrefix"
+        placeholder="Name"
+        iconPrefix="hero:megaphone"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Icon prefix & suffix</span>
+      <tw-input-field
+        name="name"
+        inputType="text"
+        color="danger"
+        [required]="true"
+        [formControl]="form.controls.nameIconPrefixSuffix"
+        placeholder="Name"
+        iconPrefix="hero:megaphone"
+        iconSuffix="hero:presentation-chart-line"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Multiline (textarea)</span>
+
+      <tw-input-field
+        name="description"
+        inputType="text"
+        [multiline]="true"
+        [formControl]="form.controls.description"
+        placeholder="Description"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Chip list</span>
+
+      <tw-chip-list [isEditable]="true" color="accent">
+        @for (item of chips; track $index) {
+          <tw-chip-item
+            [label]="item.label"
+            [image]="item.image"
+            [isDeletable]="item.isDeletable"
+          />
+        }
+      </tw-chip-list>
+
+      <tw-chip-list
+        [isEditable]="true"
+        color="accent"
+        formControlName="chips"
+        placeholder="Insert item here"
+        [autoCompleteSuggestions]="observableSuggestions"
+        [autoCompleteDisplayFactory]="suggestionKeyFactory"
+        [autoCompleteFilterFn]="customFilter"
+        [autoCompleteOptionTemplate]="customTemplate"
+        [allowUnknownItemInsertion]="false"
+        iconPrefix="hero:megaphone"
+        iconSuffix="hero:presentation-chart-line"
+      >
+        <!-- @for (item of chips; track $index) {
+        <tw-chip-item
+          [label]="item.label"
+          [image]="item.image"
+          [isDeletable]="item.isDeletable"
+        />
+        } -->
+      </tw-chip-list>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Auto complete</span>
+      <tw-autocomplete
+        name="Auto complete text"
+        [showLabel]="false"
+        placeholder="Fill this"
+        [suggestions]="fnObservableSuggestions"
+        [displayFactory]="suggestionKeyFactory"
+        [filterFn]="customFilter"
+        [optionTemplate]="customTemplate"
+        (selectionChanged)="onSelectionChange($event)"
+      ></tw-autocomplete>
+
+      <ng-template #customTemplate let-item>
+        <div class="flex items-center">
+          <span>{{ item.name }}</span>
+          <small class="ml-2 text-gray-500">{{ item.id }}</small>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Auto complete with value</span>
+      <tw-autocomplete
+        name="Auto complete text"
+        [showLabel]="false"
+        placeholder="Fill this"
+        [suggestions]="fnObservableSuggestions"
+        [displayFactory]="suggestionKeyFactory"
+        [filterFn]="customFilter"
+        [optionTemplate]="customTemplate"
+        formControlName="autoCompleteValue"
+      ></tw-autocomplete>
+
+      <ng-template #customTemplate let-item>
+        <div class="flex items-center">
+          <span>{{ item.name }}</span>
+          <small class="ml-2 text-gray-500">{{ item.id }}</small>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Calendar</span>
+      <tw-calendar></tw-calendar>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Calendar Range</span>
+      <tw-calendar [isRange]="true"></tw-calendar>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Date range picker</span>
+      <tw-date-range-picker></tw-date-range-picker>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Switch</span>
+      <tw-switch
+        [formControl]="form.controls.runCycle"
+        label="Run on next cycle"
+        color="accent"
+      />
+    </div>
+
+    <h3 class="my-4 text-xl mt-8">Masked Inputs</h3>
+
+    <div class="flex flex-col gap-3">
+      <span>Phone Number (999) 999-9999</span>
+      <tw-masked-input
+        name="phoneNumber"
+        inputType="tel"
+        [formControl]="form.controls.phoneNumber"
+        placeholder="Phone Number"
+        [maskConfig]="phoneMask"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Date (MM/YYYY)</span>
+      <tw-masked-input
+        name="dateMMYYYY"
+        inputType="text"
+        [formControl]="form.controls.dateMMYYYY"
+        placeholder="MM/YYYY"
+        [maskConfig]="dateMMYYYYMask"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Date (DD-MM-YYYY)</span>
+      <tw-masked-input
+        name="dateDDMMYYYY"
+        inputType="text"
+        [formControl]="form.controls.dateDDMMYYYY"
+        placeholder="DD-MM-YYYY"
+        [maskConfig]="dateDDMMYYYYMask"
+        [validator]="validateDate"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Alphanumeric Code (AA-9999-AA)</span>
+      <tw-masked-input
+        name="alphanumericCode"
+        inputType="text"
+        [formControl]="form.controls.alphanumericCode"
+        placeholder="XX-0000-XX"
+        [maskConfig]="alphanumericMask"
+        [allowAlphanumeric]="true"
+        [validator]="validateAlphanumericCode"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Phone Number with Icons</span>
+      <tw-masked-input
+        name="phoneWithIcons"
+        inputType="tel"
+        [formControl]="form.controls.phoneWithIcons"
+        placeholder="Phone Number"
+        [maskConfig]="phoneWithIconsMask"
+        iconPrefix="hero:phone"
+        iconSuffix="hero:information-circle"
+        iconSuffixClass="text-blue-500"
+      />
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <span>Button group select</span>
+      <tw-btn-group color="primary" formControlName="buttonGroupValue">
+        <tw-btn-group-item value="1">Option X</tw-btn-group-item>
+        <tw-btn-group-item value="2">Option Y</tw-btn-group-item>
+        <tw-btn-group-item value="3">Option Z</tw-btn-group-item>
+      </tw-btn-group>
+    </div>
+  </form>
 </div>
-<form
-  [formGroup]="form"
-  class="gap-6 flex flex-col max-w-2xl"
->
-
-  <div class="flex flex-col gap-3">
-    <span>Classic</span>
-    <tw-input-field
-      name="name"
-      inputType="text"
-      [required]="true"
-      [formControl]="form.controls.nameClassic"
-      placeholder="Name"
-    />
-
-  </div>
-
-
-  <div class="flex flex-col gap-3">
-    <span>Icon prefix</span>
-    <tw-input-field
-      name="name"
-      inputType="text"
-      color="accent"
-      [required]="true"
-      [formControl]="form.controls.nameIconPrefix"
-      placeholder="Name"
-      iconPrefix="hero:megaphone"
-    />
-  </div>
-
-
-  <div class="flex flex-col gap-3">
-    <span>Icon prefix & suffix</span>
-    <tw-input-field
-      name="name"
-      inputType="text"
-      color="danger"
-      [required]="true"
-      [formControl]="form.controls.nameIconPrefixSuffix"
-      placeholder="Name"
-      iconPrefix="hero:megaphone"
-      iconSuffix="hero:presentation-chart-line"
-    />
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Multiline (textarea)</span>
-
-    <tw-input-field
-      name="description"
-      inputType="text"
-      [multiline]="true"
-      [formControl]="form.controls.description"
-      placeholder="Description"
-    />
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Chip list</span>
-
-    <tw-chip-list
-      [isEditable]="true"
-      color="accent"
-    >
-      @for (item of chips; track $index) {
-      <tw-chip-item
-        [label]="item.label"
-        [image]="item.image"
-        [isDeletable]="item.isDeletable"
-      />
-      }
-    </tw-chip-list>
-
-    <tw-chip-list
-      [isEditable]="true"
-      color="accent"
-      formControlName="chips"
-      placeholder="Insert item here"
-      [autoCompleteSuggestions]="observableSuggestions"
-      [autoCompleteDisplayFactory]="suggestionKeyFactory"
-      [autoCompleteFilterFn]="customFilter"
-      [autoCompleteOptionTemplate]="customTemplate"
-      [allowUnknownItemInsertion]="false"
-      iconPrefix="hero:megaphone"
-      iconSuffix="hero:presentation-chart-line"
-    >
-
-      <!-- @for (item of chips; track $index) {
-      <tw-chip-item
-        [label]="item.label"
-        [image]="item.image"
-        [isDeletable]="item.isDeletable"
-      />
-      } -->
-    </tw-chip-list>
-
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Auto complete</span>
-    <tw-autocomplete
-      name="Auto complete text"
-      [showLabel]="false"
-      placeholder="Fill this"
-      [suggestions]="fnObservableSuggestions"
-      [displayFactory]="suggestionKeyFactory"
-      [filterFn]="customFilter"
-      [optionTemplate]="customTemplate"
-      (selectionChanged)="onSelectionChange($event)"
-    ></tw-autocomplete>
-
-    <ng-template
-      #customTemplate
-      let-item
-    >
-      <div class="flex items-center">
-        <span>{{ item.name }}</span>
-        <small class="ml-2 text-gray-500">{{ item.id }}</small>
-      </div>
-    </ng-template>
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Auto complete with value</span>
-    <tw-autocomplete
-      name="Auto complete text"
-      [showLabel]="false"
-      placeholder="Fill this"
-      [suggestions]="fnObservableSuggestions"
-      [displayFactory]="suggestionKeyFactory"
-      [filterFn]="customFilter"
-      [optionTemplate]="customTemplate"
-      formControlName="autoCompleteValue"
-    ></tw-autocomplete>
-
-    <ng-template
-      #customTemplate
-      let-item
-    >
-      <div class="flex items-center">
-        <span>{{ item.name }}</span>
-        <small class="ml-2 text-gray-500">{{ item.id }}</small>
-      </div>
-    </ng-template>
-
-  </div>
-
-
-  <div class="flex flex-col gap-3">
-    <span>Calendar</span>
-    <tw-calendar></tw-calendar>
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Calendar Range</span>
-    <tw-calendar [isRange]="true"></tw-calendar>
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Date range picker</span>
-    <tw-date-range-picker></tw-date-range-picker>
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Switch</span>
-    <tw-switch
-      [formControl]="form.controls.runCycle"
-      label="Run on next cycle"
-      color="accent"
-    />
-  </div>
-
-  <h3 class="my-4 text-xl mt-8">Masked Inputs</h3>
-
-  <div class="flex flex-col gap-3">
-    <span>Phone Number (999) 999-9999</span>
-    <tw-masked-input
-      name="phoneNumber"
-      inputType="tel"
-      [formControl]="form.controls.phoneNumber"
-      placeholder="Phone Number"
-      [maskConfig]="phoneMask"
-    />
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Date (MM/YYYY)</span>
-    <tw-masked-input
-      name="dateMMYYYY"
-      inputType="text"
-      [formControl]="form.controls.dateMMYYYY"
-      placeholder="MM/YYYY"
-      [maskConfig]="dateMMYYYYMask"
-    />
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Date (DD-MM-YYYY)</span>
-    <tw-masked-input
-      name="dateDDMMYYYY"
-      inputType="text"
-      [formControl]="form.controls.dateDDMMYYYY"
-      placeholder="DD-MM-YYYY"
-      [maskConfig]="dateDDMMYYYYMask"
-      [validator]="validateDate"
-    />
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Alphanumeric Code (AA-9999-AA)</span>
-    <tw-masked-input
-      name="alphanumericCode"
-      inputType="text"
-      [formControl]="form.controls.alphanumericCode"
-      placeholder="XX-0000-XX"
-      [maskConfig]="alphanumericMask"
-      [allowAlphanumeric]="true"
-      [validator]="validateAlphanumericCode"
-    />
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Phone Number with Icons</span>
-    <tw-masked-input
-      name="phoneWithIcons"
-      inputType="tel"
-      [formControl]="form.controls.phoneWithIcons"
-      placeholder="Phone Number"
-      [maskConfig]="phoneWithIconsMask"
-      iconPrefix="hero:phone"
-      iconSuffix="hero:information-circle"
-      iconSuffixClass="text-blue-500"
-    />
-  </div>
-
-  <div class="flex flex-col gap-3">
-    <span>Button group select</span>
-    <tw-btn-group
-      color="primary"
-      formControlName="buttonGroupValue"
-    >
-      <tw-btn-group-item value="1">Option X</tw-btn-group-item>
-      <tw-btn-group-item value="2">Option Y</tw-btn-group-item>
-      <tw-btn-group-item value="3">Option Z</tw-btn-group-item>
-    </tw-btn-group>
-  </div>
-
-</form>

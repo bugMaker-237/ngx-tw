@@ -1,0 +1,51 @@
+/* Custom transitions for smooth collapsing */
+.sidebar-transition {
+  transition:
+    width 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+}
+
+.submenu-transition {
+  transition:
+    max-height 0.3s ease-in-out,
+    opacity 0.2s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.submenu-active {
+  max-height: 500px; /* Large enough for content */
+  opacity: 1;
+}
+
+/* State: Collapsed (Mini) */
+:host.is-collapsed .nav-text,
+:host.is-collapsed .group-text,
+:host.is-collapsed .submenu-indicator {
+  display: none;
+}
+
+:host.is-collapsed .submenu-container {
+  display: none !important;
+}
+
+/* Force specific widths when JS intervenes */
+.w-20-force {
+  width: 5rem !important;
+}
+.w-64-force {
+  width: 16rem !important;
+}
+
+/* Default Tablet Behavior (Mini) */
+/* Note: Angular styles are encapsulated. Using @media inside :host or referencing global? */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .sidebar-default:not(.w-64-force) .nav-text,
+  .sidebar-default:not(.w-64-force) .submenu-indicator {
+    display: none;
+  }
+  .sidebar-default:not(.w-64-force) .submenu-container {
+    display: none !important;
+  }
+}

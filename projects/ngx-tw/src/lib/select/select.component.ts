@@ -73,7 +73,7 @@ export class TwSelect
   @Input() public id: string = `tw-select-${_uniqueIdCounter++}`;
   @Input() public compareWith: (o: any, o2: any) => boolean = (
     o: any,
-    o2: any
+    o2: any,
   ) => o === o2;
   @Input()
   get value(): any {
@@ -155,16 +155,16 @@ export class TwSelect
         return options.changes.pipe(
           startWith(options),
           switchMap(() =>
-            merge(...options.map((option) => option.onSelectionChange))
-          )
+            merge(...options.map((option) => option.onSelectionChange)),
+          ),
         );
       }
 
       return this.zone.onStable.pipe(
         take(1),
-        switchMap(() => this.optionSelectionChanges)
+        switchMap(() => this.optionSelectionChanges),
       );
-    }
+    },
   ) as Observable<OptionSelectionChange>;
 
   constructor(
@@ -172,7 +172,7 @@ export class TwSelect
     public elementRef: ElementRef,
     public overlay: Overlay,
     private readonly zone: NgZone,
-    private readonly liveAnnouncer: LiveAnnouncer
+    private readonly liveAnnouncer: LiveAnnouncer,
   ) {
     this._scrollStrategy = this.overlay.scrollStrategies.block();
   }
@@ -225,12 +225,11 @@ export class TwSelect
     // Set aria-disabled
     this.trigger?.nativeElement.setAttribute(
       'aria-disabled',
-      isDisabled.toString()
+      isDisabled.toString(),
     );
   }
 
   openPanel() {
-    //
     // Validate disabled
     if (this.disabled === true) return;
 
@@ -242,6 +241,8 @@ export class TwSelect
     // Scroll if we have an active item
     if (this._keyManager.activeItem)
       this._keyManager.activeItem.setActiveStylesWithDelay();
+
+    this.cdr?.detectChanges();
   }
 
   closePanel() {
@@ -251,6 +252,8 @@ export class TwSelect
 
     // close
     this.isOpen = false;
+
+    this.cdr?.detectChanges();
   }
 
   backdropClick() {
@@ -261,7 +264,7 @@ export class TwSelect
     newValue: any,
     innerHTML: string | null,
     touched: boolean,
-    forceUpdate = false
+    forceUpdate = false,
   ) {
     //
     // Do nothing if selected is the same as the current value

@@ -15,6 +15,7 @@ export * from './lib/chip/chip-list.component';
 export * from './lib/chip/chip.component';
 export * from './lib/date-picker/date-range-picker.component';
 export * from './lib/dialog/dialog';
+export * from './lib/drawer';
 export * from './lib/expander';
 export * from './lib/icon/icon.component';
 export * from './lib/input-field/input-field.component';

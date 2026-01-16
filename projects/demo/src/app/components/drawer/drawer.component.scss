@@ -1,0 +1,5 @@
+.demo-container {
+  /* Isolate the drawer fixed positioning context */
+  transform: translate(0, 0);
+  /* Ensures the drawer stays inside this box */
+}

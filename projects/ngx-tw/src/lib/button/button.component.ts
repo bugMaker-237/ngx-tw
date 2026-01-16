@@ -15,6 +15,7 @@ import {
   },
   template: `
     <button
+      #buttonElt
       class="tw-button w-full {{ twClass }} {{ type }} rounded-{{ rounded }} {{
         color
       }}"

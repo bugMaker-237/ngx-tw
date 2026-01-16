@@ -12,8 +12,14 @@
 
 body {
   @apply text-gray-600 bg-gray-100 dark:text-white dark:bg-gray-900;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Blinker,
-    Helvetica Neue, Ubuntu, sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Blinker,
+    Helvetica Neue,
+    Ubuntu,
+    sans-serif;
   font-weight: 400;
 }
 
@@ -23,8 +29,13 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: -apple-system, BlinkMacSystemFont, Blinker, Helvetica Neue,
-    Ubuntu, sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    Blinker,
+    Helvetica Neue,
+    Ubuntu,
+    sans-serif;
 }
 
 .tw-dropdown-menu-item {
@@ -75,7 +86,7 @@ table.tw-table tbody {
 
 .tw-menu-item {
   @apply flex items-center;
-  @apply hover:bg-gray-200 p-2 rounded-md transition-all dark:hover:bg-primary-500;
+  @apply hover:bg-gray-50 p-2 rounded-md transition-all dark:hover:bg-primary-500;
   &.selected-item {
     @apply text-primary-500 font-semibold dark:text-primary-300 dark:hover:text-white;
   }

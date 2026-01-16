@@ -9,6 +9,7 @@ import { TwChipList } from './chip/chip-list.component';
 import { TwChip } from './chip/chip.component';
 import { TwDateRangePicker } from './date-picker/date-range-picker.component';
 import { TwDialog } from './dialog/dialog';
+import { TwDrawer } from './drawer';
 import { TwExpanderModule } from './expander';
 import { TwInputField } from './input-field/input-field.component';
 import { TwMaskedInput } from './input-field/masked-input.component';
@@ -53,6 +54,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwChipItem,
     TwDateRangePicker,
     TwCalendar,
+    TwDrawer,
   ],
   providers: [TwDialog, TwAlertService, TwNotification],
   exports: [
@@ -80,6 +82,7 @@ import { TwToolbar } from './toolbar/toolbar.component';
     TwChipItem,
     TwDateRangePicker,
     TwCalendar,
+    TwDrawer,
   ],
 })
 export class NgxTwModule {}
