@@ -10,7 +10,7 @@ import { SelectComponent } from './select/select.component';
 import { TablesComponent } from './tables/tables.component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-components',
   imports: [
     ButtonsComponent,
     TablesComponent,

@@ -1,3 +1,11 @@
+import {
+  animate,
+  AnimationEvent,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Overlay, OverlayModule, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { NgTemplateOutlet } from '@angular/common';
@@ -10,7 +18,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TwIcon } from '../icon/icon.component';
 import { DrawerMenuItem, DrawerMenuSection } from './drawer.interface';
 
@@ -21,25 +29,65 @@ import { DrawerMenuItem, DrawerMenuSection } from './drawer.interface';
   templateUrl: './drawer.component.html',
   styleUrls: ['./drawer.component.scss'],
   host: { class: 'block h-full' },
+  animations: [
+    trigger('drawerAnimation', [
+      state('void', style({ transform: 'translateX(-100%)' })),
+      state('open', style({ transform: 'translateX(0)' })),
+      state('closed', style({ transform: 'translateX(-100%)' })),
+      transition('void => open', animate('300ms ease-in-out')),
+      transition('open => closed', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class TwDrawer implements OnDestroy {
   @Input() sections: DrawerMenuSection[] = [];
-  @Input() title: string = '';
 
+  @Input() useAsAppShell = false;
   @ViewChild('sidebarContent') sidebarTemplate!: TemplateRef<any>;
 
   isMobileMenuOpen = false;
   isCollapsed = false;
   isManuallyToggled = false;
   isMobile = false;
+  drawerAnimationState: 'open' | 'closed' = 'closed';
 
   private overlayRef?: OverlayRef;
 
   constructor(
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
+    private router: Router,
   ) {
     this.checkScreenSize();
+  }
+
+  isActive(route: string | any[]): boolean {
+    return this.router.isActive(
+      Array.isArray(route) ? this.router.createUrlTree(route) : route,
+      {
+        paths: 'exact',
+        matrixParams: 'ignored',
+        queryParams: 'ignored',
+        fragment: 'ignored',
+      },
+    );
+  }
+
+  hasActiveChild(children: DrawerMenuItem[]): boolean {
+    const currentUrl = this.router.url;
+
+    return children.some((child) => {
+      const targetUrl = Array.isArray(child.route)
+        ? this.router.createUrlTree(child.route).toString()
+        : child.route;
+
+      const isChildActive = !!targetUrl && currentUrl.startsWith(targetUrl);
+
+      return (
+        isChildActive ||
+        (child.children ? this.hasActiveChild(child.children) : false)
+      );
+    });
   }
 
   ngOnDestroy(): void {
@@ -83,14 +131,27 @@ export class TwDrawer implements OnDestroy {
   }
 
   toggleMobileMenu() {
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
-
     if (this.isMobile) {
       if (this.isMobileMenuOpen) {
-        this.openOverlay();
+        // Closing: Trigger exit animation
+        this.isMobileMenuOpen = false;
+        this.drawerAnimationState = 'closed';
       } else {
-        this.closeOverlay();
+        // Opening
+        this.isMobileMenuOpen = true;
+        this.drawerAnimationState = 'open';
+        this.openOverlay();
       }
+    } else {
+      // Should not happen on desktop if hidden logic is correct,
+      // but just in case:
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    }
+  }
+
+  onAnimationDone(event: AnimationEvent) {
+    if (event.toState === 'closed' && this.isMobile) {
+      this.closeOverlay();
     }
   }
 
@@ -110,7 +171,7 @@ export class TwDrawer implements OnDestroy {
     this.overlayRef = this.overlay.create({
       positionStrategy,
       hasBackdrop: true,
-      backdropClass: 'cdk-overlay-dark-backdrop',
+      backdropClass: 'acrylic-backdrop',
       scrollStrategy: this.overlay.scrollStrategies.block(),
       height: '100%',
       maxHeight: '100vh',

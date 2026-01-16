@@ -1,6 +1,8 @@
 <ng-template #sidebarContent>
   <aside
     class="sidebar-default sidebar-transition fixed md:relative inset-y-0 left-0 z-50 bg-white border-r border-gray-200 flex flex-col w-64 md:w-20 lg:w-64"
+    [@drawerAnimation]="isMobile ? drawerAnimationState : null"
+    (@drawerAnimation.done)="onAnimationDone($event)"
     [class.-translate-x-full]="isMobile && !isMobileMenuOpen"
     [class.md:translate-x-0]="true"
     [class.w-20-force]="isCollapsed"
@@ -73,6 +75,8 @@
       @if (!item.children) {
         <a
           [routerLink]="item.route"
+          [routerLinkActive]="'bg-primary-50 text-primary-700'"
+          [routerLinkActiveOptions]="{ exact: true }"
           [title]="item.label"
           class="flex items-center gap-3 px-3 py-2 rounded-md transition-colors hover:bg-primary-50 hover:text-primary-700 text-slate-600 cursor-pointer"
           [class.gap-3]="!isCollapsed"
@@ -82,7 +86,7 @@
             <tw-icon [size]="24" [svgIcon]="item.icon"></tw-icon>
           }
           @if (!isCollapsed) {
-            <span class="nav-text font-medium whitespace-nowrap">{{
+            <span class="nav-text font-medium text-sm whitespace-nowrap">{{
               item.label
             }}</span>
           }
@@ -98,6 +102,8 @@
             class="w-full flex items-center px-3 py-2 rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700 cursor-pointer transition-colors group cursor-pointer"
             [class.justify-center]="isCollapsed"
             [class.justify-between]="!isCollapsed"
+            [class.bg-primary-50]="hasActiveChild(item.children)"
+            [class.text-primary-700]="hasActiveChild(item.children)"
           >
             <div
               class="flex items-center"
@@ -109,7 +115,7 @@
               }
 
               @if (!isCollapsed) {
-                <span class="nav-text font-medium whitespace-nowrap">{{
+                <span class="nav-text font-medium text-sm whitespace-nowrap">{{
                   item.label
                 }}</span>
               }
@@ -138,6 +144,7 @@
     </li>
   }
 </ng-template>
+
 <div class="flex overflow-hidden h-full">
   <!-- Desktop Sidebar Injection -->
   @if (!isMobile) {
@@ -145,7 +152,10 @@
   }
 
   <!-- Main Content -->
-  <main class="flex-1 overflow-y-auto bg-gray-50 p-6">
+  <main
+    class="flex-1 overflow-y-auto bg-gray-50"
+    [class.h-screen]="useAsAppShell"
+  >
     <ng-content></ng-content>
   </main>
 </div>

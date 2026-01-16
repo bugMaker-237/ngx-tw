@@ -1,8 +1,7 @@
 /* Custom transitions for smooth collapsing */
 .sidebar-transition {
-  transition:
-    width 0.3s ease-in-out,
-    transform 0.3s ease-in-out;
+  /* Only animate width and opacity on desktop state changes; transform handled by angular animation on mobile */
+  transition: width 0.3s ease-in-out;
 }
 
 .submenu-transition {

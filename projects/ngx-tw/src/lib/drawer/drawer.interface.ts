@@ -1,7 +1,7 @@
 export interface DrawerMenuItem {
   label: string;
   icon?: string; // Raw SVG or icon name
-  route?: string;
+  route?: string | string[];
   children?: DrawerMenuItem[];
   active?: boolean;
   expanded?: boolean;
