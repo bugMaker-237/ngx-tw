@@ -20,16 +20,17 @@ import { TwButtonGroupItem } from './button-group-Item.component';
   selector: 'tw-btn-group',
   template: ` <div class="tw-button-group {{ orientation }}">
     @for (item of children; track item; let i = $index) {
-    <button
-      class="tw-button-group-item  {{ item.color || color }}"
-      [disabled]="disabled || item.disabled"
-      [class.selected-item]="
-        selectedIndex === i || selectedValue === item.value
-      "
-      (click)="changeSelection(i, item.value)"
-    >
-      <ng-container [ngTemplateOutlet]="item.content"></ng-container>
-    </button>
+      <button
+        class="tw-button-group-item  {{ item.color || color }}"
+        [disabled]="disabled || item.disabled"
+        [class.selected-item]="
+          selectedIndex === i || selectedValue === item.value
+        "
+        type="button"
+        (click)="changeSelection(i, item.value)"
+      >
+        <ng-container [ngTemplateOutlet]="item.content"></ng-container>
+      </button>
     }
   </div>`,
 
@@ -54,7 +55,7 @@ export class TwButtonGroup implements ControlValueAccessor, AfterViewInit {
   }>();
   @Input() selectedIndex: number = -1;
 
-  @Input() color?: ColorTypes;
+  @Input() color?: ColorTypes = 'primary';
 
   @Input() orientation: 'vertical' | 'horizontal' = 'horizontal';
 

@@ -1,53 +1,50 @@
 <div class="flex relative tw-chip-list items-center gap-2 {{ color }}">
-  @if(iconPrefix){
-  <span class="absolute ml-2">
-    <tw-icon
-      class="text-gray-400 {{ iconPrefixClass }}"
-      [svgIcon]="iconPrefix"
-    />
-  </span>
+  @if (iconPrefix) {
+    <span class="absolute ml-2">
+      <tw-icon
+        class="text-gray-400 {{ iconPrefixClass }}"
+        [svgIcon]="iconPrefix"
+      />
+    </span>
   }
   <div
     [class.ml-10]="iconPrefix && chipItems.length > 0"
     [class.mr-6]="iconSuffix"
-    [class.ml-7]="iconPrefix && chipItems.length ===0"
+    [class.ml-7]="iconPrefix && chipItems.length === 0"
     class="flex flex-row gap-2 flex-wrap flex-grow"
   >
-    @for(chip of chipItems; track $index){
-    <tw-chip
-      twClass="max-w-48"
-      [label]="chip.label"
-      [image]="chip.image"
-      (deleteItem)="removeItem($index)"
-      [isDeletable]="isEditable && chip.isDeletable"
-    />
+    @for (chip of chipItems; track $index) {
+      <tw-chip
+        twClass="max-w-48"
+        [label]="chip.label"
+        [image]="chip.image"
+        (deleteItem)="removeItem($index)"
+        [isDeletable]="isEditable && chip.isDeletable"
+      />
     }
 
     <div class="relative flex-grow flex flex-row items-center overflow-hidden">
       <span
         class="absolute text-gray-500 opacity-50 pointer-events-none whitespace-nowrap text-nowrap overflow-hidden text-ellipsis max-w-full"
         [class.hidden]="newItemContent?.nativeElement?.innerText"
-      >{{ placeholder }}
+        >{{ placeholder }}
       </span>
 
-      @if(isEditable){
-      <div
-        (keydown)="contentKeydown($event)"
-        #newItemContent
-        contentEditable
-        class="flex items-center border-0 flex-grow outline-0 wrap"
-      ></div>
+      @if (isEditable) {
+        <div
+          (keydown)="contentKeydown($event)"
+          #newItemContent
+          contentEditable
+          class="flex items-center border-0 flex-grow outline-none wrap"
+        ></div>
       }
     </div>
   </div>
 
-  @if(iconSuffix){
-  <span class="absolute mr-2 right-0">
-    <tw-icon
-      class="text-gray-400 {{ iconSuffix }}"
-      [svgIcon]="iconSuffix"
-    />
-  </span>
+  @if (iconSuffix) {
+    <span class="absolute mr-2 right-0">
+      <tw-icon class="text-gray-400 {{ iconSuffix }}" [svgIcon]="iconSuffix" />
+    </span>
   }
 </div>
 <!-- Dropdown Suggestions -->
@@ -58,33 +55,37 @@
   [cdkConnectedOverlayOrigin]="elementRef.nativeElement.firstElementChild"
   [cdkConnectedOverlayOpen]="autoCompleteManager?.isOpen || false"
   [cdkConnectedOverlayPositions]="positions"
-  [cdkConnectedOverlayMinWidth]="elementRef.nativeElement.firstElementChild.offsetWidth"
+  [cdkConnectedOverlayMinWidth]="
+    elementRef.nativeElement.firstElementChild.offsetWidth
+  "
   [cdkConnectedOverlayScrollStrategy]="blockScrollStrategy"
   (backdropClick)="autoCompleteManager?.closeDropdown()"
   (detach)="autoCompleteManager?.closeDropdown()"
 >
-  <div class="w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-    @if (filteredSuggestions && filteredSuggestions .length > 0) {
-    <ul>
-      @for (suggestion of filteredSuggestions; track $index) {
-      <li
-        (click)="selectSuggestion(suggestion)"
-        class="p-2 tw-option"
-      >
-        @if (autoCompleteOptionTemplate) {
-        <ng-container *ngTemplateOutlet="autoCompleteOptionTemplate; context: { $implicit: suggestion }"></ng-container>
-
-        }@else {
-        <ng-template>{{ autoCompleteManager?.getDisplayText(suggestion) }}</ng-template>
+  <div
+    class="w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+  >
+    @if (filteredSuggestions && filteredSuggestions.length > 0) {
+      <ul>
+        @for (suggestion of filteredSuggestions; track $index) {
+          <li (click)="selectSuggestion(suggestion)" class="p-2 tw-option">
+            @if (autoCompleteOptionTemplate) {
+              <ng-container
+                *ngTemplateOutlet="
+                  autoCompleteOptionTemplate;
+                  context: { $implicit: suggestion }
+                "
+              ></ng-container>
+            } @else {
+              <ng-template>{{
+                autoCompleteManager?.getDisplayText(suggestion)
+              }}</ng-template>
+            }
+          </li>
         }
-      </li>
-      }
-    </ul>
-    }
-    @else{
-    <div class="p-2 text-gray-500">
-      No suggestions found.
-    </div>
+      </ul>
+    } @else {
+      <div class="p-2 text-gray-500">No suggestions found.</div>
     }
   </div>
 </ng-template>

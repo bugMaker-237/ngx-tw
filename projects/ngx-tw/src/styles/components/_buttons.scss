@@ -70,17 +70,19 @@
   @apply bg-white  dark:bg-gray-900   dark:border-gray-700 dark:divide-gray-700;
   & .tw-button-group-item {
     @apply px-5 py-2 text-xs font-medium transition-colors duration-200;
-    @apply sm:text-sm text-gray-600  dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100;
-
-    &.primary {
+    @apply sm:text-sm text-gray-600  dark:hover:bg-gray-800 dark:text-gray-300 disabled:cursor-not-allowed disabled:text-gray-400;
+    &:not(:disabled) {
+      @apply hover:bg-gray-100;
+    }
+    &.primary:not(:disabled) {
       @apply hover:bg-primary-700 dark:hover:bg-primary-500 hover:text-primary-contrast-500;
     }
 
-    &.accent {
+    &.accent:not(:disabled) {
       @apply hover:bg-accent-700 dark:hover:bg-accent-500 hover:text-accent-contrast-500;
     }
 
-    &.danger {
+    &.danger:not(:disabled) {
       @apply hover:bg-danger-700 dark:hover:bg-danger-500 hover:text-danger-contrast-500;
     }
 
@@ -88,15 +90,15 @@
       @apply bg-gray-100 dark:bg-gray-800;
 
       &.primary {
-        @apply bg-primary-500 dark:bg-primary-600 text-primary-contrast-500;
+        @apply disabled:opacity-80 bg-primary-500 dark:bg-primary-600 text-primary-contrast-500;
       }
 
       &.accent {
-        @apply bg-accent-500 dark:bg-accent-600 text-accent-contrast-500;
+        @apply disabled:opacity-80 bg-accent-500 dark:bg-accent-600 text-accent-contrast-500;
       }
 
       &.danger {
-        @apply bg-danger-400 dark:bg-danger-600 text-danger-contrast-500;
+        @apply disabled:opacity-80 bg-danger-400 dark:bg-danger-600 text-danger-contrast-500;
       }
     }
   }
