@@ -77,7 +77,13 @@ export class TwDrawer implements OnDestroy {
     const url = Array.isArray(route)
       ? this.router.createUrlTree(route).toString()
       : route;
-    return url.startsWith('http://') || url.startsWith('https://');
+    return (
+      url.startsWith('http://') ||
+      url.startsWith('https://') ||
+      url.startsWith('//') ||
+      url.startsWith('mailto:') ||
+      url.startsWith('tel:')
+    );
   }
 
   hasActiveChild(children: DrawerMenuItem[]): boolean {
