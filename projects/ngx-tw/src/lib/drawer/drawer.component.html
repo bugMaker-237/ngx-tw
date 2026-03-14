@@ -73,24 +73,50 @@
     <li class="relative">
       <!-- Case 1: Simple Link -->
       @if (!item.children) {
-        <a
-          [routerLink]="item.route"
-          [routerLinkActive]="'bg-primary-50 text-primary-700'"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [title]="item.label"
-          class="flex items-center gap-3 px-3 py-2 rounded-md transition-colors hover:bg-primary-50 hover:text-primary-700 text-slate-600 cursor-pointer"
-          [class.gap-3]="!isCollapsed"
-          [class.justify-center]="isCollapsed"
-        >
-          @if (item.icon) {
-            <tw-icon [size]="24" [svgIcon]="item.icon"></tw-icon>
-          }
-          @if (!isCollapsed) {
-            <span class="nav-text font-medium text-sm whitespace-nowrap">{{
-              item.label
-            }}</span>
-          }
-        </a>
+        @if (isAbsolute(item.route)) {
+          <a
+            [href]="item.route"
+            target="_blank"
+            class="w-full flex items-center px-3 py-2 rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700 transition-colors group cursor-pointer"
+            [class.justify-center]="isCollapsed"
+            [class.justify-between]="!isCollapsed"
+          >
+            <div
+              class="flex items-center"
+              [class.gap-3]="!isCollapsed"
+              [class.justify-center]="isCollapsed"
+            >
+              @if (item.icon) {
+                <tw-icon [size]="24" [svgIcon]="item.icon"></tw-icon>
+              }
+
+              @if (!isCollapsed) {
+                <span class="nav-text font-medium text-sm whitespace-nowrap">{{
+                  item.label
+                }}</span>
+              }
+            </div>
+          </a>
+        } @else {
+          <a
+            [routerLink]="item.route"
+            [routerLinkActive]="'bg-primary-50 text-primary-700'"
+            [routerLinkActiveOptions]="{ exact: true }"
+            [title]="item.label"
+            class="flex items-center gap-3 px-3 py-2 rounded-md transition-colors hover:bg-primary-50 hover:text-primary-700 text-slate-600 cursor-pointer"
+            [class.gap-3]="!isCollapsed"
+            [class.justify-center]="isCollapsed"
+          >
+            @if (item.icon) {
+              <tw-icon [size]="24" [svgIcon]="item.icon"></tw-icon>
+            }
+            @if (!isCollapsed) {
+              <span class="nav-text font-medium text-sm whitespace-nowrap">{{
+                item.label
+              }}</span>
+            }
+          </a>
+        }
       }
 
       <!-- Case 2: Submenu -->
