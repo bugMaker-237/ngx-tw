@@ -1,6 +1,6 @@
 <ng-template #sidebarContent>
   <aside
-    class="sidebar-default sidebar-transition fixed md:relative inset-y-0 left-0 z-50 bg-white border-r border-gray-200 flex flex-col w-64 md:w-20 lg:w-64  max-h-dvh"
+    class="sidebar-default sidebar-transition fixed md:relative inset-y-0 left-0 z-50 bg-white border-r border-gray-200 flex flex-col w-64 md:w-20 lg:w-64 max-h-dvh"
     [@drawerAnimation]="isMobile ? drawerAnimationState : null"
     (@drawerAnimation.done)="onAnimationDone($event)"
     [class.-translate-x-full]="isMobile && !isMobileMenuOpen"
@@ -100,6 +100,7 @@
         } @else {
           <a
             [routerLink]="item.route"
+            (click)="toggleMobileMenu()"
             [routerLinkActive]="'bg-primary-50 text-primary-700'"
             [routerLinkActiveOptions]="{ exact: true }"
             [title]="item.label"
