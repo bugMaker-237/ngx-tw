@@ -116,6 +116,28 @@
             "styles": ["projects/demo/src/styles.scss"],
             "scripts": []
           }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "demo:build",
+            "compodoc": false,
+            "port": 6006,
+            "tsConfig": ".storybook/tsconfig.json",
+            "styles": ["projects/ngx-tw/src/styles/default.scss"]
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "demo:build",
+            "compodoc": false,
+            "outputDir": "storybook-static",
+            "tsConfig": ".storybook/tsconfig.json",
+            "styles": ["projects/ngx-tw/src/styles/default.scss"]
+          }
         }
       }
     }
